@@ -1,8 +1,49 @@
-# React + Vite
+# Hakka Learning App: Tales of Taiwan
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Learn Hakka through famous Taiwanese stories! This interactive application helps you explore the rich Hakka language and culture by immersing yourself in beloved Taiwanese tales.
 
-Currently, two official plugins are available:
+## Project Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Our Hakka Learning App is an innovative educational tool designed to make learning the Hakka language engaging and accessible. By leveraging well-known Taiwanese stories, we provide a unique and culturally rich learning experience.
+
+Key features:
+- Interactive storytelling in Hakka with Taiwanese folk tales and modern stories
+- Vocabulary building exercises integrated within the narrative
+- Audio pronunciations to improve listening and speaking skills
+- Cultural notes to provide context and deeper understanding
+- Progress tracking to motivate learners
+
+Whether you're a beginner just starting your Hakka language journey or an intermediate learner looking to improve, our app offers an enjoyable way to enhance your language skills while connecting with Taiwan's cultural heritage.
+
+## Getting Started
+
+Follow these steps to get the project up and running on your local machine.
+
+### Prerequisites
+
+- Node.js (version X.X.X or higher)
+- npm (usually comes with Node.js)
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/jyx0615/hakka_tales.git
+   ```
+
+2. Navigate to the project directory:
+   ```
+   cd hakka_tales
+   ```
+
+3. Install the required dependencies:
+   ```
+   npm install
+   ```
+
+### Running the Development Server
+
+To start the development server, run:
+```
+npm run dev
+```

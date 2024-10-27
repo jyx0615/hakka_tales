@@ -29,7 +29,7 @@ function Book() {
                     <p className='mt-3 text-break lh-lg fs-5 mb-5'>{bookInfo.content}</p>
                 </div>
             
-                <div className='d-flex align-items-center justify-content-end gap-4 mt-5'>
+                <div className='d-flex align-items-center justify-content-end gap-4 mb-5'>
                     <MyButton text="四縣腔" />
                     <MyButton text="海陸腔" />
                 </div>

@@ -9,9 +9,9 @@ import logo from '../assets/logo.png';
 
 function MyNavbar() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="navbar-custom mb-5" sticky="top">
       <Container fluid>
-        <Navbar.Brand href="#">
+        <Navbar.Brand href="/">
           <img
               src={logo}
               alt="HakkaTales Logo"
@@ -26,7 +26,7 @@ function MyNavbar() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="#action2">Link</Nav.Link>
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
@@ -45,7 +45,7 @@ function MyNavbar() {
           <Form className="d-flex">
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="輸入一本故事書"
               className="me-2"
               aria-label="Search"
             />

@@ -1,0 +1,23 @@
+.bookContainer{
+    background-image: url('../assets/book2.svg');
+    width: 100%;
+    aspect-ratio: 1 / 1.25;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.bookName{
+    margin-top: 30%;
+}
+
+
+.bookContainer:hover{
+    background-image: url('../assets/book3.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    cursor: pointer;
+}
+

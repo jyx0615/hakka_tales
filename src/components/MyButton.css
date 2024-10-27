@@ -1,0 +1,13 @@
+.btn-container {
+    width: 100px;
+    height: 100px;
+    margin: 0;
+    background-color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.pulse-button {
+    font-size: 1.3em;
+    font-weight: light;
+}

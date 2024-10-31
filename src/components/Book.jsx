@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
-import './Book.css'; // Assuming you will create a CSS file for additional styles
+import { useNavigate } from 'react-router-dom';
+
 import MyButton from './MyButton';
 
 function Book() {
@@ -8,6 +9,12 @@ function Book() {
     const { index } = useParams();
     console.log(index);
 
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/book/${index}/content`); // Navigate to the book page with the index
+    };
+
     const bookInfo = {
         'title': '虎姑婆',
         'author': '王文華',
@@ -15,23 +22,23 @@ function Book() {
     };
 
     return (
-        <div className="d-flex align-items-center w-100">
+        <div className="d-flex align-items-center w-100 px-2 h-100">
             {/* left side */}
             <div className="w-50 d-flex align-items-center justify-content-center border-end me-4">
                 <h1>{bookInfo.title}</h1>
             </div>
 
             {/* right side */}
-            <div className="w-50 p-3 d-flex flex-column justify-content-between me-5">
+            <div className="w-50 h-100 d-flex flex-column justify-content-between py-3">
                 <div>
-                    <h2 className='mb-5'>故事簡介</h2>
+                    <h2 className='my-5'>故事簡介</h2>
                     <h4 className='mb-4'>作者: {bookInfo.author}</h4>
-                    <p className='mt-3 text-break lh-lg fs-5 mb-5'>{bookInfo.content}</p>
+                    <p className='mt-3 text-break lh-lg fs-5'>{bookInfo.content}</p>
                 </div>
             
-                <div className='d-flex align-items-center justify-content-end gap-4 mb-5'>
-                    <MyButton text="四縣腔" />
-                    <MyButton text="海陸腔" />
+                <div className='d-flex align-items-center justify-content-end gap-4 mb-3'>
+                    <MyButton text="四縣腔" handleClick={handleClick}/>
+                    <MyButton text="海陸腔" handleClick={handleClick}/>
                 </div>
             </div>
         </div>

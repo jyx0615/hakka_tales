@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import './MyButton.css';
 
-function MyButton({ text }) {
+function MyButton({ text, handleClick }) {
     return (
-        <div className='btn-container d-flex justify-content-center align-items-center'>
+        <div className='btn-container d-flex justify-content-center align-items-center' onClick={handleClick}>
             <span className='pulse-button'>{text}</span>
         </div>
     )
@@ -11,6 +11,7 @@ function MyButton({ text }) {
 
 MyButton.propTypes = {
     text: PropTypes.string.isRequired,
+    handleClick: PropTypes.func.isRequired,
 };
 
 export default MyButton;

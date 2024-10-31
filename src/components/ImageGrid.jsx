@@ -1,4 +1,4 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import './ImageGrid.css'; // Import your custom CSS
@@ -20,18 +20,16 @@ function ImageGrid() {
     ];
   
     return (
-    <Container>
-      <Row>
-        {bookNames.map((bookName, index) => (
-            <Col key={index} md={4} lg={3} sm={6} xs={12} className="mb-4 p-3 bookGrid" 
-                onClick={() => handleClick(index)}>
-                <div className="bookContainer d-flex justify-content-center">
-                    <span className='fs-3 fw-bolder bookName'>{bookName}</span>
-                </div>
-            </Col>
-        ))}
-      </Row>
-    </Container>
+    <Row className='h-100 pt-3'>
+      {bookNames.map((bookName, index) => (
+          <Col key={index} md={4} lg={3} sm={6} xs={12} className="mb-4 bookGrid" 
+              onClick={() => handleClick(index)}>
+              <div className="bookContainer d-flex justify-content-center">
+                  <span className='fs-3 fw-bolder bookName'>{bookName}</span>
+              </div>
+          </Col>
+      ))}
+    </Row>
   );
 }
 

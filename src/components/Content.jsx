@@ -26,6 +26,42 @@ function Content() {
     const [pageLocation, setPageLocation] = useState({});
     const [pageIndex, setPageIndex] = useState(1);
     const [zi, setZi] = useState(0);
+    const [isOverviewOpen, setIsOverviewOpen] = useState(false); // Modal visibility state
+
+    {/* Go back to the first page when the user reaches the last page. */}
+    const navigateToFirstPage = () => {
+        setPageIndex(1);  // Reset pageIndex to the first page
+        setPageLocation({});  // Optionally reset page locations if needed
+        pagesRefs.current.forEach((page, index) => {
+            if (pageLocation[`page-${index}`] === 'left') {
+                gsap.to(`#page-${index}`, { duration: 1.5, rotationY: 0, transformOrigin: "left top" });
+            }
+        });
+        setZi(0); // Reset z-index for a fresh start
+    };
+    
+    {/* goToPage allows user to drag the bar to a certain page. */}
+    const goToPage = (targetPage) => {
+        setPageIndex(targetPage);
+        setPageLocation({});
+        let newZi = 0; // Start with default z-index for consistent depth
+
+        pagesRefs.current.forEach((page, index) => {
+            gsap.set(page, { z: 0 }); // Reset z-index for each page
+            if (index < targetPage - 1) {
+                // Flip pages to the left for target page
+                newZi += 1;
+                gsap.to(page, { duration: 0.01, zIndex: newZi, z: newZi });
+                gsap.to(page, { duration: 1.5, rotationY: -180, transformOrigin: "-1px top" });
+                setPageLocation((prev) => ({ ...prev, [`page-${index}`]: "left" }));
+            } else {
+                // Reset pages to the right
+                gsap.to(page, { duration: 1.5, rotationY: 0, z: 0, transformOrigin: "left top" });
+                setPageLocation((prev) => ({ ...prev, [`page-${index}`]: "right" }));
+            }
+        });
+        setZi(newZi);
+    };
     
     useEffect(() => {
         gsap.set(pageWrapperRef.current, { left: "50%", perspective: 1000 });
@@ -62,6 +98,11 @@ function Content() {
         gsap.to(`#${pageId} .${foldClass}`, { width: "0px", height: "0px" });
     };
 
+    {/* New function to handle image click in overview mode */}
+    const handleImageClick = (index) => {
+        setIsOverviewOpen(false); // Close the modal
+        goToPage(index + 1); // Navigate to the selected page
+    };
     
     return (
         <div className='w-100 h-100 position-relative'>
@@ -101,10 +142,60 @@ function Content() {
                 ))}
             </div>
 
-            {/* <ProgressBar /> */}
+            {/* Slider for navigating to a specific page */}
             <div className='p-5 w-100 progressBar pb-2'>
-                <progress value={pageIndex} max={totalPage} className=' w-100'/>
-             </div>
+                <input
+                    type="range"
+                    min="1"
+                    max={totalPage}
+                    value={pageIndex}
+                    onChange={(e) => goToPage(Number(e.target.value))}
+                    className='w-100'
+                />
+            </div>
+
+            {/* Story Overview Button */}
+            <button onClick={() => setIsOverviewOpen(true)} className="overview-button">
+                <div className="grid-icon">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </button>
+
+
+            {/* Overview Modal */}
+            {isOverviewOpen && (
+                <div className="overview-modal">
+                    <div className="modal-content">
+                        <button onClick={() => setIsOverviewOpen(false)} className="close-button">X</button>
+                        <div className="images-grid">
+                            {[...Array(totalPage)].map((_, index) => (
+                                <img
+                                    key={index}
+                                    src={data.src}  // Replace with actual source for each page
+                                    alt={`Page ${index + 1}`}
+                                    className="overview-image"
+                                    onClick={() => handleImageClick(index)} // Navigate to the page on click
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Conditionally render the navigation button on the last page */}
+            {pageIndex === totalPage && (
+                <button onClick={navigateToFirstPage} className="navigate-button">
+                    &#x21BA;
+                </button>
+            )}
         </div>
 
         

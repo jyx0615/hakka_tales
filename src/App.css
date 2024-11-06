@@ -1,3 +1,7 @@
+:root {
+  --light-blue: #e4f3f4; /* Define the color alias */
+}
+
 * {
   box-sizing: border-box;
 }
@@ -7,13 +11,22 @@
   background-size: cover;
   background-repeat: no-repeat;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-y: auto;
 }
 
 .navbar-custom {
-  background-color: #e4f3f4;
+  background-color: var(--light-blue);
   height: 8%;
 }
 
 .custom-container {
   height: 92%;
+}
+
+.offcanvas-custom {
+  background-color: var(--light-blue);
+}
+
+.navbar.hidden {
+  transform: translateY(-100%); /* Slide up out of view */
 }

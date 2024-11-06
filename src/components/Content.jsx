@@ -2,14 +2,15 @@ import { useParams } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 import { useRef, useState, useEffect} from 'react';
 import { gsap } from 'gsap';
+import { ArrowClockwise, Grid3x3GapFill, X } from 'react-bootstrap-icons';
 
+// import OverView from './Overview';
 import './Content.css';
-
 
 
 function Content() {
     const { bookIndex } = useParams();
-    // console.log("bookIndex = ", bookIndex, "pageNumber = ", pageNum);
+    // console.log("bookIndex = ", bookIndex);
     // get the page content and page image from backend
     // data = getDataFromBackend(bookIndex, pageNum);
 
@@ -25,69 +26,48 @@ function Content() {
     const pagesRefs = useRef([]);
     const [pageLocation, setPageLocation] = useState({});
     const [pageIndex, setPageIndex] = useState(1);
-    const [zi, setZi] = useState(0);
     const [isOverviewOpen, setIsOverviewOpen] = useState(false); // Modal visibility state
 
-    {/* Go back to the first page when the user reaches the last page. */}
-    const navigateToFirstPage = () => {
-        setPageIndex(1);  // Reset pageIndex to the first page
-        setPageLocation({});  // Optionally reset page locations if needed
-        pagesRefs.current.forEach((page, index) => {
-            if (pageLocation[`page-${index}`] === 'left') {
-                gsap.to(`#page-${index}`, { duration: 1.5, rotationY: 0, transformOrigin: "left top" });
-            }
-        });
-        setZi(0); // Reset z-index for a fresh start
-    };
+    const leftZi = useRef(totalPage);
+    const rightZi = useRef(0);
     
-    {/* goToPage allows user to drag the bar to a certain page. */}
-    const goToPage = (targetPage) => {
-        setPageIndex(targetPage);
-        setPageLocation({});
-        let newZi = 0; // Start with default z-index for consistent depth
 
-        pagesRefs.current.forEach((page, index) => {
-            gsap.set(page, { z: 0 }); // Reset z-index for each page
-            if (index < targetPage - 1) {
-                // Flip pages to the left for target page
-                newZi += 1;
-                gsap.to(page, { duration: 0.01, zIndex: newZi, z: newZi });
-                gsap.to(page, { duration: 1.5, rotationY: -180, transformOrigin: "-1px top" });
-                setPageLocation((prev) => ({ ...prev, [`page-${index}`]: "left" }));
-            } else {
-                // Reset pages to the right
-                gsap.to(page, { duration: 1.5, rotationY: 0, z: 0, transformOrigin: "left top" });
-                setPageLocation((prev) => ({ ...prev, [`page-${index}`]: "right" }));
-            }
-        });
-        setZi(newZi);
-    };
-    
-    useEffect(() => {
-        gsap.set(pageWrapperRef.current, { left: "50%", perspective: 1000 });
-        gsap.set(".page", { transformStyle: "preserve-3d" });
-        gsap.set(".back", { rotationY: -180 });
-        gsap.set([".back", ".front"], { backfaceVisibility: "hidden" });
-    }, []);
-    
+    const flippingFromRightToLeft = (pageId, duration=1.5) => {
+        const newZi = Math.max(leftZi.current, rightZi.current) + 1;
+        $(`#${pageId}`).css('z-index', newZi);
+        leftZi.current = newZi;
+        gsap.to(`#${pageId}`, {duration: duration, force3D: true, rotationY: -180, transformOrigin: "-1px top"});
+        $(`#${pageId}`).addClass('left');
+        setPageLocation((prev) => ({ ...prev, [pageId]: "left" }));
+        setPageIndex((pageIndex) => pageIndex += 1);
+    }
+
+    const flippingFromLeftToRight = (pageId, duration=1.5) => {
+        const newZi = Math.max(leftZi.current, rightZi.current) + 1;
+        $(`#${pageId}`).css('z-index', newZi);
+        rightZi.current = newZi;
+        gsap.to(`#${pageId}`, 
+            {   duration: duration, 
+                force3D: true, 
+                rotationY: 0, 
+                transformOrigin: "left top",
+                // Change the z-index after the animation
+                onComplete: () => {
+                    $(`#${pageId}`).css('z-index', newZi);
+                }
+            });
+        $(`#${pageId}`).addClass('right');
+        setPageLocation((prev) => ({ ...prev, [pageId]: "right" }));
+        setPageIndex((pageIndex) => pageIndex -= 1);
+    }
+
     const handlePageClick = (pageId) => {
         const currentLocation = pageLocation[pageId] || "right";
-        const newZi = zi + 1;
-        
         if (currentLocation === "right") {
-            gsap.to(`#${pageId}`, { duration: 0.01, z: newZi, zIndex: newZi });
-            gsap.to(`#${pageId}`, { duration: 1.5, force3D: true, rotationY: -180, transformOrigin: "-1px top"});
-            $(`#${pageId}`).addClass('left');
-            setPageLocation((prev) => ({ ...prev, [pageId]: "left" }));
-            setPageIndex((pageIndex) => pageIndex += 1);
+            flippingFromRightToLeft(pageId);
         } else {
-            gsap.to(`#${pageId}`, { duration: 0.01, z: newZi, zIndex: newZi });
-             gsap.to(`#${pageId}`, { duration: 1.5, force3D: true, rotationY: 0, transformOrigin: "left top"});
-            $(`#${pageId}`).addClass('right');
-            setPageLocation((prev) => ({ ...prev, [pageId]: "right" }));
-            setPageIndex((pageIndex) => pageIndex -= 1);
+            flippingFromLeftToRight(pageId);
         }
-        setZi(newZi);
     };
 
     const handleHoverEnter = (pageId, foldClass) => {
@@ -104,78 +84,138 @@ function Content() {
         goToPage(index + 1); // Navigate to the selected page
     };
     
+    {/* Go back to the first page when the user reaches the last page. */}
+    const navigateToFirstPage = () => {
+        setPageIndex(1);  // Reset pageIndex to the first page
+        setPageLocation({});  // Optionally reset page locations if needed
+        pagesRefs.current.forEach((page, index) => {
+            if (pageLocation[`page-${index}`] === 'left') {
+                gsap.to(`#page-${index}`, { duration: 1.5, rotationY: 0, transformOrigin: "left top" });
+            }
+        });
+    };
+    
+    {/* goToPage allows user to drag the bar to a certain page. */}
+    const goToPage = (targetPage) => {
+        if (targetPage === pageIndex) return;
+        
+        const flippingDelay = 500; // ms
+        // continues turn from left to right
+        if (targetPage < pageIndex){
+            for(let i = pageIndex - 1; i >= targetPage; i --){
+                setTimeout(() => {
+                    flippingFromLeftToRight(`page-${i}`);
+                }, (pageIndex - i - 1) * flippingDelay);
+            }
+        } 
+        // continues turn from right to left
+        else{
+            for(let i = pageIndex + 1; i <= targetPage; i ++){
+                flippingFromRightToLeft(`page-${i - 1}`);
+                // setTimeout(() => {
+                //     flippingFromRightToLeft(`page-${i - 1}`);
+                // }, (i - (pageIndex + 1)) * flippingDelay);
+            }
+        }
+    };
+    
+    useEffect(() => {
+        gsap.set(pageWrapperRef.current, { left: "50%", perspective: 1000 });
+        gsap.set(".page", { transformStyle: "preserve-3d" });
+        gsap.set(".back", { rotationY: -180 });
+        gsap.set([".back", ".front"], { backfaceVisibility: "hidden" });
+    }, []);
+
+    // an array start fomr [totalPage, totalPage - 1, ... , 1]
+    const reversePageNum = Array.from({ length: totalPage }, (_, index) => totalPage - index);
+    
     return (
-        <div className='w-100 h-100 position-relative'>
-            <div className="pageWrapper py-3 px-3 w-50 h-100 position-absolute float-end py-5" ref={pageWrapperRef}>
-                {[...Array(20)].map((_, index) => (
-                <div
-                    key={index}
-                    id={`page-${index}`}
-                    className="page"
-                    ref={(el) => pagesRefs.current[index] = el}
-                    onClick={() => handlePageClick(`page-${index}`)}
-                >
+        <div className='w-100 h-100 d-flex flex-column align-items-center jusitify-content-center position-relative'>
+            {/* BookWrapper */}
+            <div className='w-100 h-100 position-relative my-5'>
+                <div className="pageWrapper p-1 w-50 h-100 position-absolute float-end" ref={pageWrapperRef}>
+                    {[...reversePageNum].map((pageNum, index) => (
                     <div
-                        className="front pageFace"
-                        onMouseEnter={() => handleHoverEnter(`page-${index}`, "pageFoldRight")}
-                        onMouseLeave={() => handleHoverLeave(`page-${index}`, "pageFoldRight")}
+                        key={pageNum}
+                        id={`page-${pageNum}`}
+                        className="page position-absolute w-100 h-100"
+                        ref={(el) => pagesRefs.current[pageNum] = el}
+                        onClick={() => handlePageClick(`page-${pageNum}`)}
+                        style={{ zIndex: index }}
                     >
-                        <div className="pageFoldRight"></div>
-                        
-                        {/* content for the front(right) side */}
-                        <div className="w-100 h-100 d-flex flex-column justify-content-center me-5 h-100">           
-                            <img src={data.src} alt='illustration' className='user-select-none p-2 mh-100 mw-100'/>
-                         </div>
-                    </div>
-                    <div
-                        className="back pageFace"
-                        onMouseEnter={() => handleHoverEnter(`page-${index}`, "pageFoldLeft")}
-                        onMouseLeave={() => handleHoverLeave(`page-${index}`, "pageFoldLeft")}
-                    >
-                        <div className="pageFoldLeft"></div>
-                        <p>Back {index}</p>
-                        {/* content for the back(left) side */}
-                        <h4 className='mb-3'>Page number = {pageIndex}</h4>
-                        <p className='fs-2 lh-lg'>{data.content}</p>
-                    </div>
-                    </div>
-                ))}
-            </div>
+                        {/* front page */}
+                        <div
+                            className="front pageFace"
+                            onMouseEnter={() => handleHoverEnter(`page-${pageNum}`, "pageFoldRight")}
+                            onMouseLeave={() => handleHoverLeave(`page-${pageNum}`, "pageFoldRight")}
+                        >
+                            <div className="pageFoldRight"></div>
+                            
+                            {/* content for the front(right) side */}
+                            <div className="w-100 h-100 d-flex flex-column justify-content-center me-5 h-100">           
+                                <img src={data.src} alt='illustration' className='user-select-none p-2 mh-100 mw-100'/>
+                            </div>
+                        </div>
 
-            {/* Slider for navigating to a specific page */}
-            <div className='p-5 w-100 progressBar pb-2'>
-                <input
-                    type="range"
-                    min="1"
-                    max={totalPage}
-                    value={pageIndex}
-                    onChange={(e) => goToPage(Number(e.target.value))}
-                    className='w-100'
-                />
-            </div>
+                        {/* back page */}
+                        <div
+                            className="back pageFace"
+                            onMouseEnter={() => handleHoverEnter(`page-${pageNum}`, "pageFoldLeft")}
+                            onMouseLeave={() => handleHoverLeave(`page-${pageNum}`, "pageFoldLeft")}
+                        >
+                            <div className="pageFoldLeft"></div>
+                            {/* content for the back(left) side */}
+                            <h4 className='mb-3'>Page number = {pageNum}</h4>
+                            <p className='fs-2 lh-lg'>{data.content}</p>
+                        </div>
 
-            {/* Story Overview Button */}
-            <button onClick={() => setIsOverviewOpen(true)} className="overview-button">
-                <div className="grid-icon">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                        </div>
+                    ))}
                 </div>
-            </button>
+            </div>
 
+            {/* control bar */}
+            <div className='row w-100 pb-2'>
+                {/* progress bar */}
+                <div className='p-2 col-11 d-flex align-items-center'>
+                    <input
+                        type="range"
+                        min="1"
+                        max={totalPage}
+                        value={pageIndex}
+                        onChange={(e) => goToPage(Number(e.target.value))}
+                        className='w-100'
+                    />
+                </div>
+            </div>
+
+            {/* control tools */}
+            <div className='d-flex flex-column position-absolute end-0 bottom-0 p-2'>
+                {/* Conditionally render the navigation button on the last page */}
+                {pageIndex === totalPage && (
+                    <button 
+                        onClick={navigateToFirstPage} 
+                        className='btn btn-primary-outline'>
+                    <ArrowClockwise color="black" className='fs-3 bolder fw-bolder'/>
+                    </button>
+                )}
+
+                {/* overview button */}
+                <button  className="btn btn-primary-outline" 
+                    onClick={() => setIsOverviewOpen(true)} >
+                    <Grid3x3GapFill color='black' className='fs-3'/>
+                </button>
+            </div>
+            
 
             {/* Overview Modal */}
             {isOverviewOpen && (
                 <div className="overview-modal">
                     <div className="modal-content">
-                        <button onClick={() => setIsOverviewOpen(false)} className="close-button">X</button>
-                        <div className="images-grid">
+                        <button onClick={() => setIsOverviewOpen(false)} className="btn btn-primary-outline position-absolute top-0 end-0 rounded-circle">
+                            <X color='gray' className='fs-1 closs-icon'/>
+                        </button>
+                        <div className="images-grid pt-4">
                             {[...Array(totalPage)].map((_, index) => (
                                 <img
                                     key={index}
@@ -189,16 +229,8 @@ function Content() {
                     </div>
                 </div>
             )}
-
-            {/* Conditionally render the navigation button on the last page */}
-            {pageIndex === totalPage && (
-                <button onClick={navigateToFirstPage} className="navigate-button">
-                    &#x21BA;
-                </button>
-            )}
         </div>
 
-        
     );
 }
 

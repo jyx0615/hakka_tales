@@ -30,7 +30,7 @@ function App() {
     <Router>
       <div className='container-fluid px-0 main-container vh-100 vw-100'>
         {/* {showWelcome && <Welcome onClose={handleCloseWelcome} />} */}
-        <MyNavbar className='px-3 w-100'/>
+        <MyNavbar/>
         <Container className='pb-4 custom-container w-100'>
           <Routes>
             <Route path="/" element={<ImageGrid/>} />

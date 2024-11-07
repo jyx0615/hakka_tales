@@ -1,0 +1,64 @@
+.megaphone-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: lightsalmon;
+    z-index: 2;
+}
+
+/* Marquee container */
+.marquee {
+    background: lightsalmon;
+    width: 85vw;
+    height: 4vw;
+    box-sizing: border-box;
+    padding: 1em;
+    color: white;
+    font-weight: 200;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+  
+/* Marquee content */
+.marquee-content {
+    display: flex;
+    animation: marquee 100s linear infinite running;
+}
+  
+.marquee-content:hover {
+    animation-play-state: paused;
+}
+  
+/* Marquee tag */
+.marquee-tag {
+    margin: 0 .5em;
+    padding: .5em;
+    background: rgba(255, 255, 255, .1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s ease;
+}
+
+.empty-message {
+    width: 50vw;
+}
+  
+.marquee-tag:hover {
+    background: rgba(255, 255, 255, .5);
+    transform: scale(1.1);
+    cursor: pointer;
+}
+  
+/* Keyframes for the marquee effect */
+@keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+}
+  

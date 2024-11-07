@@ -1,0 +1,39 @@
+.custom-a {
+    color: #6c757d;
+}
+
+.custom-a:hover {
+    color: black;
+}
+
+.dropdown-menu {
+    display: none;
+    position: relative;
+    margin-top: 0.5rem;
+}
+
+.bi-chevron-down  {
+    transition: transform 0.3s ease;
+}
+
+/* When the checkbox is checked, change the chevron icon */
+.dropdown-checkbox:checked + label .bi-chevron-down  {
+    transform: rotate(180deg); /* Rotate Chevron to create the "up" effect */
+}
+
+/* Show dropdown menu when checkbox is checked */
+.dropdown-checkbox:checked + label + .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    padding-left: 2rem;
+}
+
+.dropdown-item:active {
+    background-color: transparent !important;
+}
+
+.dropdown-item:hover {
+    background-color: transparent !important;
+}

@@ -1,41 +1,42 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import Book from './components/Book'; // Your book component
+// import { useEffect } from 'react';
+
+import Book from './components/Book';
 import MyNavbar from './components/MyNavbar';
-import ImageGrid from './components/ImageGrid';
-// import Welcome from './components/Welcome'; // Import the overlay component
+import Home from './components/Home';
 import Content from './components/Content';
+import Contact from './components/Contact';
+import Upload from './components/Upload';
 import './App.css';
-// import { useState, useEffect } from 'react';
+// import useStories from './hooks/useStories';
 
 
 function App() {
-  // const [showWelcome, setShowWelcome] = useState(true);
+  // const { stories, fetchStories, fetchPages } = useStories();
 
   // useEffect(() => {
-  //   // Check if welcome has been shown before
-  //   const hasShownWelcome = localStorage.getItem('hasShownWelcome');
-  //   if (!hasShownWelcome) {
-  //     setShowWelcome(true);
-  //     localStorage.setItem('hasShownWelcome', 'true'); // Set flag in local storage
-  //   }
-  // }, []);
-
-  // const handleCloseWelcome = () => {
-  //   setShowWelcome(false); // Close the welcome overlay
-  // };
+  //   fetchStories();
+  //   fetchPages();
+  // }, [fetchStories, fetchPages]);
 
   return (
     <Router>
       <div className='container-fluid px-0 main-container vh-100 vw-100'>
         {/* {showWelcome && <Welcome onClose={handleCloseWelcome} />} */}
         <MyNavbar/>
-        <Container className='pb-4 custom-container w-100'>
+        <Container className='pb-4 custom-container px-2' fluid="xl">
           <Routes>
-            <Route path="/" element={<ImageGrid/>} />
-            <Route path="/book/:index" element={<Book />} />
-            <Route path="/book/:bookIndex/content" element={<Content />} />
+            {/* <Route path="/" element={<Home stories={stories}/>} />
+            <Route path="/book/:index" element={<Book stories={stories}/>} />
+            <Route path="/book/:bookIndex/content" element={<Content stories={stories}/>} /> */}
+            <Route path="/" element={<Home/>} />
+            <Route path="/contact" element={<Contact/>} />
+            <Route path="/upload" element={<Upload/>} />
+            <Route path="/book/:index" element={<Book/>} />
+            <Route path="/book/:bookIndex/content" element={<Content/>} />
           </Routes>
         </Container>
         

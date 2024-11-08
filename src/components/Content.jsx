@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
-import { useRef, useState, useEffect } from "react";
-import { gsap } from "gsap";
-import { ArrowClockwise, Grid3x3GapFill, X } from "react-bootstrap-icons";
+import { useRef, useState, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ArrowClockwise, Grid3x3GapFill, X } from 'react-bootstrap-icons';
 
 // import OverView from './Overview';
-import "./Content.css";
+import './Content.css';
 
 function Content() {
   const { bookIndex } = useParams();
@@ -16,8 +16,8 @@ function Content() {
   // mock data
   const data = {
     content:
-      "深山裡住著一家人，有一天，爸媽要出門辦事，只留姊弟兩人看家。因為深山裡有會吃人的妖怪，所以爸媽出門前特別交代，千萬不能讓不認識的人進門。",
-    src: "https://tse2.mm.bing.net/th?id=OIG3.DWY08uuzblpK7F1g7W6c&pid=ImgGn",
+      '深山裡住著一家人，有一天，爸媽要出門辦事，只留姊弟兩人看家。因為深山裡有會吃人的妖怪，所以爸媽出門前特別交代，千萬不能讓不認識的人進門。',
+    src: 'https://tse2.mm.bing.net/th?id=OIG3.DWY08uuzblpK7F1g7W6c&pid=ImgGn',
   };
   const totalPage = 20;
 
@@ -32,41 +32,41 @@ function Content() {
 
   const flippingFromRightToLeft = (pageId, duration = 1.5) => {
     const newZi = Math.max(leftZi.current, rightZi.current) + 1;
-    $(`#${pageId}`).css("z-index", newZi);
+    $(`#${pageId}`).css('z-index', newZi);
     leftZi.current = newZi;
     gsap.to(`#${pageId}`, {
       duration: duration,
       force3D: true,
       rotationY: -180,
-      transformOrigin: "-1px top",
+      transformOrigin: '-1px top',
     });
-    $(`#${pageId}`).addClass("left");
-    setPageLocation((prev) => ({ ...prev, [pageId]: "left" }));
+    $(`#${pageId}`).addClass('left');
+    setPageLocation((prev) => ({ ...prev, [pageId]: 'left' }));
     setPageIndex((pageIndex) => (pageIndex += 1));
   };
 
   const flippingFromLeftToRight = (pageId, duration = 1.5) => {
     const newZi = Math.max(leftZi.current, rightZi.current) + 1;
-    $(`#${pageId}`).css("z-index", newZi);
+    $(`#${pageId}`).css('z-index', newZi);
     rightZi.current = newZi;
     gsap.to(`#${pageId}`, {
       duration: duration,
       force3D: true,
       rotationY: 0,
-      transformOrigin: "left top",
+      transformOrigin: 'left top',
       // Change the z-index after the animation
       onComplete: () => {
-        $(`#${pageId}`).css("z-index", newZi);
+        $(`#${pageId}`).css('z-index', newZi);
       },
     });
-    $(`#${pageId}`).addClass("right");
-    setPageLocation((prev) => ({ ...prev, [pageId]: "right" }));
+    $(`#${pageId}`).addClass('right');
+    setPageLocation((prev) => ({ ...prev, [pageId]: 'right' }));
     setPageIndex((pageIndex) => (pageIndex -= 1));
   };
 
   const handlePageClick = (pageId) => {
-    const currentLocation = pageLocation[pageId] || "right";
-    if (currentLocation === "right") {
+    const currentLocation = pageLocation[pageId] || 'right';
+    if (currentLocation === 'right') {
       flippingFromRightToLeft(pageId);
     } else {
       flippingFromLeftToRight(pageId);
@@ -75,15 +75,15 @@ function Content() {
 
   const handleHoverEnter = (pageId, foldClass) => {
     gsap.to(`#${pageId} .${foldClass}`, {
-      width: "50px",
-      height: "50px",
+      width: '50px',
+      height: '50px',
       backgroundImage:
-        "linear-gradient(45deg, #fefefe 0%,#f2f2f2 49%,#ffffff 50%,#ffffff 100%)",
+        'linear-gradient(45deg, #fefefe 0%,#f2f2f2 49%,#ffffff 50%,#ffffff 100%)',
     });
   };
 
   const handleHoverLeave = (pageId, foldClass) => {
-    gsap.to(`#${pageId} .${foldClass}`, { width: "0px", height: "0px" });
+    gsap.to(`#${pageId} .${foldClass}`, { width: '0px', height: '0px' });
   };
 
   {
@@ -101,11 +101,11 @@ function Content() {
     setPageIndex(1); // Reset pageIndex to the first page
     setPageLocation({}); // Optionally reset page locations if needed
     pagesRefs.current.forEach((page, index) => {
-      if (pageLocation[`page-${index}`] === "left") {
+      if (pageLocation[`page-${index}`] === 'left') {
         gsap.to(`#page-${index}`, {
           duration: 1.5,
           rotationY: 0,
-          transformOrigin: "left top",
+          transformOrigin: 'left top',
         });
       }
     });
@@ -141,10 +141,10 @@ function Content() {
   };
 
   useEffect(() => {
-    gsap.set(pageWrapperRef.current, { left: "50%", perspective: 1000 });
-    gsap.set(".page", { transformStyle: "preserve-3d" });
-    gsap.set(".back", { rotationY: -180 });
-    gsap.set([".back", ".front"], { backfaceVisibility: "hidden" });
+    gsap.set(pageWrapperRef.current, { left: '50%', perspective: 1000 });
+    gsap.set('.page', { transformStyle: 'preserve-3d' });
+    gsap.set('.back', { rotationY: -180 });
+    gsap.set(['.back', '.front'], { backfaceVisibility: 'hidden' });
   }, []);
 
   // an array start fomr [totalPage, totalPage - 1, ... , 1]
@@ -174,10 +174,10 @@ function Content() {
               <div
                 className="front pageFace"
                 onMouseEnter={() =>
-                  handleHoverEnter(`page-${pageNum}`, "pageFoldRight")
+                  handleHoverEnter(`page-${pageNum}`, 'pageFoldRight')
                 }
                 onMouseLeave={() =>
-                  handleHoverLeave(`page-${pageNum}`, "pageFoldRight")
+                  handleHoverLeave(`page-${pageNum}`, 'pageFoldRight')
                 }
               >
                 <div className="pageFoldRight"></div>
@@ -196,10 +196,10 @@ function Content() {
               <div
                 className="back pageFace"
                 onMouseEnter={() =>
-                  handleHoverEnter(`page-${pageNum}`, "pageFoldLeft")
+                  handleHoverEnter(`page-${pageNum}`, 'pageFoldLeft')
                 }
                 onMouseLeave={() =>
-                  handleHoverLeave(`page-${pageNum}`, "pageFoldLeft")
+                  handleHoverLeave(`page-${pageNum}`, 'pageFoldLeft')
                 }
               >
                 <div className="pageFoldLeft"></div>

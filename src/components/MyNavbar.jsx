@@ -1,24 +1,24 @@
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Link } from 'react-router-dom';
 import {
   Meta,
   Megaphone,
   PencilSquare,
   TelephoneFill,
-} from "react-bootstrap-icons";
+} from 'react-bootstrap-icons';
 
-import logo from "../assets/logo.png";
-import "./MyNavbar.css";
+import logo from '../assets/logo.png';
+import './MyNavbar.css';
 
 function MyNavbar() {
   // when to become a hamburger icon([false, 'sm', 'md', 'lg', 'xl', 'xxl'])
-  const expand = "lg";
+  const expand = 'lg';
   return (
     <Navbar expand="lg" className="navbar-custom px-2" sticky="top">
       <Container fluid>

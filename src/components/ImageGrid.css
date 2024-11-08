@@ -1,34 +1,32 @@
-.bookContainer{
-    background-image: url('../assets/book2.svg');
-    width: 100%;
-    aspect-ratio: 1 / 1.25;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+.bookContainer {
+  background-image: url('../assets/book2.svg');
+  width: 100%;
+  aspect-ratio: 1 / 1.25;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.bookName{
-    margin-top: 30%;
+.bookName {
+  margin-top: 30%;
 }
 
-
-.bookContainer:hover{
-    background-image: url('../assets/book3.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: white;
-    cursor: pointer;
+.bookContainer:hover {
+  background-image: url('../assets/book3.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+  cursor: pointer;
 }
 
 .book-cover {
-    padding: 3px;
-    background-color: white;
-    width: 100%;
-    aspect-ratio: 1 / 1.25;
+  padding: 3px;
+  background-color: white;
+  width: 100%;
+  aspect-ratio: 1 / 1.25;
 }
 
 .book-cover:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }

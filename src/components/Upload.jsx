@@ -1,7 +1,7 @@
-import { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { Row, Col } from "react-bootstrap";
+import { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { Row, Col } from 'react-bootstrap';
 
 function Upload() {
   const [image, setImage] = useState(null);
@@ -45,7 +45,7 @@ function Upload() {
                 src={image}
                 alt="Preview"
                 className="img-fluid rounded"
-                style={{ maxWidth: "80%", height: "auto" }}
+                style={{ maxWidth: '80%', height: 'auto' }}
               />
             </div>
           )}

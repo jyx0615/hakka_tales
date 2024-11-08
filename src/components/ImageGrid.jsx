@@ -1,7 +1,7 @@
-import { Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-import "./ImageGrid.css"; // Import your custom CSS
+import './ImageGrid.css'; // Import your custom CSS
 
 function ImageGrid() {
   const navigate = useNavigate();
@@ -11,9 +11,9 @@ function ImageGrid() {
   };
 
   const books = {
-    台灣民間故事: ["虎姑婆", "媽祖", "老鼠娶新娘", "年獸", "灶馬爺", "春牛圖"],
-    安徒生童話故事: ["虎姑婆", "媽祖", "老鼠娶新娘"],
-    新星專區: ["虎姑婆", "媽祖", "老鼠娶新娘"],
+    台灣民間故事: ['虎姑婆', '媽祖', '老鼠娶新娘', '年獸', '灶馬爺', '春牛圖'],
+    安徒生童話故事: ['虎姑婆', '媽祖', '老鼠娶新娘'],
+    新星專區: ['虎姑婆', '媽祖', '老鼠娶新娘'],
   };
 
   return (

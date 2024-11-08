@@ -7,6 +7,7 @@ Learn Hakka through famous Taiwanese stories! This interactive application helps
 Our Hakka Learning App is an innovative educational tool designed to make learning the Hakka language engaging and accessible. By leveraging well-known Taiwanese stories, we provide a unique and culturally rich learning experience.
 
 Key features:
+
 - Interactive storytelling in Hakka with Taiwanese folk tales and modern stories
 - Vocabulary building exercises integrated within the narrative
 - Audio pronunciations to improve listening and speaking skills
@@ -27,11 +28,13 @@ Follow these steps to get the project up and running on your local machine.
 ### Installation
 
 1. Clone the repository:
+
    ```
    git clone https://github.com/jyx0615/hakka_tales.git
    ```
 
 2. Navigate to the project directory:
+
    ```
    cd hakka_tales
    ```
@@ -44,6 +47,7 @@ Follow these steps to get the project up and running on your local machine.
 ### Running the Development Server
 
 To start the development server, run:
+
 ```
 npm run dev
 ```

@@ -1,15 +1,15 @@
-import ImageGrid from "./ImageGrid";
-import { ChevronDown } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
+import ImageGrid from './ImageGrid';
+import { ChevronDown } from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
 
-import "./Home.css";
-import Marquee from "./Marquee";
+import './Home.css';
+import Marquee from './Marquee';
 
 function Home() {
   const books = {
-    台灣民間故事: ["虎姑婆", "媽祖", "老鼠娶新娘", "年獸", "灶馬爺", "春牛圖"],
-    安徒生童話故事: ["虎姑婆", "媽祖", "老鼠娶新娘"],
-    新星專區: ["虎姑婆", "媽祖", "老鼠娶新娘"],
+    台灣民間故事: ['虎姑婆', '媽祖', '老鼠娶新娘', '年獸', '灶馬爺', '春牛圖'],
+    安徒生童話故事: ['虎姑婆', '媽祖', '老鼠娶新娘'],
+    新星專區: ['虎姑婆', '媽祖', '老鼠娶新娘'],
   };
 
   return (
@@ -34,7 +34,7 @@ function Home() {
                   type="checkbox"
                   id={`dropdownCheckbox-${typeIndex}`}
                   className="dropdown-checkbox"
-                  style={{ display: "none" }}
+                  style={{ display: 'none' }}
                 />
 
                 {/* Label acting as the dropdown toggle button */}

@@ -1,20 +1,20 @@
 .navbar-custom {
-    background-color: var(--light-blue);
-    height: 8%;
+  background-color: var(--light-blue);
+  height: 8%;
 }
-  
+
 .custom-container {
-    height: 92%;
+  height: 92%;
 }
-  
+
 .offcanvas-custom {
-    background-color: var(--light-blue);
+  background-color: var(--light-blue);
 }
-  
+
 .navbar.hidden {
-    transform: translateY(-100%); /* Slide up out of view */
+  transform: translateY(-100%); /* Slide up out of view */
 }
 
 .dropdown-item svg {
-    margin-left: 10px;
+  margin-left: 10px;
 }

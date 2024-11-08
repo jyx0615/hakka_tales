@@ -11,19 +11,19 @@
 	width: 100%;
 	height: 100%;
 	text-align: center;
-    /* border-top-right-radius: 2%; */
+	/* border-top-right-radius: 2%; */
 }
 
 .front {
 	background: linear-gradient(to right, #d9d9d9 0%, #f9f9f9 3%, #ffffff 8%, #ffffff 100%);
-    border-top-right-radius: 3%;
-    border-bottom-right-radius: 3%;
+	border-top-right-radius: 3%;
+	border-bottom-right-radius: 3%;
 }
 
 .back {
 	background: linear-gradient(to right, #ffffff 0%, #ffffff 92%, #f9f9f9 97%, #d9d9d9 100%);
-    border-top-left-radius: 3%;
-    border-bottom-left-radius: 3%;
+	border-top-left-radius: 3%;
+	border-bottom-left-radius: 3%;
 }
 
 .pageFoldRight {
@@ -57,47 +57,48 @@
 }
 
 .overview-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 80%;
-    max-height: 80%;
-    /* overflow-y: auto; */
-    overflow: 'unset';
-    position: relative;
+	background: white;
+	padding: 20px;
+	border-radius: 8px;
+	max-width: 80%;
+	max-height: 80%;
+	/* overflow-y: auto; */
+	overflow: 'unset';
+	position: relative;
 }
 
 .images-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+	gap: 10px;
 }
 
 .overview-image {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-    transition: transform 0.3s;
+	width: 100%;
+	height: auto;
+	cursor: pointer;
+	transition: transform 0.3s;
 }
 
 .overview-image:hover {
-    transform: scale(1.1);
+	transform: scale(1.1);
 }
 
-.closs-icon:hover{
-    transform: scale(1.5); /* Adjust the scale factor as needed */
-    transition: transform 0.2s ease-in-out; /* Smooth transition */
+.closs-icon:hover {
+	transform: scale(1.5);
+	/* Adjust the scale factor as needed */
+	transition: transform 0.2s ease-in-out;
+	/* Smooth transition */
 }
-

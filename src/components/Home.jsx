@@ -1,16 +1,24 @@
 import ImageGrid from './ImageGrid';
 import { ChevronDown } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { Riple } from 'react-loading-indicators';
 
 import './Home.css';
 import Marquee from './Marquee';
+import { DataContext } from '../hooks/DataContext';
 
 function Home() {
-  const books = {
-    台灣民間故事: ['虎姑婆', '媽祖', '老鼠娶新娘', '年獸', '灶馬爺', '春牛圖'],
-    安徒生童話故事: ['虎姑婆', '媽祖', '老鼠娶新娘'],
-    新星專區: ['虎姑婆', '媽祖', '老鼠娶新娘'],
-  };
+  const { tags, stories } = useContext(DataContext);
+
+  // display the loading icon when data is not loaded
+  if (!tags.length) {
+    return (
+      <div className="d-flex flex-color align-items-center justify-content-center w-100 h-100">
+        <Riple color="#32cd32" size="medium" text="" textColor="" />
+      </div>
+    );
+  }
 
   return (
     <div className="d-flex flex-column align-items-center">
@@ -18,7 +26,7 @@ function Home() {
         <Marquee />
       </div>
 
-      <div className="row w-100">
+      <div className="row w-100 h-100">
         {/* the main contains that shows all books */}
         <div className="col docItemCol_VOVn">
           <ImageGrid />
@@ -27,7 +35,7 @@ function Home() {
         {/* side bar that displays all the book names and hide when the screen is too small */}
         <div className="col col-2 pt-5 d-lg-block d-none">
           <div className="position-fixed border-start border-3">
-            {Object.keys(books).map((type, typeIndex) => (
+            {Object.keys(stories).map((type, typeIndex) => (
               <div key={typeIndex} className="dropdown my-2">
                 {/* Hidden checkbox to control the dropdown menu */}
                 <input
@@ -53,7 +61,7 @@ function Home() {
                   className="dropdown-menu bg-transparent border-0"
                   aria-labelledby={`dropdownCheckbox-${typeIndex}`}
                 >
-                  {books[type].map((bookName, index) => (
+                  {stories[type].map((book, index) => (
                     <li
                       key={index}
                       className="list-group-item bg-transparent border-0"
@@ -62,7 +70,7 @@ function Home() {
                         to={`/book/${index}`}
                         className="text-decoration-none custom-a dropdown-item"
                       >
-                        {bookName}
+                        {book.title}
                       </Link>
                       {/* <a href={`/book/${index}`}className="text-decoration-none custom-a dropdown-item">{bookName}</a> */}
                     </li>

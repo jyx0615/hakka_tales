@@ -15,6 +15,10 @@
   transform: translateY(-100%); /* Slide up out of view */
 }
 
+.nav > img:hover {
+  cursor: pointer;
+}
+
 .dropdown-item svg {
   margin-left: 10px;
 }

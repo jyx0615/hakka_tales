@@ -11,6 +11,7 @@ import {
   Megaphone,
   PencilSquare,
   TelephoneFill,
+  BoxArrowInUpRight,
 } from 'react-bootstrap-icons';
 
 import logo from '../assets/logo.png';
@@ -56,6 +57,7 @@ function MyNavbar() {
                   target="_blank"
                 >
                   台客委員會
+                  <BoxArrowInUpRight className="text-secondary" />
                 </NavDropdown.Item>
 
                 <NavDropdown.Item href="#action4">

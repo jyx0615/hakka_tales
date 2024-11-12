@@ -11,7 +11,7 @@ import Content from './components/Content';
 import Contact from './components/Contact';
 import Upload from './components/Upload';
 import './App.css';
-// import useStories from './hooks/useStories';
+import { DataProvider } from './hooks/DataContext';
 
 function App() {
   // const { stories, fetchStories, fetchPages } = useStories();
@@ -24,19 +24,20 @@ function App() {
   return (
     <Router>
       <div className="container-fluid px-0 main-container vh-100 vw-100">
-        {/* {showWelcome && <Welcome onClose={handleCloseWelcome} />} */}
         <MyNavbar />
         <Container className="pb-4 custom-container px-2" fluid="xl">
-          <Routes>
-            {/* <Route path="/" element={<Home stories={stories}/>} />
-            <Route path="/book/:index" element={<Book stories={stories}/>} />
-            <Route path="/book/:bookIndex/content" element={<Content stories={stories}/>} /> */}
-            <Route path="/" element={<Home />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/upload" element={<Upload />} />
-            <Route path="/book/:index" element={<Book />} />
-            <Route path="/book/:bookIndex/content" element={<Content />} />
-          </Routes>
+          <DataProvider>
+            <Routes>
+              {/* <Route path="/" element={<Home stories={stories}/>} />
+              <Route path="/book/:index" element={<Book stories={stories}/>} />
+              <Route path="/book/:bookIndex/content" element={<Content stories={stories}/>} /> */}
+              <Route path="/" element={<Home />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route path="/book/:index" element={<Book />} />
+              <Route path="/book/:bookIndex/content" element={<Content />} />
+            </Routes>
+          </DataProvider>
         </Container>
       </div>
     </Router>

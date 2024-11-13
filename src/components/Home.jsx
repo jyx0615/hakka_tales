@@ -3,12 +3,13 @@ import { ChevronDown } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { Riple } from 'react-loading-indicators';
+import PropTypes from 'prop-types';
 
 import './Home.css';
 import Marquee from './Marquee';
 import { DataContext } from '../hooks/DataContext';
 
-function Home() {
+function Home({ searchItem }) {
   const { tags, stories } = useContext(DataContext);
 
   // display the loading icon when data is not loaded
@@ -29,7 +30,7 @@ function Home() {
       <div className="row w-100 h-100">
         {/* the main contains that shows all books */}
         <div className="col docItemCol_VOVn">
-          <ImageGrid />
+          <ImageGrid searchItem={searchItem} />
         </div>
 
         {/* side bar that displays all the book names and hide when the screen is too small */}
@@ -84,5 +85,9 @@ function Home() {
     </div>
   );
 }
+
+Home.propTypes = {
+  searchItem: PropTypes.string,
+};
 
 export default Home;

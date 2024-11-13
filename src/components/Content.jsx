@@ -99,16 +99,17 @@ function Content() {
   const goToPage = (targetPage) => {
     if (targetPage === pageIndex) return;
 
-    const flippingDelay = 500; // ms
+    // const flippingDelay = 500; // ms
     // continues turn from left to right
     if (targetPage < pageIndex) {
       for (let i = pageIndex - 1; i >= targetPage; i--) {
-        setTimeout(
-          () => {
-            flippingFromLeftToRight(`page-${i}`);
-          },
-          (pageIndex - i - 1) * flippingDelay
-        );
+        flippingFromLeftToRight(`page-${i}`);
+        // setTimeout(
+        //   () => {
+        //     flippingFromLeftToRight(`page-${i}`);
+        //   },
+        //   (pageIndex - i - 1) * flippingDelay
+        // );
       }
     }
     // continues turn from right to left

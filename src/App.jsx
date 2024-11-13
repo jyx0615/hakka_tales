@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-// import { useEffect } from 'react';
+import { useState } from 'react';
 
 import Book from './components/Book';
 import MyNavbar from './components/MyNavbar';
@@ -14,24 +14,20 @@ import './App.css';
 import { DataProvider } from './hooks/DataContext';
 
 function App() {
-  // const { stories, fetchStories, fetchPages } = useStories();
+  const [searchItem, setSearchItem] = useState('');
 
-  // useEffect(() => {
-  //   fetchStories();
-  //   fetchPages();
-  // }, [fetchStories, fetchPages]);
+  const handleSearch = (target) => {
+    setSearchItem(target);
+  };
 
   return (
     <Router>
       <div className="container-fluid px-0 main-container vh-100 vw-100">
-        <MyNavbar />
+        <MyNavbar handleSearch={handleSearch} />
         <Container className="pb-4 custom-container px-2" fluid="xl">
           <DataProvider>
             <Routes>
-              {/* <Route path="/" element={<Home stories={stories}/>} />
-              <Route path="/book/:index" element={<Book stories={stories}/>} />
-              <Route path="/book/:bookIndex/content" element={<Content stories={stories}/>} /> */}
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home searchItem={searchItem} />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/upload" element={<Upload />} />
               <Route path="/book/:index" element={<Book />} />

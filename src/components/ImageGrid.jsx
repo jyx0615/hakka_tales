@@ -40,7 +40,7 @@ function ImageGrid() {
                 sm={6}
                 xs={12}
                 className="mb-4 bookGrid d-flex flex-column align-items-center px-5"
-                onClick={() => handleClick(index)}
+                onClick={() => handleClick(book.id)}
               >
                 <div className="d-flex justify-content-center book-cover">
                   <img

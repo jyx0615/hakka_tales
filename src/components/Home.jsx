@@ -67,7 +67,7 @@ function Home() {
                       className="list-group-item bg-transparent border-0"
                     >
                       <Link
-                        to={`/book/${index}`}
+                        to={`/book/${book.id}`}
                         className="text-decoration-none custom-a dropdown-item"
                       >
                         {book.title}

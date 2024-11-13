@@ -1,33 +1,32 @@
 import { useParams } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
 import { gsap } from 'gsap';
 import { ArrowClockwise, Grid3x3GapFill, X } from 'react-bootstrap-icons';
+import { Riple } from 'react-loading-indicators';
+
+import { DataContext } from '../hooks/DataContext';
 
 // import OverView from './Overview';
 import './Content.css';
 
 function Content() {
+  const { fetchPagesById, pages, findBookById } = useContext(DataContext);
   const { bookIndex } = useParams();
-  // console.log("bookIndex = ", bookIndex);
-  // get the page content and page image from backend
-  // data = getDataFromBackend(bookIndex, pageNum);
 
-  // mock data
-  const data = {
-    content:
-      '深山裡住著一家人，有一天，爸媽要出門辦事，只留姊弟兩人看家。因為深山裡有會吃人的妖怪，所以爸媽出門前特別交代，千萬不能讓不認識的人進門。',
-    src: 'https://tse2.mm.bing.net/th?id=OIG3.DWY08uuzblpK7F1g7W6c&pid=ImgGn',
-  };
-  const totalPage = 20;
+  // get the page content and page image from backend
+  const story = findBookById(bookIndex);
+
+  if (!pages[bookIndex]) {
+    fetchPagesById(bookIndex);
+  }
 
   const pageWrapperRef = useRef();
   const pagesRefs = useRef([]);
   const [pageLocation, setPageLocation] = useState({});
-  const [pageIndex, setPageIndex] = useState(1);
+  const [pageIndex, setPageIndex] = useState(0);
   const [isOverviewOpen, setIsOverviewOpen] = useState(false); // Modal visibility state
 
-  const leftZi = useRef(totalPage);
+  const leftZi = useRef(0);
   const rightZi = useRef(0);
 
   const flippingFromRightToLeft = (pageId, duration = 1.5) => {
@@ -91,24 +90,7 @@ function Content() {
   }
   const handleImageClick = (index) => {
     setIsOverviewOpen(false); // Close the modal
-    goToPage(index + 1); // Navigate to the selected page
-  };
-
-  {
-    /* Go back to the first page when the user reaches the last page. */
-  }
-  const navigateToFirstPage = () => {
-    setPageIndex(1); // Reset pageIndex to the first page
-    setPageLocation({}); // Optionally reset page locations if needed
-    pagesRefs.current.forEach((page, index) => {
-      if (pageLocation[`page-${index}`] === 'left') {
-        gsap.to(`#page-${index}`, {
-          duration: 1.5,
-          rotationY: 0,
-          transformOrigin: 'left top',
-        });
-      }
-    });
+    goToPage(index); // Navigate to the selected page
   };
 
   {
@@ -141,17 +123,46 @@ function Content() {
   };
 
   useEffect(() => {
-    gsap.set(pageWrapperRef.current, { left: '50%', perspective: 1000 });
-    gsap.set('.page', { transformStyle: 'preserve-3d' });
-    gsap.set('.back', { rotationY: -180 });
-    gsap.set(['.back', '.front'], { backfaceVisibility: 'hidden' });
-  }, []);
+    if (pages[bookIndex]) {
+      leftZi.current = pages[bookIndex].length - 1;
+      gsap.set(pageWrapperRef.current, { left: '50%', perspective: 1000 });
+      gsap.set('.page', { transformStyle: 'preserve-3d' });
+      gsap.set('.back', { rotationY: -180 });
+      gsap.set(['.back', '.front'], { backfaceVisibility: 'hidden' });
+    }
+  }, [pages, bookIndex]);
 
-  // an array start fomr [totalPage, totalPage - 1, ... , 1]
+  if (!pages[bookIndex] || !story) {
+    fetchPagesById(bookIndex);
+    return (
+      <div className="d-flex flex-color align-items-center justify-content-center w-100 h-100">
+        <Riple
+          color="#32cd32"
+          size="medium"
+          text="Loading..."
+          textColor="#32cd32"
+        />
+      </div>
+    );
+  }
+
+  const currentBook = pages[bookIndex];
+  const bookCoverUrl = findBookById(bookIndex).cover_image_url;
+  const totalPage = currentBook.length;
+  // an array start fomr [totalPage, totalPage - 1, ... , 1, 0]
   const reversePageNum = Array.from(
-    { length: totalPage },
+    { length: totalPage + 1 },
     (_, index) => totalPage - index
   );
+
+  // if the page index is 0, show the book cover, else return(pageNum-1).image_url
+  const getImageOfPage = (pageNum) => {
+    if (pageNum === 0) {
+      return bookCoverUrl;
+    } else {
+      return currentBook[pageNum - 1].narration_url;
+    }
+  };
 
   return (
     <div className="w-100 h-100 d-flex flex-column align-items-center jusitify-content-center position-relative">
@@ -185,7 +196,7 @@ function Content() {
                 {/* content for the front(right) side */}
                 <div className="w-100 h-100 d-flex flex-column justify-content-center me-5 h-100">
                   <img
-                    src={data.src}
+                    src={getImageOfPage(pageNum)}
                     alt="illustration"
                     className="user-select-none p-2 mh-100 mw-100"
                   />
@@ -205,7 +216,11 @@ function Content() {
                 <div className="pageFoldLeft"></div>
                 {/* content for the back(left) side */}
                 <h4 className="mb-3">Page number = {pageNum}</h4>
-                <p className="fs-2 lh-lg">{data.content}</p>
+                {pageNum === totalPage ? (
+                  <p></p>
+                ) : (
+                  <p className="fs-2 lh-lg">{currentBook[pageNum].content}</p>
+                )}
               </div>
             </div>
           ))}
@@ -218,8 +233,8 @@ function Content() {
         <div className="p-2 col-11 d-flex align-items-center">
           <input
             type="range"
-            min="1"
-            max={totalPage}
+            min="0"
+            max={totalPage + 1}
             value={pageIndex}
             onChange={(e) => goToPage(Number(e.target.value))}
             className="w-100"
@@ -230,9 +245,9 @@ function Content() {
       {/* control tools */}
       <div className="d-flex flex-column position-absolute end-0 bottom-0 p-2">
         {/* Conditionally render the navigation button on the last page */}
-        {pageIndex === totalPage && (
+        {pageIndex === totalPage + 1 && (
           <button
-            onClick={navigateToFirstPage}
+            onClick={() => goToPage(0)}
             className="btn btn-primary-outline"
           >
             <ArrowClockwise color="black" className="fs-3 bolder fw-bolder" />
@@ -259,11 +274,11 @@ function Content() {
               <X color="gray" className="fs-1 closs-icon" />
             </button>
             <div className="images-grid pt-4">
-              {[...Array(totalPage)].map((_, index) => (
+              {[...reversePageNum].map((_, index) => (
                 <img
                   key={index}
-                  src={data.src} // Replace with actual source for each page
-                  alt={`Page ${index + 1}`}
+                  src={getImageOfPage(index)} // Replace with actual source for each page
+                  alt={`Page ${index}`}
                   className="overview-image"
                   onClick={() => handleImageClick(index)} // Navigate to the page on click
                 />

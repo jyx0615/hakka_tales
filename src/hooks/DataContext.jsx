@@ -1,7 +1,11 @@
 // src/context/DataContext.js
 
 import { createContext, useState, useEffect, useCallback } from 'react';
-import { getAllTags, fetchStoryByTag } from '../utils/mockData.js'; // Import your mock data functions
+import {
+  getAllTags,
+  fetchStoryByTag,
+  fetchPagesByStoryId,
+} from '../utils/mockData.js'; // Import your mock data functions
 import PropTypes from 'prop-types'; // Import PropTypes
 
 // Create a Context
@@ -11,6 +15,7 @@ const DataContext = createContext();
 const DataProvider = ({ children }) => {
   const [tags, setTags] = useState([]);
   const [stories, setStories] = useState({});
+  const [pages, setPages] = useState([]);
 
   const fetchTags = async () => {
     const fetchedTags = await getAllTags();
@@ -28,8 +33,6 @@ const DataProvider = ({ children }) => {
   }, []);
 
   const findBookById = (targetId) => {
-    console.log('find book with id = ', targetId);
-    console.log(stories);
     for (let tag in stories) {
       const book = stories[tag].find((book) => book.id === targetId);
       if (book) {
@@ -37,6 +40,18 @@ const DataProvider = ({ children }) => {
       }
     }
     return null;
+  };
+
+  const fetchPagesById = async (storyId) => {
+    try {
+      const fetchedPages = await fetchPagesByStoryId(storyId);
+      setPages((prevPages) => ({
+        ...prevPages,
+        [storyId]: fetchedPages,
+      }));
+    } catch (error) {
+      console.error('Error fetching pages:', error);
+    }
   };
 
   useEffect(() => {
@@ -48,7 +63,9 @@ const DataProvider = ({ children }) => {
   }, [tags, fetchStories]);
 
   return (
-    <DataContext.Provider value={{ tags, stories, findBookById }}>
+    <DataContext.Provider
+      value={{ tags, stories, findBookById, fetchPagesById, pages }}
+    >
       {children}
     </DataContext.Provider>
   );

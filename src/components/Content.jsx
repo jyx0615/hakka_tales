@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useRef, useState, useEffect, useContext } from 'react';
 import { gsap } from 'gsap';
-import { ArrowClockwise, Grid3x3GapFill, X } from 'react-bootstrap-icons';
+import { ArrowClockwise, Grid3x3GapFill, X, PlayFill, PauseFill } from 'react-bootstrap-icons';
 import { Riple } from 'react-loading-indicators';
 
 import { DataContext } from '../hooks/DataContext';
@@ -22,9 +22,11 @@ function Content() {
 
   const pageWrapperRef = useRef();
   const pagesRefs = useRef([]);
+  const audioRef = useRef(null); // Initialize audio reference
   const [pageLocation, setPageLocation] = useState({});
   const [pageIndex, setPageIndex] = useState(0);
   const [isOverviewOpen, setIsOverviewOpen] = useState(false); // Modal visibility state
+  const [isPlaying, setIsPlaying] = useState(false); // Playback state
 
   const leftZi = useRef(0);
   const rightZi = useRef(0);
@@ -70,6 +72,43 @@ function Content() {
     } else {
       flippingFromLeftToRight(pageId);
     }
+  };
+
+  const handleAudioEnd = () => {
+    // Automatically flip to the next page when audio finishes
+    if (pageIndex < currentBook.length) {
+      flippingFromRightToLeft(`page-${pageIndex}`);
+    }
+  };
+
+  const togglePlay = () => {
+
+    const audioSrc = getAudioOfPage(pageIndex);
+
+    if (!audioSrc) {
+      // If there's no audio for the current page, turn the page automatically
+      if (pageIndex < currentBook.length) {
+        flippingFromRightToLeft(`page-${pageIndex}`);
+        
+        // Ensure the audio for the next page starts playing
+        setTimeout(() => {
+          if (audioRef.current) {
+            audioRef.current.pause();  // Stop any previous audio
+            audioRef.current.load();   // Reload the audio for the new page
+            audioRef.current.play();   // Play the new audio
+            setIsPlaying(true);        // Update the play state
+          }
+        }, 1500); // Match the page flip animation duration
+      }
+      return; // Exit the function
+    }
+
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
   };
 
   const handleHoverEnter = (pageId, foldClass) => {
@@ -130,8 +169,17 @@ function Content() {
       gsap.set('.back', { rotationY: -180 });
       gsap.set(['.back', '.front'], { backfaceVisibility: 'hidden' });
     }
-  }, [pages, bookIndex]);
-
+  
+    // Handle audio playback when pageIndex changes
+    if (audioRef.current) {
+      audioRef.current.pause();  // Pause the current audio
+      audioRef.current.load();   // Reload the audio for the new page
+      if (isPlaying) {
+        audioRef.current.play(); // Play the new audio if the play state is active
+      }
+    }
+  }, [pages, bookIndex, pageIndex, isPlaying]);
+  
   if (!pages[bookIndex] || !story) {
     fetchPagesById(bookIndex);
     return (
@@ -164,8 +212,21 @@ function Content() {
     }
   };
 
+  const getAudioOfPage = (pageNum) => {
+    if (pageNum === 0) return null; // No audio for the book cover
+    // Example URL with raw=1 to allow direct playback
+    return null;
+  };  
+  
+
   return (
     <div className="w-100 h-100 d-flex flex-column align-items-center jusitify-content-center position-relative">
+
+      {/* Audio Player */}
+      {getAudioOfPage(pageIndex) && (
+        <audio ref={audioRef} src={getAudioOfPage(pageIndex)} onEnded={handleAudioEnd} />
+      )}
+
       {/* BookWrapper */}
       <div className="w-100 h-100 position-relative my-5">
         <div
@@ -243,7 +304,19 @@ function Content() {
       </div>
 
       {/* control tools */}
+      <div className="d-flex position-absolute bottom-0 end-100 p-0">
+        <button onClick={togglePlay} className="btn btn-primary btn-lg rounded-circle">
+          {isPlaying ? (
+            <PauseFill color="white" />
+          ) : (
+            <PlayFill color="white" />
+          )}
+        </button>
+      </div>
+      
       <div className="d-flex flex-column position-absolute end-0 bottom-0 p-2">
+
+
         {/* Conditionally render the navigation button on the last page */}
         {pageIndex === totalPage + 1 && (
           <button

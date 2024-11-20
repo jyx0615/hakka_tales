@@ -6,6 +6,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 import {
   Meta,
   Megaphone,
@@ -17,7 +19,21 @@ import {
 import logo from '../assets/logo.png';
 import './MyNavbar.css';
 
-function MyNavbar() {
+function MyNavbar({ handleSearch }) {
+  const [inputItem, setInputItem] = useState('');
+
+  const handleInputChange = (e) => {
+    setInputItem(e.target.value);
+  };
+
+  // Call the onSearch callback with the current search term
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearch(inputItem);
+    }
+  };
+
   // when to become a hamburger icon([false, 'sm', 'md', 'lg', 'xl', 'xxl'])
   const expand = 'lg';
   return (
@@ -56,7 +72,7 @@ function MyNavbar() {
                   href="https://www.hakka.gov.tw/chhakka/index"
                   target="_blank"
                 >
-                  台客委員會
+                  客家委員會
                   <BoxArrowInUpRight className="text-secondary" />
                 </NavDropdown.Item>
 
@@ -89,8 +105,16 @@ function MyNavbar() {
                 placeholder="搜尋"
                 className="me-2"
                 aria-label="Search"
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
               />
-              <Button variant="outline-success">Search</Button>
+              <Button
+                variant="outline-success"
+                onClick={() => handleSearch(inputItem)}
+                type="submit"
+              >
+                Search
+              </Button>
             </Form>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
@@ -98,5 +122,9 @@ function MyNavbar() {
     </Navbar>
   );
 }
+
+MyNavbar.propTypes = {
+  handleSearch: PropTypes.func,
+};
 
 export default MyNavbar;

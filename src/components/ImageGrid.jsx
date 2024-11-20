@@ -1,12 +1,13 @@
 import { Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Riple } from 'react-loading-indicators';
+import PropTypes from 'prop-types';
 
 import './ImageGrid.css'; // Import your custom CSS
 import { DataContext } from '../hooks/DataContext';
 
-function ImageGrid() {
+function ImageGrid({ searchItem }) {
   const navigate = useNavigate();
 
   const handleClick = (index) => {
@@ -14,7 +15,30 @@ function ImageGrid() {
   };
 
   const { tags, stories } = useContext(DataContext);
+  const [filteredStories, setFilteredStories] = useState(stories);
 
+  useEffect(() => {
+    filterStories();
+  }, [searchItem, stories]);
+
+  const filterStories = () => {
+    if (searchItem === '') {
+      setFilteredStories(stories);
+    }
+    const tmpStories = {};
+    for (const [type, books] of Object.entries(stories)) {
+      const filteredBooks = books.filter((book) =>
+        book.title.toLowerCase().includes(searchItem.toLowerCase())
+      );
+
+      if (filteredBooks.length > 0) {
+        tmpStories[type] = filteredBooks;
+      }
+    }
+    setFilteredStories(tmpStories);
+  };
+
+  // show the loading icon when data is not loaded
   if (!tags.length) {
     return (
       <div className="d-flex flex-color align-items-center justify-content-center w-100 h-100">
@@ -26,13 +50,13 @@ function ImageGrid() {
   return (
     <>
       {/* use mock data */}
-      {Object.keys(stories).map((type, typeIndex) => (
+      {Object.keys(filteredStories).map((type, typeIndex) => (
         <div key={typeIndex}>
           <div className="fs-2 fw-bolder my-4 ps-4 text-decoration-underline">
             {type}
           </div>
           <Row className="pt-3">
-            {stories[type].map((book, index) => (
+            {filteredStories[type].map((book, index) => (
               <Col
                 key={index}
                 md={4}
@@ -58,5 +82,9 @@ function ImageGrid() {
     </>
   );
 }
+
+ImageGrid.propTypes = {
+  searchItem: PropTypes.string,
+};
 
 export default ImageGrid;

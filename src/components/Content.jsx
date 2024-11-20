@@ -1,7 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useRef, useState, useEffect, useContext } from 'react';
 import { gsap } from 'gsap';
-import { ArrowClockwise, Grid3x3GapFill, X, PlayFill, PauseFill } from 'react-bootstrap-icons';
+import {
+  ArrowClockwise,
+  Grid3x3GapFill,
+  X,
+  PlayFill,
+  PauseFill,
+} from 'react-bootstrap-icons';
 import { Riple } from 'react-loading-indicators';
 
 import { DataContext } from '../hooks/DataContext';
@@ -33,6 +39,7 @@ function Content() {
 
   const flippingFromRightToLeft = (pageId, duration = 1.5) => {
     const newZi = Math.max(leftZi.current, rightZi.current) + 1;
+    console.log('newZi', newZi, leftZi.current, rightZi.current);
     $(`#${pageId}`).css('z-index', newZi);
     leftZi.current = newZi;
     gsap.to(`#${pageId}`, {
@@ -65,6 +72,7 @@ function Content() {
     setPageIndex((pageIndex) => (pageIndex -= 1));
   };
 
+  // Handle page navigation on click
   const handlePageClick = (pageId) => {
     const currentLocation = pageLocation[pageId] || 'right';
     if (currentLocation === 'right') {
@@ -82,21 +90,20 @@ function Content() {
   };
 
   const togglePlay = () => {
-
     const audioSrc = getAudioOfPage(pageIndex);
-
+    console.log('audioSrc: ', audioSrc);
     if (!audioSrc) {
       // If there's no audio for the current page, turn the page automatically
       if (pageIndex < currentBook.length) {
         flippingFromRightToLeft(`page-${pageIndex}`);
-        
+
         // Ensure the audio for the next page starts playing
         setTimeout(() => {
           if (audioRef.current) {
-            audioRef.current.pause();  // Stop any previous audio
-            audioRef.current.load();   // Reload the audio for the new page
-            audioRef.current.play();   // Play the new audio
-            setIsPlaying(true);        // Update the play state
+            audioRef.current.pause(); // Stop any previous audio
+            audioRef.current.load(); // Reload the audio for the new page
+            audioRef.current.play(); // Play the new audio
+            setIsPlaying(true); // Update the play state
           }
         }, 1500); // Match the page flip animation duration
       }
@@ -124,30 +131,23 @@ function Content() {
     gsap.to(`#${pageId} .${foldClass}`, { width: '0px', height: '0px' });
   };
 
-  {
-    /* New function to handle image click in overview mode */
-  }
   const handleImageClick = (index) => {
     setIsOverviewOpen(false); // Close the modal
     goToPage(index); // Navigate to the selected page
   };
 
-  {
-    /* goToPage allows user to drag the bar to a certain page. */
-  }
   const goToPage = (targetPage) => {
     if (targetPage === pageIndex) return;
 
-    const flippingDelay = 500; // ms
     // continues turn from left to right
     if (targetPage < pageIndex) {
       for (let i = pageIndex - 1; i >= targetPage; i--) {
-        setTimeout(
-          () => {
-            flippingFromLeftToRight(`page-${i}`);
-          },
-          (pageIndex - i - 1) * flippingDelay
-        );
+        // flip all pages at once
+        flippingFromLeftToRight(`page-${i}`);
+        // flip one page at a time
+        // setTimeout(() => {
+        //     flippingFromLeftToRight(`page-${i}`);
+        // }, (pageIndex - i - 1) * flippingDelay);
       }
     }
     // continues turn from right to left
@@ -161,6 +161,18 @@ function Content() {
     }
   };
 
+  // Handle audio playback when pageIndex changes
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause(); // Pause the current audio
+      audioRef.current.load(); // Reload the audio for the new page
+      if (isPlaying) {
+        audioRef.current.play(); // Play the new audio if the play state is active
+      }
+    }
+  }, [isPlaying]);
+
+  // initialize the pageWrapperRef and set the initial state
   useEffect(() => {
     if (pages[bookIndex]) {
       leftZi.current = pages[bookIndex].length - 1;
@@ -169,17 +181,9 @@ function Content() {
       gsap.set('.back', { rotationY: -180 });
       gsap.set(['.back', '.front'], { backfaceVisibility: 'hidden' });
     }
-  
-    // Handle audio playback when pageIndex changes
-    if (audioRef.current) {
-      audioRef.current.pause();  // Pause the current audio
-      audioRef.current.load();   // Reload the audio for the new page
-      if (isPlaying) {
-        audioRef.current.play(); // Play the new audio if the play state is active
-      }
-    }
-  }, [pages, bookIndex, pageIndex, isPlaying]);
-  
+  }, [pages, bookIndex]);
+
+  // display the loading indicator if the pages are not fetched
   if (!pages[bookIndex] || !story) {
     fetchPagesById(bookIndex);
     return (
@@ -217,15 +221,17 @@ function Content() {
     // return currentBook[pageNum - 1]?.audio_url || null; // Return audio URL or null
     // Example URL with raw=1 to allow direct playback
     return 'https://www.dropbox.com/scl/fi/0o3lj1ezkbjgc933ckoct/.mp3?rlkey=ajlqt3ecq8agm86itjj889oi5&st=5jgq794z&raw=1';
-  };  
-  
+  };
 
   return (
     <div className="w-100 h-100 d-flex flex-column align-items-center jusitify-content-center position-relative">
-
       {/* Audio Player */}
       {getAudioOfPage(pageIndex) && (
-        <audio ref={audioRef} src={getAudioOfPage(pageIndex)} onEnded={handleAudioEnd} />
+        <audio
+          ref={audioRef}
+          src={getAudioOfPage(pageIndex)}
+          onEnded={handleAudioEnd}
+        />
       )}
 
       {/* BookWrapper */}
@@ -289,35 +295,8 @@ function Content() {
         </div>
       </div>
 
-      {/* control bar */}
-      <div className="row w-100 pb-2">
-        {/* progress bar */}
-        <div className="p-2 col-11 d-flex align-items-center">
-          <input
-            type="range"
-            min="0"
-            max={totalPage + 1}
-            value={pageIndex}
-            onChange={(e) => goToPage(Number(e.target.value))}
-            className="w-100"
-          />
-        </div>
-      </div>
-
-      {/* control tools */}
-      <div className="d-flex position-absolute bottom-0 end-100 p-0">
-        <button onClick={togglePlay} className="btn btn-primary btn-lg rounded-circle">
-          {isPlaying ? (
-            <PauseFill color="white" />
-          ) : (
-            <PlayFill color="white" />
-          )}
-        </button>
-      </div>
-      
-      <div className="d-flex flex-column position-absolute end-0 bottom-0 p-2">
-
-
+      {/* Refresh button */}
+      <div className="w-100 d-flex justify-content-end p-2">
         {/* Conditionally render the navigation button on the last page */}
         {pageIndex === totalPage + 1 && (
           <button
@@ -327,14 +306,45 @@ function Content() {
             <ArrowClockwise color="black" className="fs-3 bolder fw-bolder" />
           </button>
         )}
+      </div>
+
+      {/* control bar */}
+      <div className="row w-100 pb-2">
+        {/* pause/stop button */}
+        <div className="p-2 col-1 d-flex">
+          <button
+            onClick={togglePlay}
+            className="btn btn-primary btn-lg rounded-circle d-flex align-items-center justify-content-center"
+          >
+            {isPlaying ? (
+              <PauseFill color="white" />
+            ) : (
+              <PlayFill color="white" />
+            )}
+          </button>
+        </div>
+
+        {/* progress bar */}
+        <div className="p-2 col-10 d-flex align-items-center">
+          <input
+            type="range"
+            min="0"
+            max={totalPage + 1}
+            value={pageIndex}
+            onChange={(e) => goToPage(Number(e.target.value))}
+            className="w-100"
+          />
+        </div>
 
         {/* overview button */}
-        <button
-          className="btn btn-primary-outline"
-          onClick={() => setIsOverviewOpen(true)}
-        >
-          <Grid3x3GapFill color="black" className="fs-3" />
-        </button>
+        <div className="p-2 col-1 d-flex justify-content-end">
+          <button
+            className="btn btn-primary-outline"
+            onClick={() => setIsOverviewOpen(true)}
+          >
+            <Grid3x3GapFill color="black" className="fs-3" />
+          </button>
+        </div>
       </div>
 
       {/* Overview Modal */}

@@ -138,17 +138,16 @@ function Content() {
   const goToPage = (targetPage) => {
     if (targetPage === pageIndex) return;
 
-    // const flippingDelay = 500; // ms
+    const flippingDelay = 500; // ms
     // continues turn from left to right
     if (targetPage < pageIndex) {
       for (let i = pageIndex - 1; i >= targetPage; i--) {
-        flippingFromLeftToRight(`page-${i}`);
-        // setTimeout(
-        //   () => {
-        //     flippingFromLeftToRight(`page-${i}`);
-        //   },
-        //   (pageIndex - i - 1) * flippingDelay
-        // );
+        setTimeout(
+          () => {
+            flippingFromLeftToRight(`page-${i}`);
+          },
+          (pageIndex - i - 1) * flippingDelay
+        );
       }
     }
     // continues turn from right to left
@@ -215,8 +214,9 @@ function Content() {
 
   const getAudioOfPage = (pageNum) => {
     if (pageNum === 0) return null; // No audio for the book cover
+    // return currentBook[pageNum - 1]?.audio_url || null; // Return audio URL or null
     // Example URL with raw=1 to allow direct playback
-    return null;
+    return 'https://www.dropbox.com/scl/fi/0o3lj1ezkbjgc933ckoct/.mp3?rlkey=ajlqt3ecq8agm86itjj889oi5&st=5jgq794z&raw=1';
   };  
   
 

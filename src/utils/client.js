@@ -1,13 +1,18 @@
 import axios from 'axios';
 
-import { env } from './env';
+// import { env } from './env';
 
 const client = axios.create({
-  baseURL: env.VITE_API_URL,
+  // baseURL: env.VITE_API_URL,
+  baseURL: 'https://api.hakka.rice9547.org/api/'
 });
 
 export function getStories() {
   return client.get('/story');
+}
+
+export function getStoryById(bookIndex) {
+  return client.get(`/story/${bookIndex}`);
 }
 
 export function getPages(bookIndex) {
@@ -37,3 +42,12 @@ export function updatePage(bookIndex, pageNumber, input) {
 export function deletePage(bookIndex, pageNumber) {
   return client.delete(`/story/${bookIndex}/page/${pageNumber}`);
 }
+
+
+// getStories().then(res => {
+//   console.log(res.data);
+// });
+
+// getStoryById(1).then(res => {
+//   console.log(res.data);
+// });

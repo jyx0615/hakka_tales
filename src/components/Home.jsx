@@ -1,16 +1,17 @@
 import ImageGrid from './ImageGrid';
 import { ChevronDown } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+// import { useContext } from 'react';
 import { Riple } from 'react-loading-indicators';
 import PropTypes from 'prop-types';
 
 import './Home.css';
 import Marquee from './Marquee';
-import { DataContext } from '../hooks/DataContext';
+import useStories from '../hooks/useStories';
 
 function Home({ searchItem }) {
-  const { tags, stories } = useContext(DataContext);
+  const { tags, stories, fetchStories } = useStories();
+  fetchStories();
 
   // display the loading icon when data is not loaded
   if (!tags.length) {
@@ -20,6 +21,11 @@ function Home({ searchItem }) {
       </div>
     );
   }
+
+  // tags.forEach((type) => {
+  //   console.log(type.name, index);
+  //   console.log(stories[type.id]);
+  // });
 
   return (
     <div className="d-flex flex-column align-items-center">
@@ -36,33 +42,33 @@ function Home({ searchItem }) {
         {/* side bar that displays all the book names and hide when the screen is too small */}
         <div className="col col-2 pt-5 d-lg-block d-none">
           <div className="position-fixed border-start border-3">
-            {Object.keys(stories).map((type, typeIndex) => (
-              <div key={typeIndex} className="dropdown my-2">
+            {tags.map((type) => (
+              <div key={type.id} className="dropdown my-2">
                 {/* Hidden checkbox to control the dropdown menu */}
                 <input
                   type="checkbox"
-                  id={`dropdownCheckbox-${typeIndex}`}
+                  id={`dropdownCheckbox-${type.id}`}
                   className="dropdown-checkbox"
                   style={{ display: 'none' }}
                 />
-
+            
                 {/* Label acting as the dropdown toggle button */}
                 <label
-                  htmlFor={`dropdownCheckbox-${typeIndex}`}
+                  htmlFor={`dropdownCheckbox-${type.id}`}
                   className="btn bg-transparent border-0"
                 >
                   <span className="custom-a text-decoration-none">
-                    {type}
+                    {type.name}
                     <ChevronDown className="ms-1" />
                   </span>
                 </label>
-
+            
                 {/* Dropdown Menu */}
                 <ul
                   className="dropdown-menu bg-transparent border-0"
-                  aria-labelledby={`dropdownCheckbox-${typeIndex}`}
+                  aria-labelledby={`dropdownCheckbox-${type.id}`}
                 >
-                  {stories[type].map((book, index) => (
+                  {stories[type.name].map((book, index) => (
                     <li
                       key={index}
                       className="list-group-item bg-transparent border-0"
@@ -73,7 +79,6 @@ function Home({ searchItem }) {
                       >
                         {book.title}
                       </Link>
-                      {/* <a href={`/book/${index}`}className="text-decoration-none custom-a dropdown-item">{bookName}</a> */}
                     </li>
                   ))}
                 </ul>

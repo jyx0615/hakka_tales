@@ -1,11 +1,11 @@
 import { Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Riple } from 'react-loading-indicators';
 import PropTypes from 'prop-types';
 
 import './ImageGrid.css'; // Import your custom CSS
-import { DataContext } from '../hooks/DataContext';
+import useStories from '../hooks/useStories';
 
 function ImageGrid({ searchItem }) {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function ImageGrid({ searchItem }) {
     navigate(`/book/${index}`); // Navigate to the book page with the index
   };
 
-  const { tags, stories } = useContext(DataContext);
+  const { tags, stories } = useStories();
   const [filteredStories, setFilteredStories] = useState(stories);
 
   useEffect(() => {

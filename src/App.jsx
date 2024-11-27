@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Book from './components/Book';
 import MyNavbar from './components/MyNavbar';
@@ -11,10 +11,15 @@ import Content from './components/Content';
 import Contact from './components/Contact';
 import Upload from './components/Upload';
 import './App.css';
-import { DataProvider } from './hooks/DataContext';
+import useStories, { StoryProvider } from './hooks/useStories';
 
 function App() {
+  const { fetchStories } = useStories();
   const [searchItem, setSearchItem] = useState('');
+
+  useEffect(() => {
+    fetchStories();
+  }, [fetchStories]);
 
   const handleSearch = (target) => {
     setSearchItem(target);
@@ -25,15 +30,15 @@ function App() {
       <div className="container-fluid px-0 main-container vh-100 vw-100">
         <MyNavbar handleSearch={handleSearch} />
         <Container className="pb-4 custom-container px-2" fluid="xl">
-          <DataProvider>
+          <StoryProvider>
             <Routes>
               <Route path="/" element={<Home searchItem={searchItem} />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/upload" element={<Upload />} />
-              <Route path="/book/:index" element={<Book />} />
+              <Route path="/book/:bookIndex" element={<Book />} />
               <Route path="/book/:bookIndex/content" element={<Content />} />
             </Routes>
-          </DataProvider>
+          </StoryProvider>
         </Container>
       </div>
     </Router>

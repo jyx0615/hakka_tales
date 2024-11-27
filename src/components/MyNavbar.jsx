@@ -99,7 +99,7 @@ function MyNavbar({ handleSearch }) {
               </NavDropdown>
             </Nav>
             {/* search button */}
-            <Form className="d-flex">
+            <Form className="d-flex mh-100">
               <Form.Control
                 type="search"
                 placeholder="搜尋"

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { gsap } from 'gsap';
 import {
   ArrowClockwise,
@@ -10,21 +10,24 @@ import {
 } from 'react-bootstrap-icons';
 import { Riple } from 'react-loading-indicators';
 
-import { DataContext } from '../hooks/DataContext';
+import useStories from '../hooks/useStories';
 
 // import OverView from './Overview';
 import './Content.css';
 
 function Content() {
-  const { fetchPagesById, pages, findBookById } = useContext(DataContext);
+  const { currentStory, fetchCurrentStory } = useStories();
+  const [loading, setLoading] = useState(true);
   const { bookIndex } = useParams();
 
-  // get the page content and page image from backend
-  const story = findBookById(bookIndex);
-
-  if (!pages[bookIndex]) {
-    fetchPagesById(bookIndex);
-  }
+  useEffect(() => {
+    const getStory = async () => {
+      setLoading(true);
+      await fetchCurrentStory(bookIndex);
+      setLoading(false);
+    };
+    getStory();
+  }, [bookIndex, fetchCurrentStory]);
 
   const pageWrapperRef = useRef();
   const pagesRefs = useRef([]);
@@ -39,7 +42,6 @@ function Content() {
 
   const flippingFromRightToLeft = (pageId, duration = 1.5) => {
     const newZi = Math.max(leftZi.current, rightZi.current) + 1;
-    console.log('newZi', newZi, leftZi.current, rightZi.current);
     $(`#${pageId}`).css('z-index', newZi);
     leftZi.current = newZi;
     gsap.to(`#${pageId}`, {
@@ -80,42 +82,6 @@ function Content() {
     } else {
       flippingFromLeftToRight(pageId);
     }
-  };
-
-  const handleAudioEnd = () => {
-    // Automatically flip to the next page when audio finishes
-    if (pageIndex < currentBook.length) {
-      flippingFromRightToLeft(`page-${pageIndex}`);
-    }
-  };
-
-  const togglePlay = () => {
-    const audioSrc = getAudioOfPage(pageIndex);
-    console.log('audioSrc: ', audioSrc);
-    if (!audioSrc) {
-      // If there's no audio for the current page, turn the page automatically
-      if (pageIndex < currentBook.length) {
-        flippingFromRightToLeft(`page-${pageIndex}`);
-
-        // Ensure the audio for the next page starts playing
-        setTimeout(() => {
-          if (audioRef.current) {
-            audioRef.current.pause(); // Stop any previous audio
-            audioRef.current.load(); // Reload the audio for the new page
-            audioRef.current.play(); // Play the new audio
-            setIsPlaying(true); // Update the play state
-          }
-        }, 1500); // Match the page flip animation duration
-      }
-      return; // Exit the function
-    }
-
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
   };
 
   const handleHoverEnter = (pageId, foldClass) => {
@@ -161,31 +127,78 @@ function Content() {
     }
   };
 
+  const handleAudioEnd = () => {
+    // Automatically flip to the next page when audio finishes
+    if (pageIndex <= totalPage) {
+      flippingFromRightToLeft(`page-${pageIndex}`);
+    }
+    if(pageIndex === totalPage){
+      setIsPlaying(false);
+    }
+  };
+
+  const togglePlay = () => {
+    const audioSrc = getAudioOfPage(pageIndex);
+    if (!audioSrc) {
+      // If there's no audio for the current page, turn the page automatically
+      if (pageIndex < totalPage) {
+        flippingFromRightToLeft(`page-${pageIndex}`);
+
+        // Ensure the audio for the next page starts playing
+        setTimeout(() => {
+          if (audioRef.current) {
+            audioRef.current.pause(); // Stop any previous audio
+            audioRef.current.load(); // Reload the audio for the new page
+            audioRef.current.play(); // Play the new audio
+            setIsPlaying(true); // Update the play state
+          }
+        }, 1500); // Match the page flip animation duration
+      }
+      return; // Exit the function
+    }
+
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   // Handle audio playback when pageIndex changes
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.pause(); // Pause the current audio
       audioRef.current.load(); // Reload the audio for the new page
       if (isPlaying) {
-        audioRef.current.play(); // Play the new audio if the play state is active
+        // Match the page flip animation duration
+        // Play the new audio if the play state is active
+        setTimeout(() => {
+          audioRef.current.play();
+        }, 1500);
       }
     }
-  }, [isPlaying]);
+  }, [pageIndex]);
 
+  const pages = currentStory.pages;
+  const totalPage = pages?.length;
   // initialize the pageWrapperRef and set the initial state
-  useEffect(() => {
-    if (pages[bookIndex]) {
-      leftZi.current = pages[bookIndex].length - 1;
-      gsap.set(pageWrapperRef.current, { left: '50%', perspective: 1000 });
-      gsap.set('.page', { transformStyle: 'preserve-3d' });
-      gsap.set('.back', { rotationY: -180 });
-      gsap.set(['.back', '.front'], { backfaceVisibility: 'hidden' });
+  const setPageWrapperRef = useCallback((node) => {
+    if (node !== null) {
+      pageWrapperRef.current = node;
+      if (pages) {
+        setPageIndex(0);
+        leftZi.current = totalPage - 1;
+        gsap.set(pageWrapperRef.current, { left: '50%', perspective: 1000 });
+        gsap.set('.page', { transformStyle: 'preserve-3d' });
+        gsap.set('.back', { rotationY: -180 });
+        gsap.set(['.back', '.front'], { backfaceVisibility: 'hidden' });
+      }
     }
-  }, [pages, bookIndex]);
+  }, [pages, totalPage]);
 
   // display the loading indicator if the pages are not fetched
-  if (!pages[bookIndex] || !story) {
-    fetchPagesById(bookIndex);
+  if (loading) {
     return (
       <div className="d-flex flex-color align-items-center justify-content-center w-100 h-100">
         <Riple
@@ -198,9 +211,6 @@ function Content() {
     );
   }
 
-  const currentBook = pages[bookIndex];
-  const bookCoverUrl = findBookById(bookIndex).cover_image_url;
-  const totalPage = currentBook.length;
   // an array start fomr [totalPage, totalPage - 1, ... , 1, 0]
   const reversePageNum = Array.from(
     { length: totalPage + 1 },
@@ -210,17 +220,17 @@ function Content() {
   // if the page index is 0, show the book cover, else return(pageNum-1).image_url
   const getImageOfPage = (pageNum) => {
     if (pageNum === 0) {
-      return bookCoverUrl;
+      return currentStory.cover_image_url;
     } else {
-      return currentBook[pageNum - 1].narration_url;
+      return pages[pageNum - 1].narration_url;
     }
   };
 
   const getAudioOfPage = (pageNum) => {
-    if (pageNum === 0) return null; // No audio for the book cover
+    if (pageNum === 0 || pageNum == totalPage + 1) return null; // No audio for the book cover
     // return currentBook[pageNum - 1]?.audio_url || null; // Return audio URL or null
     // Example URL with raw=1 to allow direct playback
-    return 'https://www.dropbox.com/scl/fi/0o3lj1ezkbjgc933ckoct/.mp3?rlkey=ajlqt3ecq8agm86itjj889oi5&st=5jgq794z&raw=1';
+    return pages[pageNum - 1].audios[0].audio_url;
   };
 
   return (
@@ -235,10 +245,10 @@ function Content() {
       )}
 
       {/* BookWrapper */}
-      <div className="w-100 h-100 position-relative my-5">
+      <div className="w-100 h-100 position-relative my-5" >
         <div
           className="pageWrapper p-1 w-50 h-100 position-absolute float-end"
-          ref={pageWrapperRef}
+          ref={setPageWrapperRef}
         >
           {[...reversePageNum].map((pageNum, index) => (
             <div
@@ -249,7 +259,7 @@ function Content() {
               onClick={() => handlePageClick(`page-${pageNum}`)}
               style={{ zIndex: index }}
             >
-              {/* front page */}
+              {/* front page(right) */}
               <div
                 className="front pageFace"
                 onMouseEnter={() =>
@@ -271,7 +281,7 @@ function Content() {
                 </div>
               </div>
 
-              {/* back page */}
+              {/* back page(left) */}
               <div
                 className="back pageFace"
                 onMouseEnter={() =>
@@ -287,7 +297,7 @@ function Content() {
                 {pageNum === totalPage ? (
                   <p></p>
                 ) : (
-                  <p className="fs-2 lh-lg">{currentBook[pageNum].content}</p>
+                  <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
                 )}
               </div>
             </div>
@@ -314,10 +324,10 @@ function Content() {
         <div className="p-2 col-1 d-flex">
           <button
             onClick={togglePlay}
-            className="btn btn-primary btn-lg rounded-circle d-flex align-items-center justify-content-center"
+            className="btn btn-primary btn-lg rounded-circle d-flex align-items-center justify-content-center p-2"
           >
             {isPlaying ? (
-              <PauseFill color="white" />
+              <PauseFill color="white"className='fs-3' />
             ) : (
               <PlayFill color="white" />
             )}

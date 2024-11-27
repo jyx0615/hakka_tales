@@ -1,7 +1,6 @@
 import ImageGrid from './ImageGrid';
 import { ChevronDown } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-// import { useContext } from 'react';
 import { Riple } from 'react-loading-indicators';
 import PropTypes from 'prop-types';
 
@@ -29,7 +28,7 @@ function Home({ searchItem }) {
 
   return (
     <div className="d-flex flex-column align-items-center">
-      <div className="pt-3">
+      <div className="pt-3 mb-4">
         <Marquee />
       </div>
 

@@ -51,8 +51,8 @@ function ImageGrid({ searchItem }) {
   if(Object.keys(filteredStories).length == 0){
     return (
       <div className='d-flex flex-column align-items-center mt-5'>
-        <div>查詢結果： 0</div>
-        <div className='text-danger'>請更改搜索詞</div>
+        <h3 className='mb-3'>查詢結果： 0</h3>
+        <h4 className='text-danger'>請更改搜索詞</h4>
       </div>
     )
   }

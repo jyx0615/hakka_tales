@@ -20,7 +20,7 @@ function Marquee() {
   ];
 
   return (
-    <div className="marquee">
+    <div className="marquee rounded-3">
       <div className="megaphone-icon d-flex align-items-center px-3 h-100">
         <Megaphone className="text-danger  fs-3" />
       </div>

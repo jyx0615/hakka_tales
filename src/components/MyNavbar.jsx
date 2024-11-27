@@ -7,12 +7,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {
   Meta,
-  Megaphone,
-  PencilSquare,
-  TelephoneFill,
   BoxArrowInUpRight,
 } from 'react-bootstrap-icons';
 
@@ -21,6 +19,8 @@ import './MyNavbar.css';
 
 function MyNavbar({ handleSearch }) {
   const [inputItem, setInputItem] = useState('');
+  const [showOffCanvas, setShowOffcanvas] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setInputItem(e.target.value);
@@ -31,39 +31,68 @@ function MyNavbar({ handleSearch }) {
     if (e.key === 'Enter') {
       e.preventDefault();
       handleSearch(inputItem);
+      setInputItem("");
+      closeOffcanvas();
     }
   };
+
+  const handleSubmit = () => {
+    handleSearch(inputItem);
+    setInputItem("");
+    closeOffcanvas();
+  }
+
+  const goToHome = () => {
+    handleSearch("");
+    setInputItem("");
+    closeOffcanvas();
+    navigate("/");
+  }
+
+  const closeOffcanvas = () => setShowOffcanvas(false);
+  const openOffcanvas = () => setShowOffcanvas(true);
 
   // when to become a hamburger icon([false, 'sm', 'md', 'lg', 'xl', 'xxl'])
   const expand = 'lg';
   return (
     <Navbar expand="lg" className="navbar-custom px-2" sticky="top">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand  onClick={goToHome}>
           <img
             src={logo}
             alt="HakkaTales Logo"
             height="30"
-            className="d-inline-block align-top"
+            className="d-inline-block align-top logo-image"
           />
         </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+        <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`}
+        onClick={openOffcanvas}/>
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expand}`}
           aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
           placement="end"
-          className="offcanvas-custom"
+          className="offcanvas-custom ms-auto"
+          show={showOffCanvas}
+          onHide={closeOffcanvas}
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-              Offcanvas
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`} onClick={goToHome}>
+              <img
+                src={logo}
+                alt="HakkaTales Logo"
+                // height="30"
+                className="d-inline-block align-top logo-image"
+              />
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="flex-grow-1 pe-3">
-              <Nav.Link href="#action1">Home</Nav.Link>
-              <Nav.Link href="#action2">Link</Nav.Link>
+              <Nav.Link href="/">主頁</Nav.Link>
+              <Nav.Link href="#action4"> 近期活動</Nav.Link>
+              <Nav.Link as={Link} to="/upload">投稿專區</Nav.Link>
+              <Nav.Link as={Link} to="/contact">聯絡我們</Nav.Link>
+              
               <NavDropdown
                 title="Links"
                 id={`offcanvasNavbarDropdown-expand-${expand}`}
@@ -76,28 +105,13 @@ function MyNavbar({ handleSearch }) {
                   <BoxArrowInUpRight className="text-secondary" />
                 </NavDropdown.Item>
 
-                <NavDropdown.Item href="#action4">
-                  近期活動
-                  <Megaphone className="text-danger" />
-                </NavDropdown.Item>
-
-                <NavDropdown.Item as={Link} to="/upload">
-                  投稿專區
-                  <PencilSquare />
-                </NavDropdown.Item>
-
-                <NavDropdown.Item as={Link} to="/contact">
-                  聯絡我們
-                  <TelephoneFill className="text-success" />
-                </NavDropdown.Item>
-
-                <NavDropdown.Divider />
                 <NavDropdown.Item href="#action8">
                   臉書專頁
                   <Meta className="text-primary" />
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
+
             {/* search button */}
             <Form className="d-flex mh-100">
               <Form.Control
@@ -110,8 +124,7 @@ function MyNavbar({ handleSearch }) {
               />
               <Button
                 variant="outline-success"
-                onClick={() => handleSearch(inputItem)}
-                type="submit"
+                onClick={() => handleSubmit()}
               >
                 Search
               </Button>

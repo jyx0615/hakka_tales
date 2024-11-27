@@ -44,10 +44,10 @@ export function deletePage(bookIndex, pageNumber) {
 }
 
 
-// getStories().then(res => {
-//   console.log(res.data);
-// });
+getStories().then(res => {
+  console.log(res.data);
+});
 
-// getStoryById(1).then(res => {
-//   console.log(res.data);
-// });
+getStoryById(1).then(res => {
+  console.log(res.data);
+});

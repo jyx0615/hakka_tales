@@ -47,13 +47,25 @@ function ImageGrid({ searchItem }) {
     );
   }
 
+  // no matched books
+  if(Object.keys(filteredStories).length == 0){
+    return (
+      <div className='d-flex flex-column align-items-center mt-5'>
+        <div>查詢結果： 0</div>
+        <div className='text-danger'>請更改搜索詞</div>
+      </div>
+    )
+  }
+
   return (
     <>
       {/* use mock data */}
       {Object.keys(filteredStories).map((type, typeIndex) => (
         <div key={typeIndex}>
-          <div className="fs-2 fw-bolder my-4 ps-4 text-decoration-underline">
-            {type}
+          <div className="fs-2 fw-bolder my-4 ms-4">
+            <span className='bg-secondary p-2 rounded-3'>
+              {type}
+            </span>
           </div>
           <Row className="pt-3">
             {filteredStories[type].map((book, index) => (

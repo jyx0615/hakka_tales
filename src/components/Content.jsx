@@ -9,6 +9,7 @@ import {
   PauseFill,
 } from 'react-bootstrap-icons';
 import { Riple } from 'react-loading-indicators';
+import Modal from 'react-bootstrap/Modal';
 
 import useStories from '../hooks/useStories';
 
@@ -233,155 +234,181 @@ function Content() {
     return pages[pageNum - 1].audios[0].audio_url;
   };
 
+  const handleClose = () => {
+    setIsOverviewOpen(false);
+  }
+
   return (
-    <div className="w-100 h-100 d-flex flex-column align-items-center jusitify-content-center position-relative">
-      {/* Audio Player */}
-      {getAudioOfPage(pageIndex) && (
-        <audio
-          ref={audioRef}
-          src={getAudioOfPage(pageIndex)}
-          onEnded={handleAudioEnd}
-        />
-      )}
+    <>
+        <div className="w-100 h-100 d-flex flex-column align-items-center jusitify-content-center position-relative">
+        {/* Audio Player */}
+        {getAudioOfPage(pageIndex) && (
+          <audio
+            ref={audioRef}
+            src={getAudioOfPage(pageIndex)}
+            onEnded={handleAudioEnd}
+          />
+        )}
 
-      {/* BookWrapper */}
-      <div className="w-100 h-100 position-relative my-5" >
-        <div
-          className="pageWrapper p-1 w-50 h-100 position-absolute float-end"
-          ref={setPageWrapperRef}
-        >
-          {[...reversePageNum].map((pageNum, index) => (
-            <div
-              key={pageNum}
-              id={`page-${pageNum}`}
-              className="page position-absolute w-100 h-100"
-              ref={(el) => (pagesRefs.current[pageNum] = el)}
-              onClick={() => handlePageClick(`page-${pageNum}`)}
-              style={{ zIndex: index }}
-            >
-              {/* front page(right) */}
+        {/* BookWrapper */}
+        <div className="w-100 h-100 position-relative my-5" >
+          <div
+            className="pageWrapper p-1 w-50 h-100 position-absolute float-end"
+            ref={setPageWrapperRef}
+          >
+            {[...reversePageNum].map((pageNum, index) => (
               <div
-                className="front pageFace"
-                onMouseEnter={() =>
-                  handleHoverEnter(`page-${pageNum}`, 'pageFoldRight')
-                }
-                onMouseLeave={() =>
-                  handleHoverLeave(`page-${pageNum}`, 'pageFoldRight')
-                }
+                key={pageNum}
+                id={`page-${pageNum}`}
+                className="page position-absolute w-100 h-100"
+                ref={(el) => (pagesRefs.current[pageNum] = el)}
+                onClick={() => handlePageClick(`page-${pageNum}`)}
+                style={{ zIndex: index }}
               >
-                <div className="pageFoldRight"></div>
+                {/* front page(right) */}
+                <div
+                  className="front pageFace"
+                  onMouseEnter={() =>
+                    handleHoverEnter(`page-${pageNum}`, 'pageFoldRight')
+                  }
+                  onMouseLeave={() =>
+                    handleHoverLeave(`page-${pageNum}`, 'pageFoldRight')
+                  }
+                >
+                  <div className="pageFoldRight"></div>
 
-                {/* content for the front(right) side */}
-                <div className="w-100 h-100 d-flex flex-column justify-content-center me-5 h-100">
-                  <img
-                    src={getImageOfPage(pageNum)}
-                    alt="illustration"
-                    className="user-select-none p-2 mh-100 mw-100"
-                  />
+                  {/* content for the front(right) side */}
+                  <div className="w-100 h-100 d-flex flex-column justify-content-center me-5 h-100">
+                    <img
+                      src={getImageOfPage(pageNum)}
+                      alt="illustration"
+                      className="user-select-none p-2 mh-100 mw-100"
+                    />
+                  </div>
+                </div>
+
+                {/* back page(left) */}
+                <div
+                  className="back pageFace"
+                  onMouseEnter={() =>
+                    handleHoverEnter(`page-${pageNum}`, 'pageFoldLeft')
+                  }
+                  onMouseLeave={() =>
+                    handleHoverLeave(`page-${pageNum}`, 'pageFoldLeft')
+                  }
+                >
+                  <div className="pageFoldLeft"></div>
+                  {/* content for the back(left) side */}
+                  <h4 className="mb-3">Page number = {pageNum}</h4>
+                  {pageNum === totalPage ? (
+                    <p></p>
+                  ) : (
+                    <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
+                  )}
                 </div>
               </div>
-
-              {/* back page(left) */}
-              <div
-                className="back pageFace"
-                onMouseEnter={() =>
-                  handleHoverEnter(`page-${pageNum}`, 'pageFoldLeft')
-                }
-                onMouseLeave={() =>
-                  handleHoverLeave(`page-${pageNum}`, 'pageFoldLeft')
-                }
-              >
-                <div className="pageFoldLeft"></div>
-                {/* content for the back(left) side */}
-                <h4 className="mb-3">Page number = {pageNum}</h4>
-                {pageNum === totalPage ? (
-                  <p></p>
-                ) : (
-                  <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Refresh button */}
-      <div className="w-100 d-flex justify-content-end p-2">
-        {/* Conditionally render the navigation button on the last page */}
-        {pageIndex === totalPage + 1 && (
-          <button
-            onClick={() => goToPage(0)}
-            className="btn btn-primary-outline"
-          >
-            <ArrowClockwise color="black" className="fs-3 bolder fw-bolder" />
-          </button>
-        )}
-      </div>
-
-      {/* control bar */}
-      <div className="row w-100 pb-2">
-        {/* pause/stop button */}
-        <div className="p-2 col-1 d-flex">
-          <button
-            onClick={togglePlay}
-            className="btn btn-primary btn-lg rounded-circle d-flex align-items-center justify-content-center p-2"
-          >
-            {isPlaying ? (
-              <PauseFill color="white"className='fs-3' />
-            ) : (
-              <PlayFill color="white" />
-            )}
-          </button>
-        </div>
-
-        {/* progress bar */}
-        <div className="p-2 col-10 d-flex align-items-center">
-          <input
-            type="range"
-            min="0"
-            max={totalPage + 1}
-            value={pageIndex}
-            onChange={(e) => goToPage(Number(e.target.value))}
-            className="w-100"
-          />
-        </div>
-
-        {/* overview button */}
-        <div className="p-2 col-1 d-flex justify-content-end">
-          <button
-            className="btn btn-primary-outline"
-            onClick={() => setIsOverviewOpen(true)}
-          >
-            <Grid3x3GapFill color="black" className="fs-3" />
-          </button>
-        </div>
-      </div>
-
-      {/* Overview Modal */}
-      {isOverviewOpen && (
-        <div className="overview-modal">
-          <div className="modal-content">
-            <button
-              onClick={() => setIsOverviewOpen(false)}
-              className="btn btn-primary-outline position-absolute top-0 end-0 rounded-circle"
-            >
-              <X color="gray" className="fs-1 closs-icon" />
-            </button>
-            <div className="images-grid pt-4">
-              {[...reversePageNum].map((_, index) => (
-                <img
-                  key={index}
-                  src={getImageOfPage(index)} // Replace with actual source for each page
-                  alt={`Page ${index}`}
-                  className="overview-image"
-                  onClick={() => handleImageClick(index)} // Navigate to the page on click
-                />
-              ))}
-            </div>
+            ))}
           </div>
         </div>
-      )}
-    </div>
+
+        {/* Refresh button */}
+        <div className="w-100 d-flex justify-content-end p-2">
+          {/* Conditionally render the navigation button on the last page */}
+          {pageIndex === totalPage + 1 && (
+            <button
+              onClick={() => goToPage(0)}
+              className="btn btn-primary-outline"
+            >
+              <ArrowClockwise color="black" className="fs-3 bolder fw-bolder" />
+            </button>
+          )}
+        </div>
+
+        {/* control bar */}
+        <div className="row w-100 pb-2">
+          {/* pause/stop button */}
+          <div className="p-2 col-1 d-flex">
+            <button
+              onClick={togglePlay}
+              className="btn btn-primary btn-lg rounded-circle d-flex align-items-center justify-content-center p-2"
+            >
+              {isPlaying ? (
+                <PauseFill color="white" className='fs-3' />
+              ) : (
+                <PlayFill color="white" className='fs-3' />
+              )}
+            </button>
+          </div>
+
+          {/* progress bar */}
+          <div className="p-2 col-10 d-flex align-items-center">
+            <input
+              type="range"
+              min="0"
+              max={totalPage + 1}
+              value={pageIndex}
+              onChange={(e) => goToPage(Number(e.target.value))}
+              className="w-100"
+            />
+          </div>
+
+          {/* overview button */}
+          <div className="p-2 col-1 d-flex justify-content-end">
+            <button
+              className="btn btn-primary-outline"
+              onClick={() => setIsOverviewOpen(true)}
+            >
+              <Grid3x3GapFill color="black" className="fs-3" />
+            </button>
+          </div>
+        </div>
+
+        {/* Overview Modal */}
+        {/* {isOverviewOpen && (
+          <div className="overview-modal">
+            <div className="modal-content">
+              <button
+                onClick={() => setIsOverviewOpen(false)}
+                className="btn btn-primary-outline position-absolute top-0 end-0 rounded-circle"
+              >
+                <X color="gray" className="fs-1 closs-icon" />
+              </button>
+              <div className="images-grid pt-4">
+                {[...reversePageNum].map((_, index) => (
+                  <img
+                    key={index}
+                    src={getImageOfPage(index)} // Replace with actual source for each page
+                    alt={`Page ${index}`}
+                    className="overview-image"
+                    onClick={() => handleImageClick(index)} // Navigate to the page on click
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )} */}
+      </div>
+
+      <Modal show={isOverviewOpen} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter" centered scrollable>
+        <Modal.Header closeButton>
+          <Modal.Title>分頁總覽</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="images-grid pt-4">
+            {[...reversePageNum].map((_, index) => (
+              <img
+                key={index}
+                src={getImageOfPage(index)} // Replace with actual source for each page
+                alt={`Page ${index}`}
+                className="overview-image"
+                onClick={() => handleImageClick(index)} // Navigate to the page on click
+              />
+            ))}
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
+    
   );
 }
 

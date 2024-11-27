@@ -22,3 +22,12 @@
 .dropdown-item svg {
   margin-left: 10px;
 }
+
+
+.offcanvas-custom {
+  max-width: 70%;
+}
+
+.logo-image:hover {
+  cursor: pointer;
+}

@@ -17,7 +17,6 @@ const StoryContext = createContext({
 
 // Create a Provider component
 export function StoryProvider ({ children }) {
-
   const [rawStories, setRawStories] = useState({});
   const [currentStory, setCurrentStory] = useState({});
 

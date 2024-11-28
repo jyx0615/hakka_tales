@@ -36,7 +36,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/book/:bookIndex" element={<Book />} />
-            <Route path="/book/:bookIndex/content" element={<Content />} />
+            <Route path="/book/:bookIndex/content/:type" element={<Content />} />
           </Routes>
         </Container>
       </div>

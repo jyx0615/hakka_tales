@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {
   Meta,
+  TelephoneFill,
   BoxArrowInUpRight,
   Search,
   ChevronDown
@@ -105,7 +106,10 @@ function MyNavbar({ handleSearch }) {
               <Nav.Link href="/">主頁</Nav.Link>
               <Nav.Link href="#action4"> 近期活動</Nav.Link>
               <Nav.Link as={Link} to="/upload">投稿專區</Nav.Link>
-              <Nav.Link as={Link} to="/contact">聯絡我們</Nav.Link>
+              <Nav.Link as={Link} to="/contact">
+              <TelephoneFill className="text-success" />
+                聯絡我們
+              </Nav.Link>
               
               {/* link dropdown */}
               <NavDropdown

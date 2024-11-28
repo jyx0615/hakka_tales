@@ -4,12 +4,10 @@ import { gsap } from 'gsap';
 import {
   ArrowClockwise,
   Grid3x3GapFill,
-  X,
   PlayFill,
   PauseFill,
 } from 'react-bootstrap-icons';
 import { Riple } from 'react-loading-indicators';
-import Modal from 'react-bootstrap/Modal';
 
 import useStories from '../hooks/useStories';
 
@@ -19,7 +17,9 @@ import './Content.css';
 function Content() {
   const { currentStory, fetchCurrentStory } = useStories();
   const [loading, setLoading] = useState(true);
-  const { bookIndex } = useParams();
+  const { bookIndex, type } = useParams();
+
+  console.log(type);
 
   useEffect(() => {
     const getStory = async () => {
@@ -35,7 +35,6 @@ function Content() {
   const audioRef = useRef(null); // Initialize audio reference
   const [pageLocation, setPageLocation] = useState({});
   const [pageIndex, setPageIndex] = useState(0);
-  const [isOverviewOpen, setIsOverviewOpen] = useState(false); // Modal visibility state
   const [isPlaying, setIsPlaying] = useState(false); // Playback state
 
   const leftZi = useRef(0);
@@ -99,7 +98,8 @@ function Content() {
   };
 
   const handleImageClick = (index) => {
-    setIsOverviewOpen(false); // Close the modal
+    // close the modal
+    $('#overviewModal').modal('toggle');
     goToPage(index); // Navigate to the selected page
   };
 
@@ -234,9 +234,6 @@ function Content() {
     return pages[pageNum - 1].audios[0].audio_url;
   };
 
-  const handleClose = () => {
-    setIsOverviewOpen(false);
-  }
 
   return (
     <>
@@ -356,23 +353,24 @@ function Content() {
           <div className="p-2 col-1 d-flex justify-content-end">
             <button
               className="btn btn-primary-outline"
-              onClick={() => setIsOverviewOpen(true)}
+              data-bs-toggle="modal"
+              data-bs-target="#overviewModal"
             >
               <Grid3x3GapFill color="black" className="fs-3" />
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Overview Modal */}
-        {/* {isOverviewOpen && (
-          <div className="overview-modal">
-            <div className="modal-content">
-              <button
-                onClick={() => setIsOverviewOpen(false)}
-                className="btn btn-primary-outline position-absolute top-0 end-0 rounded-circle"
-              >
-                <X color="gray" className="fs-1 closs-icon" />
-              </button>
+      {/* Overview Modal */}
+      <div className="modal fade" id="overviewModal" tabIndex="-1" aria-labelledby="overviewModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="overviewModalLabel">分頁總覽</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
               <div className="images-grid pt-4">
                 {[...reversePageNum].map((_, index) => (
                   <img
@@ -386,27 +384,8 @@ function Content() {
               </div>
             </div>
           </div>
-        )} */}
+        </div>
       </div>
-
-      <Modal show={isOverviewOpen} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter" centered scrollable>
-        <Modal.Header closeButton>
-          <Modal.Title>分頁總覽</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="images-grid pt-4">
-            {[...reversePageNum].map((_, index) => (
-              <img
-                key={index}
-                src={getImageOfPage(index)} // Replace with actual source for each page
-                alt={`Page ${index}`}
-                className="overview-image"
-                onClick={() => handleImageClick(index)} // Navigate to the page on click
-              />
-            ))}
-          </div>
-        </Modal.Body>
-      </Modal>
     </>
     
   );

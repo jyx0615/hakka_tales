@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Riple } from 'react-loading-indicators';
 import { Row, Col } from 'react-bootstrap';
@@ -22,7 +22,6 @@ function Book() {
     getStory();
   }, [bookIndex, fetchCurrentStory]);
 
-  const navigate = useNavigate();
 
   // display the loading icon when data is not loaded
   if (loading) {
@@ -32,10 +31,6 @@ function Book() {
       </div>
     );
   }
-
-  const handleClick = () => {
-    navigate(`/book/${bookIndex}/content`); // Navigate to the book page with the index
-  };
 
   return (
     <Row>
@@ -63,8 +58,8 @@ function Book() {
           </div>
 
           <div className="d-flex align-items-center justify-content-end gap-4 mb-3">
-            <MyButton text="四縣腔" handleClick={handleClick} />
-            <MyButton text="海陸腔" handleClick={handleClick} />
+            <MyButton text="四縣腔" bookIndex={bookIndex} type="sixian"/>
+            <MyButton text="海陸腔" bookIndex={bookIndex} type="hailu"/>
           </div>
         </div>
       </Col>

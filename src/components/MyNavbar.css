@@ -19,15 +19,14 @@
   margin-left: 10px;
 }
 
-
 .logo-image:hover {
   cursor: pointer;
 }
 
 .navbar-toggler:focus,
 .navbar-toggler-icon:focus {
-    outline: none;
-    box-shadow: none;
+  outline: none;
+  box-shadow: none;
 }
 
 .dropdown-menu .list-group-item {
@@ -40,7 +39,7 @@
 }
 
 /* Small devices (landscape phones, less than 992px) */
-@media (max-width: 992px) { 
+@media (max-width: 992px) {
   .offcanvas-custom {
     max-width: 70%;
   }
@@ -48,5 +47,4 @@
   .dropdown-menu {
     margin-bottom: 10px;
   }
-  
 }

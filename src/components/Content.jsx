@@ -133,7 +133,7 @@ function Content() {
     if (pageIndex <= totalPage) {
       flippingFromRightToLeft(`page-${pageIndex}`);
     }
-    if(pageIndex === totalPage){
+    if (pageIndex === totalPage) {
       setIsPlaying(false);
     }
   };
@@ -184,19 +184,22 @@ function Content() {
   const pages = currentStory.pages;
   const totalPage = pages?.length;
   // initialize the pageWrapperRef and set the initial state
-  const setPageWrapperRef = useCallback((node) => {
-    if (node !== null) {
-      pageWrapperRef.current = node;
-      if (pages) {
-        setPageIndex(0);
-        leftZi.current = totalPage - 1;
-        gsap.set(pageWrapperRef.current, { left: '50%', perspective: 1000 });
-        gsap.set('.page', { transformStyle: 'preserve-3d' });
-        gsap.set('.back', { rotationY: -180 });
-        gsap.set(['.back', '.front'], { backfaceVisibility: 'hidden' });
+  const setPageWrapperRef = useCallback(
+    (node) => {
+      if (node !== null) {
+        pageWrapperRef.current = node;
+        if (pages) {
+          setPageIndex(0);
+          leftZi.current = totalPage - 1;
+          gsap.set(pageWrapperRef.current, { left: '50%', perspective: 1000 });
+          gsap.set('.page', { transformStyle: 'preserve-3d' });
+          gsap.set('.back', { rotationY: -180 });
+          gsap.set(['.back', '.front'], { backfaceVisibility: 'hidden' });
+        }
       }
-    }
-  }, [pages, totalPage]);
+    },
+    [pages, totalPage]
+  );
 
   // display the loading indicator if the pages are not fetched
   if (loading) {
@@ -234,10 +237,9 @@ function Content() {
     return pages[pageNum - 1].audios[0].audio_url;
   };
 
-
   return (
     <>
-        <div className="w-100 h-100 d-flex flex-column align-items-center jusitify-content-center position-relative">
+      <div className="w-100 h-100 d-flex flex-column align-items-center jusitify-content-center position-relative">
         {/* Audio Player */}
         {getAudioOfPage(pageIndex) && (
           <audio
@@ -248,7 +250,7 @@ function Content() {
         )}
 
         {/* BookWrapper */}
-        <div className="w-100 h-100 position-relative my-5" >
+        <div className="w-100 h-100 position-relative my-5">
           <div
             className="pageWrapper p-1 w-50 h-100 position-absolute float-end"
             ref={setPageWrapperRef}
@@ -330,9 +332,9 @@ function Content() {
               className="btn btn-primary btn-lg rounded-circle d-flex align-items-center justify-content-center p-2"
             >
               {isPlaying ? (
-                <PauseFill color="white" className='fs-3' />
+                <PauseFill color="white" className="fs-3" />
               ) : (
-                <PlayFill color="white" className='fs-3' />
+                <PlayFill color="white" className="fs-3" />
               )}
             </button>
           </div>
@@ -363,12 +365,25 @@ function Content() {
       </div>
 
       {/* Overview Modal */}
-      <div className="modal fade" id="overviewModal" tabIndex="-1" aria-labelledby="overviewModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="overviewModal"
+        tabIndex="-1"
+        aria-labelledby="overviewModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="overviewModalLabel">分頁總覽</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 className="modal-title" id="overviewModalLabel">
+                分頁總覽
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div className="modal-body">
               <div className="images-grid pt-4">
@@ -387,7 +402,6 @@ function Content() {
         </div>
       </div>
     </>
-    
   );
 }
 

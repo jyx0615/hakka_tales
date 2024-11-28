@@ -99,11 +99,14 @@ const pages = [
     content:
       '深山裡住著一家人，有一天，爸媽要出門辦事，只留姊弟兩人看家。因為深山裡有會吃人的妖怪，所以爸媽出門前特別交代，千萬不能讓不認識的人進門。',
     narration_url: 'https://pokemon.wingzero.tw/assets/pokemon/011.png',
-    audios: [{
-      id: '0',
-      audio_url: 'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_30_07.mp3',
-      dialect: 'zh-TW',
-    }]
+    audios: [
+      {
+        id: '0',
+        audio_url:
+          'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_30_07.mp3',
+        dialect: 'zh-TW',
+      },
+    ],
   },
   {
     id: '1',
@@ -111,11 +114,14 @@ const pages = [
     content:
       '到了晚上，忽然間有人來敲門。姊姊問：「是誰啊？」有個聲音回答：「我是虎姑婆，我知道你們爸媽不在家，怕你們肚子餓，特地帶點心來給你們吃。」聰明的姊姊說：「我們不認識什麼虎姑婆，所以我不能開門。」',
     narration_url: 'https://pokemon.wingzero.tw/assets/pokemon/012.png',
-    audios: [{
-      id: '1',
-      audio_url: 'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_31_07.mp3',
-      dialect: 'zh-TW',
-    }]
+    audios: [
+      {
+        id: '1',
+        audio_url:
+          'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_31_07.mp3',
+        dialect: 'zh-TW',
+      },
+    ],
   },
   {
     id: '2',
@@ -123,11 +129,14 @@ const pages = [
     content:
       '但是貪吃的弟弟一聽到有點心，早把爸媽的叮嚀忘了，搶著開門請虎姑婆進來。這個虎姑婆長得好奇怪，臉上有鬍子，原來這位虎姑婆是山裡的老虎變的。弟弟撒嬌地說：「虎姑婆，快把您帶來的點心給我吃吧，我肚子好餓。」',
     narration_url: 'https://pokemon.wingzero.tw/assets/pokemon/013.png',
-    audios: [{
-      id: '2',
-      audio_url: 'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_32_07.mp3',
-      dialect: 'zh-TW',
-    }]
+    audios: [
+      {
+        id: '2',
+        audio_url:
+          'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_32_07.mp3',
+        dialect: 'zh-TW',
+      },
+    ],
   },
   {
     id: '3',
@@ -135,11 +144,14 @@ const pages = [
     content:
       '虎姑婆說：「今天晚上誰跟我睡，我就給誰點心吃。」貪吃的弟弟立刻跑上前去跟虎姑婆睡ㄧ張床，姊姊只好睡另一張床。到了半夜，姊姊被「格崩、格崩」咬東西的聲音吵醒，黑暗中姊姊看不清楚，就問：「虎姑婆，您在吃東西嗎？我肚子也餓了，可不可以分我一點？」',
     narration_url: 'https://pokemon.wingzero.tw/assets/pokemon/014.png',
-    audios: [{
-      id: '3',
-      audio_url: 'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_33_07.mp3',
-      dialect: 'zh-TW',
-    }]
+    audios: [
+      {
+        id: '3',
+        audio_url:
+          'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_33_07.mp3',
+        dialect: 'zh-TW',
+      },
+    ],
   },
   {
     id: '4',
@@ -147,11 +159,14 @@ const pages = [
     content:
       '於是虎姑婆遞過來一個小東西，姊姊拿過來一看，是弟弟的手指。原來弟弟被可怕的虎姑婆給吃了，自己不逃走怎麼行？於是姊姊說：「虎姑婆，我想去廁所。」',
     narration_url: 'https://pokemon.wingzero.tw/assets/pokemon/015.png',
-    audios: [{
-      id: '4',
-      audio_url: 'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_34_07.mp3',
-      dialect: 'zh-TW',
-    }]
+    audios: [
+      {
+        id: '4',
+        audio_url:
+          'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_34_07.mp3',
+        dialect: 'zh-TW',
+      },
+    ],
   },
   {
     id: '5',
@@ -159,11 +174,14 @@ const pages = [
     content:
       '虎姑婆怕姊姊會逃走，就拿一條繩子把她綁住，然後回答：「好，妳快去快回。」姊姊一出門，就把繩子解開，栓在柱子上。但是虎姑婆等很久，原來姊姊早就爬到樹上去了，虎姑婆氣得大吼大叫：「快下來，我要吃了妳！」',
     narration_url: 'https://pokemon.wingzero.tw/assets/pokemon/016.png',
-    audios: [{
-      id: '5',
-      audio_url: 'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_35_07.mp3',
-      dialect: 'zh-TW',
-    }]
+    audios: [
+      {
+        id: '5',
+        audio_url:
+          'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_35_07.mp3',
+        dialect: 'zh-TW',
+      },
+    ],
   },
   {
     id: '6',
@@ -171,11 +189,14 @@ const pages = [
     content:
       '姊姊說：「可是我的肉不好吃，不如您去燒鍋油來，把我炸熟了，味道比較好。」虎姑婆一聽，覺得很有道理，便燒了一大鍋油來，對姊姊說：「油燒好了，妳可以下來讓我吃了吧！」',
     narration_url: 'https://pokemon.wingzero.tw/assets/pokemon/017.png',
-    audios: [{
-      id: '6',
-      audio_url: 'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_36_07.mp3',
-      dialect: 'zh-TW',
-    }]
+    audios: [
+      {
+        id: '6',
+        audio_url:
+          'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_36_07.mp3',
+        dialect: 'zh-TW',
+      },
+    ],
   },
   {
     id: '7',
@@ -183,11 +204,14 @@ const pages = [
     content:
       '姊姊說：「這樣太辛苦您了，還是拿繩子把油吊上樹，讓我先進油鍋把自己炸熟，再直接跳進您嘴裡吧！」這個虎姑婆實在有夠笨、有夠恐怖，牠覺得這個方法的確更好，便把油鍋吊上樹，然後自己坐在樹下張大嘴巴，等姊姊跳下來。',
     narration_url: 'https://pokemon.wingzero.tw/assets/pokemon/018.png',
-    audios: [{
-      id: '7',
-      audio_url: 'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_29_07.mp3',
-      dialect: 'zh-TW',
-    }]
+    audios: [
+      {
+        id: '7',
+        audio_url:
+          'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_29_07.mp3',
+        dialect: 'zh-TW',
+      },
+    ],
   },
   {
     id: '8',
@@ -195,11 +219,14 @@ const pages = [
     content:
       '聰明的姊姊當然不會把自己炸熟，而是把一鍋滾燙的油對準虎姑婆的大嘴倒下去，就這樣把虎姑婆燙死了。',
     narration_url: 'https://pokemon.wingzero.tw/assets/pokemon/019.png',
-    audios: [{
-      id: '8',
-      audio_url: 'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_30_07.mp3',
-      dialect: 'zh-TW',
-    }]
+    audios: [
+      {
+        id: '8',
+        audio_url:
+          'https://language.moe.gov.tw/upload/download/jts/03語句1(音檔)/0301_01_30_07.mp3',
+        dialect: 'zh-TW',
+      },
+    ],
   },
 ];
 
@@ -225,4 +252,4 @@ export const getStoryById = (id) => {
       }
     }, 500);
   });
-}
+};

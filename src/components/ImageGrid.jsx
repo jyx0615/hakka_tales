@@ -48,13 +48,13 @@ function ImageGrid({ searchItem }) {
   }
 
   // no matched books
-  if(Object.keys(filteredStories).length == 0){
+  if (Object.keys(filteredStories).length == 0) {
     return (
-      <div className='d-flex flex-column align-items-center mt-5'>
-        <h3 className='mb-3'>查詢結果： 0</h3>
-        <h4 className='text-danger'>請更改搜索詞</h4>
+      <div className="d-flex flex-column align-items-center mt-5">
+        <h3 className="mb-3">查詢結果： 0</h3>
+        <h4 className="text-danger">請更改搜索詞</h4>
       </div>
-    )
+    );
   }
 
   return (
@@ -63,9 +63,7 @@ function ImageGrid({ searchItem }) {
       {Object.keys(filteredStories).map((type, typeIndex) => (
         <div key={typeIndex}>
           <div className="fs-2 fw-bolder my-4 ms-4">
-            <span className='bg-secondary p-2 rounded-3'>
-              {type}
-            </span>
+            <span className="bg-secondary p-2 rounded-3">{type}</span>
           </div>
           <Row className="pt-3">
             {filteredStories[type].map((book, index) => (

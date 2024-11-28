@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const client = axios.create({
   // baseURL: env.VITE_API_URL,
-  baseURL: 'https://api.hakka.rice9547.org/api/'
+  baseURL: 'https://api.hakka.rice9547.org/api/',
 });
 
 export function getStories() {
@@ -43,11 +43,10 @@ export function deletePage(bookIndex, pageNumber) {
   return client.delete(`/story/${bookIndex}/page/${pageNumber}`);
 }
 
-
-getStories().then(res => {
+getStories().then((res) => {
   console.log(res.data);
 });
 
-getStoryById(1).then(res => {
+getStoryById(1).then((res) => {
   console.log(res.data);
 });

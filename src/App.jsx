@@ -28,18 +28,21 @@ function App() {
   return (
     <Router>
       <StoryProvider>
-      <div className="container-fluid px-0 main-container vh-100 vw-100">
-        <MyNavbar handleSearch={handleSearch} />
-        <Container className="pb-4 custom-container px-2" fluid="xl">
-          <Routes>
-            <Route path="/" element={<Home searchItem={searchItem} />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/upload" element={<Upload />} />
-            <Route path="/book/:bookIndex" element={<Book />} />
-            <Route path="/book/:bookIndex/content/:type" element={<Content />} />
-          </Routes>
-        </Container>
-      </div>
+        <div className="container-fluid px-0 main-container vh-100 vw-100">
+          <MyNavbar handleSearch={handleSearch} />
+          <Container className="pb-4 custom-container px-2" fluid="xl">
+            <Routes>
+              <Route path="/" element={<Home searchItem={searchItem} />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route path="/book/:bookIndex" element={<Book />} />
+              <Route
+                path="/book/:bookIndex/content/:type"
+                element={<Content />}
+              />
+            </Routes>
+          </Container>
+        </div>
       </StoryProvider>
     </Router>
   );

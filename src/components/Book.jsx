@@ -22,7 +22,6 @@ function Book() {
     getStory();
   }, [bookIndex, fetchCurrentStory]);
 
-
   // display the loading icon when data is not loaded
   if (loading) {
     return (
@@ -49,22 +48,23 @@ function Book() {
       </Col>
 
       {/* right side */}
-      <Col md={6} sm={12}> 
+      <Col md={6} sm={12}>
         <div className="w-100 h-100 d-flex flex-column justify-content-between p-3">
           <div>
             <h2 className="my-5">故事簡介</h2>
             {/* <h4 className="mb-4">作者: {bookInfo.author}</h4> */}
-            <p className="mt-3 text-break lh-lg fs-5">{currentStory.description}</p>
+            <p className="mt-3 text-break lh-lg fs-5">
+              {currentStory.description}
+            </p>
           </div>
 
           <div className="d-flex align-items-center justify-content-end gap-4 mb-3">
-            <MyButton text="四縣腔" bookIndex={bookIndex} type="sixian"/>
-            <MyButton text="海陸腔" bookIndex={bookIndex} type="hailu"/>
+            <MyButton text="四縣腔" bookIndex={bookIndex} type="sixian" />
+            <MyButton text="海陸腔" bookIndex={bookIndex} type="hailu" />
           </div>
         </div>
       </Col>
     </Row>
-
   );
 }
 

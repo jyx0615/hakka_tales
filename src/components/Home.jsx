@@ -50,7 +50,7 @@ function Home({ searchItem }) {
                   className="dropdown-checkbox"
                   style={{ display: 'none' }}
                 />
-            
+
                 {/* Label acting as the dropdown toggle button */}
                 <label
                   htmlFor={`dropdownCheckbox-${type.id}`}
@@ -61,7 +61,7 @@ function Home({ searchItem }) {
                     <ChevronDown className="ms-1" />
                   </span>
                 </label>
-            
+
                 {/* Dropdown Menu */}
                 <ul
                   className="dropdown-menu bg-transparent border-0"

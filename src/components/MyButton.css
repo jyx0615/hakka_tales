@@ -10,7 +10,10 @@
 }
 
 .custom-button:hover .shadow-layer {
-  transition: opacity, margin-top, margin-left 0.3s ease-in-out;
+  transition:
+    opacity,
+    margin-top,
+    margin-left 0.3s ease-in-out;
   opacity: 0;
   margin-top: 0;
   margin-left: 0;
@@ -31,14 +34,15 @@
   vertical-align: middle;
 }
 
-.custom-button:hover  .text-layer {
+.custom-button:hover .text-layer {
   color: white;
   transition: color 0.2s ease-in-out;
   transition-delay: 0.05s;
 }
 
 /* 四縣腔 (green) */
-.sixian .shadow-layer, .sixian .bg-layer {
+.sixian .shadow-layer,
+.sixian .bg-layer {
   background-color: green;
 }
 
@@ -47,7 +51,8 @@
 }
 
 /* 海陸腔 (blue) */
-.hailu .shadow-layer, .hailu .bg-layer {
+.hailu .shadow-layer,
+.hailu .bg-layer {
   background-color: blue;
 }
 

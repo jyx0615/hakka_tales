@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Row, Col } from 'react-bootstrap';
+import './Upload.css';
 
 function Upload() {
   const [image, setImage] = useState(null);
@@ -18,8 +19,8 @@ function Upload() {
   };
 
   return (
-    <Row className="mt-5">
-      <Col className="col col-6 d-flex flex-column align-items-center">
+    <Row className="upload-row mt-5">
+      <Col className="upload-col col col-6 d-flex flex-column align-items-center">
         <h1>投稿圖片</h1>
 
         <Form className="px-5 py-2">
@@ -57,16 +58,16 @@ function Upload() {
 
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>作者</Form.Label>
-            <Form.Control type="name" placeholder="作者姓名" />
+            <Form.Control type="name" placeholder="只能包含中英文字與空格且不能超過20字" />
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Submit
+            提交
           </Button>
         </Form>
       </Col>
-
-      <Col className="col col-6 d-flex flex-column align-items-center">
+    
+      <Col className="upload-col col col-6 d-flex flex-column align-items-center">
         <h1>投稿故事</h1>
         <Form className="w-100 px-5 py-2">
           <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -81,11 +82,11 @@ function Upload() {
 
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>作者</Form.Label>
-            <Form.Control type="name" placeholder="作者姓名" />
+            <Form.Control type="name" placeholder="只能包含中英文字與空格且不能超過20字" />
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Submit
+            提交
           </Button>
         </Form>
       </Col>

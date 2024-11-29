@@ -1,0 +1,22 @@
+/* Default horizontal layout */
+.upload-row {
+  display: flex;
+}
+
+/* Portrait mode or smaller screens */
+@media (orientation: portrait) {
+  .upload-row {
+    flex-direction: column; /* Change to vertical layout */
+    flex-wrap: wrap; /* Ensure wrapping works on smaller screens */
+  }
+  .upload-col {
+    width: 100%; /* Ensure each column takes the full width */
+    display: flex;
+    margin: 0 auto;
+    left: 0px;
+    
+  }
+  .left {
+    text-align: left;
+  }
+}

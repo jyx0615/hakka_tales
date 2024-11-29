@@ -1,13 +1,61 @@
-.btn-container {
+.custom-btn {
+  height: 50px;
   width: 100px;
-  height: 100px;
-  margin: 0;
-  background-color: #fff;
-  border-radius: 50%;
-  cursor: pointer;
 }
 
-.pulse-button {
-  font-size: 1.3em;
-  font-weight: light;
+.shadow-layer {
+  opacity: 1;
+  margin-top: 10%;
+  margin-left: 10%;
+}
+
+.custom-button:hover .shadow-layer {
+  transition:
+    opacity,
+    margin-top,
+    margin-left 0.3s ease-in-out;
+  opacity: 0;
+  margin-top: 0;
+  margin-left: 0;
+}
+
+.bg-layer {
+  opacity: 0;
+}
+
+.custom-button:hover .bg-layer {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+  transition-delay: 0.05s;
+}
+
+.text-layer {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.custom-button:hover .text-layer {
+  color: white;
+  transition: color 0.2s ease-in-out;
+  transition-delay: 0.05s;
+}
+
+/* 四縣腔 (green) */
+.sixian .shadow-layer,
+.sixian .bg-layer {
+  background-color: green;
+}
+
+.sixian .text-layer {
+  color: green;
+}
+
+/* 海陸腔 (blue) */
+.hailu .shadow-layer,
+.hailu .bg-layer {
+  background-color: blue;
+}
+
+.hailu .text-layer {
+  color: blue;
 }

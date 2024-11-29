@@ -1,10 +1,12 @@
-import { createContext, useState, useContext, useCallback, useMemo } from 'react';
 import {
-  getStories,
-  getStoryById,
-} from '../utils/mockData.js'; // Import your mock data functions
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+  useMemo,
+} from 'react';
+import { getStories, getStoryById } from '../utils/mockData.js'; // Import your mock data functions
 import PropTypes from 'prop-types'; // Import PropTypes
-
 
 // Create a Context
 const StoryContext = createContext({
@@ -16,8 +18,7 @@ const StoryContext = createContext({
 });
 
 // Create a Provider component
-export function StoryProvider ({ children }) {
-
+export function StoryProvider({ children }) {
   const [rawStories, setRawStories] = useState({});
   const [currentStory, setCurrentStory] = useState({});
 
@@ -27,7 +28,7 @@ export function StoryProvider ({ children }) {
   }, []);
 
   const fetchCurrentStory = useCallback(async (storyId) => {
-    try{
+    try {
       const fetchedStory = await getStoryById(storyId);
       setCurrentStory(fetchedStory);
     } catch (error) {
@@ -37,7 +38,7 @@ export function StoryProvider ({ children }) {
 
   const tags = useMemo(() => {
     const uniqueTags = [];
-    if(!rawStories.length) return uniqueTags;
+    if (!rawStories.length) return uniqueTags;
     rawStories.forEach((story) => {
       story.tags.forEach((tag) => {
         if (!uniqueTags.some((uniqueTag) => uniqueTag.id === tag.id)) {
@@ -65,13 +66,12 @@ export function StoryProvider ({ children }) {
       {children}
     </StoryContext.Provider>
   );
-};
+}
 
 // Add prop types validation
 StoryProvider.propTypes = {
   children: PropTypes.node.isRequired, // Validate that children is required
 };
-
 
 // this is a custom hook, the name must start with "use"
 export default function useStories() {

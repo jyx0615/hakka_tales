@@ -296,14 +296,18 @@ function Content() {
                     handleHoverLeave(`page-${pageNum}`, 'pageFoldLeft')
                   }
                 >
-                  <div className="pageFoldLeft"></div>
-                  {/* content for the back(left) side */}
-                  <h4 className="mb-3">Page number = {pageNum}</h4>
-                  {pageNum === totalPage ? (
-                    <p></p>
-                  ) : (
-                    <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
-                  )}
+                  <div className="content-back content-face">
+                    <div className="pageFoldLeft"></div>
+                    <div className="content-container">
+                      {/* content for the back(left) side */}
+                      <h4 className="mb-3">Page number = {pageNum}</h4>
+                      {pageNum === totalPage ? (
+                        <p></p>
+                      ) : (
+                        <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
+                      )}
+                    </div> 
+                  </div>  
                 </div>
               </div>
             ))}

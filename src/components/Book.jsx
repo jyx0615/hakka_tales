@@ -59,8 +59,8 @@ function Book() {
           </div>
 
           <div className="d-flex align-items-center justify-content-end gap-4 mb-3">
-            <MyButton text="四縣腔" bookIndex={bookIndex} type="sixian" />
-            <MyButton text="海陸腔" bookIndex={bookIndex} type="hailu" />
+            <MyButton text="四縣腔" bookIndex={bookIndex} category="sixian" />
+            <MyButton text="海陸腔" bookIndex={bookIndex} category="hailu" />
           </div>
         </div>
       </Col>

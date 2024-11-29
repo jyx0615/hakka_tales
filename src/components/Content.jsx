@@ -17,9 +17,9 @@ import './Content.css';
 function Content() {
   const { currentStory, fetchCurrentStory } = useStories();
   const [loading, setLoading] = useState(true);
-  const { bookIndex, type } = useParams();
+  const { bookIndex, category } = useParams();
 
-  console.log(type);
+  console.log(category);
 
   useEffect(() => {
     const getStory = async () => {

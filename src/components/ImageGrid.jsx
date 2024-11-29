@@ -14,7 +14,7 @@ function ImageGrid({ searchItem }) {
     navigate(`/book/${index}`); // Navigate to the book page with the index
   };
 
-  const { tags, stories } = useStories();
+  const { categories, stories } = useStories();
   const [filteredStories, setFilteredStories] = useState(stories);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function ImageGrid({ searchItem }) {
   };
 
   // show the loading icon when data is not loaded
-  if (!tags.length) {
+  if (!categories.length) {
     return (
       <div className="d-flex flex-color align-items-center justify-content-center w-100 h-100">
         <Riple color="#32cd32" size="medium" text="" textColor="" />

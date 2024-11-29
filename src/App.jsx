@@ -37,7 +37,7 @@ function App() {
               <Route path="/upload" element={<Upload />} />
               <Route path="/book/:bookIndex" element={<Book />} />
               <Route
-                path="/book/:bookIndex/content/:type"
+                path="/book/:bookIndex/content/:category"
                 element={<Content />}
               />
             </Routes>

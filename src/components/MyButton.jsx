@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom';
 
 import './MyButton.css';
 
-function MyButton({ text, bookIndex, type }) {
+function MyButton({ text, bookIndex, category }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/book/${bookIndex}/content/${type}`);
+    navigate(`/book/${bookIndex}/content/${category}`);
   };
 
   return (
     // add type as classname
 
     <div
-      className={`custom-btn d-flex align-items-center justify-content-center  ${type}`}
+      className={`custom-btn d-flex align-items-center justify-content-center  ${category}`}
     >
       <button
         href="#"
@@ -32,8 +32,8 @@ function MyButton({ text, bookIndex, type }) {
 
 MyButton.propTypes = {
   text: PropTypes.string.isRequired,
-  bookIndex: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
+  bookIndex: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
 };
 
 export default MyButton;

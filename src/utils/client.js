@@ -15,32 +15,8 @@ export function getStoryById(bookIndex) {
   return client.get(`/story/${bookIndex}`);
 }
 
-export function getPages(bookIndex) {
-  return client.get(`/story/${bookIndex}/pages`);
-}
-
-export function createStory(bookIndex, input) {
-  return client.get(`/story/${bookIndex}`, input);
-}
-
-export function updateStory(bookIndex, input) {
-  return client.post(`/story/${bookIndex}`, input);
-}
-
-export function deleteStory(bookIndex) {
-  return client.delete(`/story/${bookIndex}`);
-}
-
-export function createPage(bookIndex, pageNumber, input) {
-  return client.post(`/story/${bookIndex}/page/${pageNumber}`, input);
-}
-
-export function updatePage(bookIndex, pageNumber, input) {
-  return client.put(`/story/${bookIndex}/page/${pageNumber}`, input);
-}
-
-export function deletePage(bookIndex, pageNumber) {
-  return client.delete(`/story/${bookIndex}/page/${pageNumber}`);
+export function getCategories() {
+  return client.get('/category');
 }
 
 getStories().then((res) => {
@@ -48,5 +24,9 @@ getStories().then((res) => {
 });
 
 getStoryById(1).then((res) => {
+  console.log(res.data);
+});
+
+getCategories().then((res) => {
   console.log(res.data);
 });

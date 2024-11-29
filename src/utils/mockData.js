@@ -253,3 +253,15 @@ export const getStoryById = (id) => {
     }, 500);
   });
 };
+
+export const getCategories = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { id: '101', name: '台灣民間故事' },
+        { id: '102', name: '安徒生童話故事' },
+        { id: '103', name: '新星專區' },
+      ]);
+    }, 500);
+  });
+};

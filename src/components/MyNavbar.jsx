@@ -15,6 +15,8 @@ import {
   BoxArrowInUpRight,
   Search,
   ChevronDown,
+  Megaphone,
+  PencilSquare,
 } from 'react-bootstrap-icons';
 
 import logo from '../assets/logo.png';
@@ -24,7 +26,7 @@ import './MyNavbar.css';
 function MyNavbar({ handleSearch }) {
   const [inputItem, setInputItem] = useState('');
   const [showOffCanvas, setShowOffcanvas] = useState(false);
-  const { tags, stories } = useStories();
+  const { categories, stories } = useStories();
   const navigate = useNavigate();
 
   // when to become a hamburger icon([false, 'sm', 'md', 'lg', 'xl', 'xxl'])
@@ -109,12 +111,18 @@ function MyNavbar({ handleSearch }) {
           <Offcanvas.Body>
             <Nav className="flex-grow-1 pe-3 me-auto justify-content-start">
               <Nav.Link href="/">主頁</Nav.Link>
-              <Nav.Link href="#action4"> 近期活動</Nav.Link>
+              <Nav.Link href="#action4">
+                <Megaphone className="text-danger fs-3 pe-2" />
+                近期活動
+              </Nav.Link>
+
               <Nav.Link as={Link} to="/upload">
+                <PencilSquare className="text-secondary fs-3 pe-2" />
                 投稿專區
               </Nav.Link>
+
               <Nav.Link as={Link} to="/contact">
-                <TelephoneFill className="text-success" />
+                <TelephoneFill className="text-success fs-3 pe-2" />
                 聯絡我們
               </Nav.Link>
 
@@ -146,23 +154,23 @@ function MyNavbar({ handleSearch }) {
                 id="book-dropdown"
                 className={showOffCanvas ? 'd-block' : 'd-none'}
               >
-                {tags.map((type) => (
-                  <div key={type.id} className="dropdown my-2">
+                {categories.map((category) => (
+                  <div key={category.id} className="dropdown my-2">
                     {/* Hidden checkbox to control the dropdown menu */}
                     <input
                       type="checkbox"
-                      id={`book-dropdown-checkbox-${type.id}`}
+                      id={`book-dropdown-checkbox-${category.id}`}
                       className="dropdown-checkbox"
                       style={{ display: 'none' }}
                     />
 
                     {/* Label acting as the dropdown toggle button */}
                     <label
-                      htmlFor={`book-dropdown-checkbox-${type.id}`}
+                      htmlFor={`book-dropdown-checkbox-${category.id}`}
                       className="btn bg-transparent border-0"
                     >
                       <span className="custom-a text-decoration-none">
-                        {type.name}
+                        {category.name}
                         <ChevronDown className="ms-1" />
                       </span>
                     </label>
@@ -170,9 +178,9 @@ function MyNavbar({ handleSearch }) {
                     {/* Dropdown Menu */}
                     <ul
                       className="dropdown-menu bg-transparent border-0"
-                      aria-labelledby={`book-dropdown-checkbox-${type.id}`}
+                      aria-labelledby={`book-dropdown-checkbox-${category.id}`}
                     >
-                      {stories[type.name].map((book, index) => (
+                      {stories[category.name].map((book, index) => (
                         <li
                           key={index}
                           className="list-group-item bg-transparent border-0 dropdown-item"

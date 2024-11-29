@@ -19,14 +19,14 @@ export function getCategories() {
   return client.get('/category');
 }
 
-getStories().then((res) => {
-  console.log(res.data);
-});
+// getStories().then((res) => {
+//   console.log(res.data);
+// });
 
-getStoryById(1).then((res) => {
-  console.log(res.data);
-});
+// getStoryById(1).then((res) => {
+//   console.log(res.data);
+// });
 
-getCategories().then((res) => {
-  console.log(res.data);
-});
+// getCategories().then((res) => {
+//   console.log(res.data);
+// });

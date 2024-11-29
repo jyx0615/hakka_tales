@@ -3,9 +3,9 @@ const stories = [
     id: '0',
     title: '虎姑婆',
     description: '一個關於堅韌與冒險的故事，講述跨越大陸的旅程。',
-    cover_image_url:
+    cover_image:
       'https://truth.bahamut.com.tw/s01/201806/88eee22272e3898b8e31e12afc76fc97.JPG',
-    tags: [{ id: '101', name: '台灣民間故事' }],
+    categories: [{ id: '101', name: '台灣民間故事' }],
     created_at: '2023-01-15T08:45:30Z',
     updated_at: '2023-02-10T10:20:45Z',
   },
@@ -13,8 +13,8 @@ const stories = [
     id: '1',
     title: '七爺八爺',
     description: '探索都市心臟地帶的繁華生活與隱藏的寶藏。',
-    cover_image_url: 'https://pokemon.wingzero.tw/assets/pokemon/001.png',
-    tags: [{ id: '101', name: '台灣民間故事' }],
+    cover_image: 'https://pokemon.wingzero.tw/assets/pokemon/001.png',
+    categories: [{ id: '101', name: '台灣民間故事' }],
     created_at: '2023-03-22T12:34:56Z',
     updated_at: '2023-03-23T14:15:10Z',
   },
@@ -22,8 +22,8 @@ const stories = [
     id: '2',
     title: '媽祖',
     description: '一個關於奉獻與保護人民的女神的故事。',
-    cover_image_url: 'https://pokemon.wingzero.tw/assets/pokemon/002.png',
-    tags: [{ id: '101', name: '台灣民間故事' }],
+    cover_image: 'https://pokemon.wingzero.tw/assets/pokemon/002.png',
+    categories: [{ id: '101', name: '台灣民間故事' }],
     created_at: '2023-04-01T09:00:00Z',
     updated_at: '2023-04-02T10:00:00Z',
   },
@@ -31,8 +31,8 @@ const stories = [
     id: '3',
     title: '老鼠娶新娘',
     description: '一個關於老鼠尋找新娘的奇幻故事。',
-    cover_image_url: 'https://pokemon.wingzero.tw/assets/pokemon/003.png',
-    tags: [{ id: '101', name: '台灣民間故事' }],
+    cover_image: 'https://pokemon.wingzero.tw/assets/pokemon/003.png',
+    categories: [{ id: '101', name: '台灣民間故事' }],
     created_at: '2023-05-10T11:15:30Z',
     updated_at: '2023-05-11T12:20:45Z',
   },
@@ -40,8 +40,8 @@ const stories = [
     id: '4',
     title: '年獸',
     description: '一個在農曆新年期間面對神話野獸的驚險冒險。',
-    cover_image_url: 'https://pokemon.wingzero.tw/assets/pokemon/004.png',
-    tags: [{ id: '101', name: '台灣民間故事' }],
+    cover_image: 'https://pokemon.wingzero.tw/assets/pokemon/004.png',
+    categories: [{ id: '101', name: '台灣民間故事' }],
     created_at: '2023-06-15T14:30:00Z',
     updated_at: '2023-06-16T15:45:00Z',
   },
@@ -49,8 +49,8 @@ const stories = [
     id: '5',
     title: '小美人魚',
     description: '一個美麗的故事，講述美人魚對人類世界的渴望。',
-    cover_image_url: 'https://pokemon.wingzero.tw/assets/pokemon/005.png',
-    tags: [{ id: '102', name: '安徒生童話故事' }],
+    cover_image: 'https://pokemon.wingzero.tw/assets/pokemon/005.png',
+    categories: [{ id: '102', name: '安徒生童話故事' }],
     created_at: '2023-07-01T10:00:00Z',
     updated_at: '2023-07-02T11:00:00Z',
   },
@@ -58,8 +58,8 @@ const stories = [
     id: '6',
     title: '醜小鴨',
     description: '一隻小鴨變成美麗天鵝的故事。',
-    cover_image_url: 'https://pokemon.wingzero.tw/assets/pokemon/006.png',
-    tags: [{ id: '102', name: '安徒生童話故事' }],
+    cover_image: 'https://pokemon.wingzero.tw/assets/pokemon/006.png',
+    categories: [{ id: '102', name: '安徒生童話故事' }],
     created_at: '2023-07-10T12:00:00Z',
     updated_at: '2023-07-11T13:00:00Z',
   },
@@ -67,8 +67,8 @@ const stories = [
     id: '7',
     title: '皇帝的新衣',
     description: '一個關於虛榮與真相的故事。',
-    cover_image_url: 'https://pokemon.wingzero.tw/assets/pokemon/007.png',
-    tags: [{ id: '103', name: '新星專區' }],
+    cover_image: 'https://pokemon.wingzero.tw/assets/pokemon/007.png',
+    categories: [{ id: '103', name: '新星專區' }],
     created_at: '2023-07-15T14:00:00Z',
     updated_at: '2023-07-16T15:00:00Z',
   },
@@ -76,8 +76,8 @@ const stories = [
     id: '8',
     title: '拇指姑娘',
     description: '一個小女孩的冒險與尋找愛情的故事。',
-    cover_image_url: 'https://pokemon.wingzero.tw/assets/pokemon/008.png',
-    tags: [{ id: '102', name: '安徒生童話故事' }],
+    cover_image: 'https://pokemon.wingzero.tw/assets/pokemon/008.png',
+    categories: [{ id: '102', name: '安徒生童話故事' }],
     created_at: '2023-07-20T16:00:00Z',
     updated_at: '2023-07-21T17:00:00Z',
   },
@@ -85,8 +85,8 @@ const stories = [
     id: '9',
     title: '雪女',
     description: '一個關於愛與失落的故事，發生在雪地中。',
-    cover_image_url: 'https://pokemon.wingzero.tw/assets/pokemon/009.png',
-    tags: [{ id: '102', name: '安徒生童話故事' }],
+    cover_image: 'https://pokemon.wingzero.tw/assets/pokemon/009.png',
+    categories: [{ id: '102', name: '安徒生童話故事' }],
     created_at: '2023-07-25T18:00:00Z',
     updated_at: '2023-07-26T19:00:00Z',
   },
@@ -235,7 +235,12 @@ export const getStories = () => {
   // Simulate a network request delay with a promise
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(stories);
+      const data = {
+        data: {
+          data: stories,
+        },
+      };
+      resolve(data);
     }, 500); // 500ms delay
   });
 };
@@ -246,7 +251,12 @@ export const getStoryById = (id) => {
       const story = stories.find((story) => story.id === id);
       if (story) {
         story['pages'] = pages;
-        resolve(story);
+        const data = {
+          data: {
+            data: story,
+          },
+        };
+        resolve(data);
       } else {
         reject(new Error('Story not found'));
       }
@@ -257,11 +267,15 @@ export const getStoryById = (id) => {
 export const getCategories = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve([
-        { id: '101', name: '台灣民間故事' },
-        { id: '102', name: '安徒生童話故事' },
-        { id: '103', name: '新星專區' },
-      ]);
+      resolve({
+        data: {
+          data: [
+            { id: '101', name: '台灣民間故事' },
+            { id: '102', name: '安徒生童話故事' },
+            { id: '103', name: '新星專區' },
+          ],
+        },
+      });
     }, 500);
   });
 };

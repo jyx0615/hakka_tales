@@ -1,5 +1,5 @@
 import ImageGrid from './ImageGrid';
-import { ChevronDown } from 'react-bootstrap-icons';
+import { CartDash, ChevronDown } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import { Riple } from 'react-loading-indicators';
 import PropTypes from 'prop-types';
@@ -10,11 +10,11 @@ import useStories from '../hooks/useStories';
 
 function Home({ searchItem }) {
   const { categories, stories, fetchStories, fetchCategories } = useStories();
-  fetchStories();
 
   // display the loading icon when data is not loaded
   if (!categories.length) {
     fetchCategories();
+    fetchStories();
     return (
       <div className="d-flex flex-color align-items-center justify-content-center w-100 h-100">
         <Riple color="#32cd32" size="medium" text="" textColor="" />

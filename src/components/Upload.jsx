@@ -19,11 +19,11 @@ function Upload() {
   };
 
   return (
-    <Row className="upload-row mt-5">
-      <Col className="upload-col col col-6 d-flex flex-column align-items-center">
+    <Row className="mt-5">
+      <Col className="d-flex flex-column align-items-center" md={6} sm={12}>
         <h1>投稿圖片</h1>
 
-        <Form className="px-5 py-2">
+        <Form className="px-5 py-2 w-100">
           {/* Image input with Bootstrap styling */}
           <div className="mb-3">
             <label htmlFor="imageInput" className="form-label">
@@ -57,20 +57,25 @@ function Upload() {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>作者</Form.Label>
-            <Form.Control type="name" placeholder="只能包含中英文字與空格且不能超過20字" />
+            <Form.Label>
+              作者
+              <span className="ms-3 text-secondary">
+                只限中文＋英文，最多20個字
+              </span>
+            </Form.Label>
+            <Form.Control type="name" placeholder="作者姓名" maxLength="20" />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" className="float-end">
             提交
           </Button>
         </Form>
       </Col>
-    
-      <Col className="upload-col col col-6 d-flex flex-column align-items-center">
+
+      <Col className="d-flex flex-column align-items-center" md={6} sm={12}>
         <h1>投稿故事</h1>
         <Form className="w-100 px-5 py-2">
-          <Form.Group controlId="exampleForm.ControlTextarea1">
+          <Form.Group controlId="exampleForm.ControlTextarea1" className="mb-3">
             <Form.Label>故事內容</Form.Label>
             <Form.Control as="textarea" rows={10} />
           </Form.Group>
@@ -81,11 +86,16 @@ function Upload() {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>作者</Form.Label>
-            <Form.Control type="name" placeholder="只能包含中英文字與空格且不能超過20字" />
+            <Form.Label>
+              作者
+              <span className="ms-3 text-secondary">
+                只限中文＋英文，最多20個字
+              </span>
+            </Form.Label>
+            <Form.Control type="name" placeholder="作者姓名" maxLength="20" />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" className="float-end">
             提交
           </Button>
         </Form>

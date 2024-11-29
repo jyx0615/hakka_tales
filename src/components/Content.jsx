@@ -224,7 +224,7 @@ function Content() {
   // if the page index is 0, show the book cover, else return(pageNum-1).image_url
   const getImageOfPage = (pageNum) => {
     if (pageNum === 0) {
-      return currentStory.cover_image_url;
+      return currentStory.cover_image;
     } else {
       return pages[pageNum - 1].narration_url;
     }

@@ -78,8 +78,8 @@ function ImageGrid({ searchItem }) {
               >
                 <div className="d-flex justify-content-center book-cover">
                   <img
-                    src={book.cover_image_url}
-                    alt="placeholder"
+                    src={book.cover_image}
+                    alt="cover image"
                     className="w-100"
                   />
                 </div>

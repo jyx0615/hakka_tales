@@ -109,8 +109,10 @@ function MyNavbar({ handleSearch }) {
           </Offcanvas.Header>
 
           <Offcanvas.Body>
-            <Nav className="flex-grow-1 pe-3 me-auto justify-content-start">
-              <Nav.Link href="/">主頁</Nav.Link>
+            <Nav className="flex-grow-1 pe-4 me-auto justify-content-start">
+              <Nav.Link as={Link} to="/">
+                主頁
+              </Nav.Link>
               <Nav.Link href="#action4">
                 <Megaphone className="text-danger fs-3 pe-2" />
                 近期活動

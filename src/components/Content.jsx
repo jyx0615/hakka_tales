@@ -239,7 +239,7 @@ function Content() {
 
   return (
     <>
-      <div className="w-100 h-100 d-flex flex-column align-items-center jusitify-content-center position-relative">
+      <div className="w-100 h-100 d-flex p-3 flex-column align-items-center jusitify-content-center position-relative">
         {/* Audio Player */}
         {getAudioOfPage(pageIndex) && (
           <audio
@@ -250,7 +250,9 @@ function Content() {
         )}
 
         {/* BookWrapper */}
-        <div className="w-100 h-100 position-relative my-5">
+
+        {/* page view for screen size larger than md */}
+        <div className="w-100 h-100 position-relative my-5  d-none d-md-block">
           <div
             className="pageWrapper p-1 w-50 h-100 position-absolute float-end"
             ref={setPageWrapperRef}
@@ -306,12 +308,29 @@ function Content() {
                       ) : (
                         <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
                       )}
-                    </div> 
-                  </div>  
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+
+        {/* page view for screen size smaller than md */}
+        <div className="d-block d-md-none w-100 h-100 overflow-auto">
+          {pages.map((page, pageNum) => (
+            <div
+              key={pageNum}
+              className="w-100 d-flex flex-column align-items-center justify-content-center"
+            >
+              <img
+                src={getImageOfPage(pageNum)}
+                alt="illustration"
+                className="user-select-none p-2 mh-100 mw-100"
+              />
+              <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
+            </div>
+          ))}
         </div>
 
         {/* Refresh button */}
@@ -330,7 +349,7 @@ function Content() {
         {/* control bar */}
         <div className="row w-100 pb-2">
           {/* pause/stop button */}
-          <div className="p-2 col-1 d-flex">
+          <div className="p-2 col-md-1 col-2 d-flex">
             <button
               onClick={togglePlay}
               className="btn btn-primary btn-lg rounded-circle d-flex align-items-center justify-content-center p-2"
@@ -344,7 +363,7 @@ function Content() {
           </div>
 
           {/* progress bar */}
-          <div className="p-2 col-10 d-flex align-items-center">
+          <div className="p-2 col-md-10 col-8 d-flex align-items-center">
             <input
               type="range"
               min="0"
@@ -356,7 +375,7 @@ function Content() {
           </div>
 
           {/* overview button */}
-          <div className="p-2 col-1 d-flex justify-content-end">
+          <div className="p-2 col-md-1 col-2 d-flex justify-content-end">
             <button
               className="btn btn-primary-outline"
               data-bs-toggle="modal"

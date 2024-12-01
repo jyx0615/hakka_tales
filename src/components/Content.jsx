@@ -8,6 +8,7 @@ import {
   PauseFill,
 } from 'react-bootstrap-icons';
 import { Riple } from 'react-loading-indicators';
+import { useMediaQuery } from "react-responsive";
 
 import useStories from '../hooks/useStories';
 
@@ -39,6 +40,10 @@ function Content() {
 
   const leftZi = useRef(0);
   const rightZi = useRef(0);
+
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const pagesRefsMobile = useRef([]);
+  const mobileContainerRef = useRef();
 
   const flippingFromRightToLeft = (pageId, duration = 1.5) => {
     const newZi = Math.max(leftZi.current, rightZi.current) + 1;
@@ -106,24 +111,37 @@ function Content() {
   const goToPage = (targetPage) => {
     if (targetPage === pageIndex) return;
 
-    // continues turn from left to right
-    if (targetPage < pageIndex) {
-      for (let i = pageIndex - 1; i >= targetPage; i--) {
-        // flip all pages at once
-        flippingFromLeftToRight(`page-${i}`);
-        // flip one page at a time
-        // setTimeout(() => {
-        //     flippingFromLeftToRight(`page-${i}`);
-        // }, (pageIndex - i - 1) * flippingDelay);
+    if (isMobile) {
+      setPageIndex(targetPage);
+      if (
+        mobileContainerRef.current &&
+        pagesRefsMobile.current[targetPage]
+      ) {
+        pagesRefsMobile.current[targetPage].scrollIntoView({
+          behavior: 'smooth',
+        });
       }
-    }
-    // continues turn from right to left
+    } 
     else {
-      for (let i = pageIndex + 1; i <= targetPage; i++) {
-        flippingFromRightToLeft(`page-${i - 1}`);
-        // setTimeout(() => {
-        //     flippingFromRightToLeft(`page-${i - 1}`);
-        // }, (i - (pageIndex + 1)) * flippingDelay);
+      // continues turn from left to right
+      if (targetPage < pageIndex) {
+        for (let i = pageIndex - 1; i >= targetPage; i--) {
+          // flip all pages at once
+          flippingFromLeftToRight(`page-${i}`);
+          // flip one page at a time
+          // setTimeout(() => {
+          //     flippingFromLeftToRight(`page-${i}`);
+          // }, (pageIndex - i - 1) * flippingDelay);
+        }
+      }
+      // continues turn from right to left
+      else {
+        for (let i = pageIndex + 1; i <= targetPage; i++) {
+          flippingFromRightToLeft(`page-${i - 1}`);
+          // setTimeout(() => {
+          //     flippingFromRightToLeft(`page-${i - 1}`);
+          // }, (i - (pageIndex + 1)) * flippingDelay);
+        }
       }
     }
   };
@@ -131,7 +149,20 @@ function Content() {
   const handleAudioEnd = () => {
     // Automatically flip to the next page when audio finishes
     if (pageIndex <= totalPage) {
+      if (isMobile) {
+        setPageIndex(pageIndex + 1);
+        if (
+          mobileContainerRef.current &&
+          pagesRefsMobile.current[pageIndex + 1]
+        ) {
+          pagesRefsMobile.current[pageIndex + 1].scrollIntoView({
+            behavior: 'smooth',
+          });
+        }
+      }
+      else {
       flippingFromRightToLeft(`page-${pageIndex}`);
+      }
     }
     if (pageIndex === totalPage) {
       setIsPlaying(false);
@@ -143,17 +174,38 @@ function Content() {
     if (!audioSrc) {
       // If there's no audio for the current page, turn the page automatically
       if (pageIndex < totalPage) {
-        flippingFromRightToLeft(`page-${pageIndex}`);
-
-        // Ensure the audio for the next page starts playing
-        setTimeout(() => {
-          if (audioRef.current) {
-            audioRef.current.pause(); // Stop any previous audio
-            audioRef.current.load(); // Reload the audio for the new page
-            audioRef.current.play(); // Play the new audio
-            setIsPlaying(true); // Update the play state
+        if (isMobile) {
+          setPageIndex(pageIndex + 1);
+          if (
+            mobileContainerRef.current &&
+            pagesRefsMobile.current[pageIndex + 1]
+          ) {
+            pagesRefsMobile.current[pageIndex + 1].scrollIntoView({
+              behavior: 'smooth',
+            });
           }
-        }, 1500); // Match the page flip animation duration
+          // Start audio playback after scrolling
+          setTimeout(() => {
+            if (audioRef.current) {
+              audioRef.current.pause();
+              audioRef.current.load();
+              audioRef.current.play();
+              setIsPlaying(true);
+            }
+          }, 500);
+        }
+        else {
+          flippingFromRightToLeft(`page-${pageIndex}`);
+          // Ensure the audio for the next page starts playing
+          setTimeout(() => {
+            if (audioRef.current) {
+              audioRef.current.pause(); // Stop any previous audio
+              audioRef.current.load(); // Reload the audio for the new page
+              audioRef.current.play(); // Play the new audio
+              setIsPlaying(true); // Update the play state
+            }
+          }, 1500); // Match the page flip animation duration
+        }
       }
       return; // Exit the function
     }
@@ -174,12 +226,49 @@ function Content() {
       if (isPlaying) {
         // Match the page flip animation duration
         // Play the new audio if the play state is active
-        setTimeout(() => {
+        if (isMobile) {
+          // Mobile layout
           audioRef.current.play();
-        }, 1500);
+        } else {
+          // Desktop layout
+          setTimeout(() => {
+            audioRef.current.play();
+          }, 1500);
+        }
       }
     }
-  }, [pageIndex]);
+  }, [pageIndex, isPlaying, isMobile]);
+
+  // IntersectionObserver to update pageIndex on scroll
+  useEffect(() => {
+    if (pagesRefsMobile.current.length > 0) {
+      const options = {
+        root: mobileContainerRef.current,
+        rootMargin: '0px',
+        threshold: 0.5,
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = pagesRefsMobile.current.indexOf(entry.target);
+            setPageIndex(index);
+          }
+        });
+      }, options);
+
+      pagesRefsMobile.current.forEach((ref) => {
+        if (ref) observer.observe(ref);
+      });
+
+      return () => {
+        if (observer && pagesRefsMobile.current) {
+          pagesRefsMobile.current.forEach((ref) => {
+            if (ref) observer.unobserve(ref);
+          });
+        }
+      };
+    }
+  }, [pagesRefsMobile.current, mobileContainerRef.current]);
 
   const pages = currentStory.pages;
   const totalPage = pages?.length;
@@ -317,11 +406,12 @@ function Content() {
         </div>
 
         {/* page view for screen size smaller than md */}
-        <div className="d-block d-md-none w-100 h-100 overflow-auto">
+        <div className="d-block d-md-none w-100 h-100 overflow-auto" ref={mobileContainerRef}>
           {pages.map((page, pageNum) => (
             <div
               key={pageNum}
               className="w-100 d-flex flex-column align-items-center justify-content-center"
+              ref={(el) => (pagesRefsMobile.current[pageNum] = el)}
             >
               <img
                 src={getImageOfPage(pageNum)}

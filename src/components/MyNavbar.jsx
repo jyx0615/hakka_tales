@@ -81,7 +81,7 @@ function MyNavbar({ handleSearch }) {
   const closeOffcanvas = () => setShowOffcanvas(false);
   const openOffcanvas = () => setShowOffcanvas(true);
 
-  useEffect(() => { 
+  useEffect(() => {
     fetchCategories();
   }, [fetchCategories]);
 
@@ -99,7 +99,9 @@ function MyNavbar({ handleSearch }) {
 
         <div>
           {/* login/register icon */}
-          <PersonCircle className='fs-2 d-lg-none me-3' id="login-logout-icon"
+          <PersonCircle
+            className="fs-2 d-lg-none me-3"
+            id="login-logout-icon"
             onClick={() => handleLoginLogout()}
           />
 
@@ -109,7 +111,7 @@ function MyNavbar({ handleSearch }) {
             onClick={openOffcanvas}
           />
         </div>
-        
+
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expand}`}
           aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
@@ -180,53 +182,57 @@ function MyNavbar({ handleSearch }) {
                 id="book-dropdown"
                 className={showOffCanvas ? 'd-block' : 'd-none'}
               >
-                {categories && categories.map((category) => (
-                  <div key={category.id} className="dropdown my-2">
-                    {/* Hidden checkbox to control the dropdown menu */}
-                    <input
-                      type="checkbox"
-                      id={`book-dropdown-checkbox-${category.id}`}
-                      className="dropdown-checkbox"
-                      style={{ display: 'none' }}
-                    />
+                {categories &&
+                  categories.map((category) => (
+                    <div key={category.id} className="dropdown my-2">
+                      {/* Hidden checkbox to control the dropdown menu */}
+                      <input
+                        type="checkbox"
+                        id={`book-dropdown-checkbox-${category.id}`}
+                        className="dropdown-checkbox"
+                        style={{ display: 'none' }}
+                      />
 
-                    {/* Label acting as the dropdown toggle button */}
-                    <label
-                      htmlFor={`book-dropdown-checkbox-${category.id}`}
-                      className="btn bg-transparent border-0"
-                    >
-                      <span className="custom-a text-decoration-none">
-                        {category.name}
-                        <ChevronDown className="ms-1" />
-                      </span>
-                    </label>
+                      {/* Label acting as the dropdown toggle button */}
+                      <label
+                        htmlFor={`book-dropdown-checkbox-${category.id}`}
+                        className="btn bg-transparent border-0"
+                      >
+                        <span className="custom-a text-decoration-none">
+                          {category.name}
+                          <ChevronDown className="ms-1" />
+                        </span>
+                      </label>
 
-                    {/* Dropdown Menu */}
-                    <ul
-                      className="dropdown-menu bg-transparent border-0"
-                      aria-labelledby={`book-dropdown-checkbox-${category.id}`}
-                    >
-                      { stories[category.name] && stories[category.name].map((book, index) => (
-                        <li
-                          key={index}
-                          className="list-group-item bg-transparent border-0 dropdown-item"
-                          onClick={() => goToBook(book.id)}
-                        >
-                          {book.title}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                      {/* Dropdown Menu */}
+                      <ul
+                        className="dropdown-menu bg-transparent border-0"
+                        aria-labelledby={`book-dropdown-checkbox-${category.id}`}
+                      >
+                        {stories[category.name] &&
+                          stories[category.name].map((book, index) => (
+                            <li
+                              key={index}
+                              className="list-group-item bg-transparent border-0 dropdown-item"
+                              onClick={() => goToBook(book.id)}
+                            >
+                              {book.title}
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  ))}
               </NavDropdown>
             </Nav>
 
             {/* login/register button */}
             <Nav className="flex-grow-1 me-auto justify-content-end align-items-center pe-2 d-lg-flex d-none">
               {/* login button */}
-              { !isLoading && 
-                <span onClick={() => handleLoginLogout()} id='login-logout-btn'>{user? "登出":"登入"}</span>
-              }
+              {!isLoading && (
+                <span onClick={() => handleLoginLogout()} id="login-logout-btn">
+                  {user ? '登出' : '登入'}
+                </span>
+              )}
             </Nav>
 
             {/* search button */}

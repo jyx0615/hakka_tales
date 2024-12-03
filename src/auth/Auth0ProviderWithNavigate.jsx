@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { env } from '../utils/env';
 
-function Auth0ProviderWithNavigate ({ children }) {
+function Auth0ProviderWithNavigate({ children }) {
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState) => {
@@ -18,14 +18,14 @@ function Auth0ProviderWithNavigate ({ children }) {
       authorizationParams={{
         redirect_uri: window.location.origin,
         audience: env.REACT_APP_AUTH0_AUDIENCE,
-        scope: 'openid profile email'
+        scope: 'openid profile email',
       }}
       onRedirectCallback={onRedirectCallback}
     >
       {children}
     </Auth0Provider>
   );
-};
+}
 
 Auth0ProviderWithNavigate.propTypes = {
   children: PropTypes.node.isRequired,

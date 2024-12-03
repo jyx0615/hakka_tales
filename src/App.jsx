@@ -41,7 +41,7 @@ function App() {
                 <Route
                   path="/book/:bookIndex/content/:category"
                   element={<Content />}
-                  />
+                />
               </Routes>
             </Container>
           </div>

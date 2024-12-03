@@ -8,7 +8,7 @@ import {
   PauseFill,
 } from 'react-bootstrap-icons';
 import { Riple } from 'react-loading-indicators';
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from 'react-responsive';
 
 import useStories from '../hooks/useStories';
 
@@ -113,16 +113,12 @@ function Content() {
 
     if (isMobile) {
       setPageIndex(targetPage);
-      if (
-        mobileContainerRef.current &&
-        pagesRefsMobile.current[targetPage]
-      ) {
+      if (mobileContainerRef.current && pagesRefsMobile.current[targetPage]) {
         pagesRefsMobile.current[targetPage].scrollIntoView({
           behavior: 'smooth',
         });
       }
-    } 
-    else {
+    } else {
       // continues turn from left to right
       if (targetPage < pageIndex) {
         for (let i = pageIndex - 1; i >= targetPage; i--) {
@@ -159,9 +155,8 @@ function Content() {
             behavior: 'smooth',
           });
         }
-      }
-      else {
-      flippingFromRightToLeft(`page-${pageIndex}`);
+      } else {
+        flippingFromRightToLeft(`page-${pageIndex}`);
       }
     }
     if (pageIndex === totalPage) {
@@ -193,8 +188,7 @@ function Content() {
               setIsPlaying(true);
             }
           }, 500);
-        }
-        else {
+        } else {
           flippingFromRightToLeft(`page-${pageIndex}`);
           // Ensure the audio for the next page starts playing
           setTimeout(() => {
@@ -406,11 +400,14 @@ function Content() {
         </div>
 
         {/* page view for screen size smaller than md */}
-        <div className="d-block d-md-none w-100 h-100 overflow-auto" ref={mobileContainerRef}>
+        <div
+          className="d-block d-md-none w-100 h-100 overflow-auto"
+          ref={mobileContainerRef}
+        >
           {/* the cover page */}
           <div
-              className="w-100 d-flex flex-column align-items-center justify-content-center p-3"
-              ref={(el) => (pagesRefsMobile.current[0] = el)}
+            className="w-100 d-flex flex-column align-items-center justify-content-center p-3"
+            ref={(el) => (pagesRefsMobile.current[0] = el)}
           >
             <img
               src={getImageOfPage(0)}
@@ -418,7 +415,7 @@ function Content() {
               className="user-select-none p-2 mh-100 mw-100"
             />
           </div>
-          
+
           {pages.map((page, pageNum) => (
             <div
               key={pageNum + 1}

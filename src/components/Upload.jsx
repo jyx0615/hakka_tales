@@ -37,29 +37,28 @@ function Upload() {
   };
 
   const validateEmail = (email) => {
-    const regex =
-      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    const regex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!regex.test(email)) {
       return '請輸入有效的電子郵件地址';
     }
     return '';
-  };  
+  };
 
   const handleAuthorImageChange = (e) => {
     const name = e.target.value;
     setAuthorImage(name);
-  
+
     const error = validateAuthor(name);
     setAuthorImageError(error);
   };
-  
+
   const handleAuthorStoryChange = (e) => {
     const name = e.target.value;
     setAuthorStory(name);
-  
+
     const error = validateAuthor(name);
     setAuthorStoryError(error);
-  };  
+  };
 
   // Handle email input change and validation for the first form
   const handleEmailImageChange = (e) => {

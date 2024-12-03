@@ -42,48 +42,50 @@ function Home({ searchItem }) {
         {/* side bar that displays all the book names and hide when the screen is too small */}
         <div className="col col-2 pt-5 d-lg-block d-none">
           <div className="position-fixed border-start border-3">
-            {categories && categories.map((category) => (
-              <div key={category.id} className="dropdown my-2">
-                {/* Hidden checkbox to control the dropdown menu */}
-                <input
-                  type="checkbox"
-                  id={`dropdownCheckbox-${category.id}`}
-                  className="dropdown-checkbox"
-                  style={{ display: 'none' }}
-                />
+            {categories &&
+              categories.map((category) => (
+                <div key={category.id} className="dropdown my-2">
+                  {/* Hidden checkbox to control the dropdown menu */}
+                  <input
+                    type="checkbox"
+                    id={`dropdownCheckbox-${category.id}`}
+                    className="dropdown-checkbox"
+                    style={{ display: 'none' }}
+                  />
 
-                {/* Label acting as the dropdown toggle button */}
-                <label
-                  htmlFor={`dropdownCheckbox-${category.id}`}
-                  className="btn bg-transparent border-0"
-                >
-                  <span className="custom-a text-decoration-none">
-                    {category.name}
-                    <ChevronDown className="ms-1" />
-                  </span>
-                </label>
+                  {/* Label acting as the dropdown toggle button */}
+                  <label
+                    htmlFor={`dropdownCheckbox-${category.id}`}
+                    className="btn bg-transparent border-0"
+                  >
+                    <span className="custom-a text-decoration-none">
+                      {category.name}
+                      <ChevronDown className="ms-1" />
+                    </span>
+                  </label>
 
-                {/* Dropdown Menu */}
-                <ul
-                  className="dropdown-menu bg-transparent border-0"
-                  aria-labelledby={`dropdownCheckbox-${category.id}`}
-                >
-                  {stories[category.name] && stories[category.name].map((book, index) => (
-                    <li
-                      key={index}
-                      className="list-group-item bg-transparent border-0"
-                    >
-                      <Link
-                        to={`/book/${book.id}`}
-                        className="text-decoration-none custom-a dropdown-item"
-                      >
-                        {book.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                  {/* Dropdown Menu */}
+                  <ul
+                    className="dropdown-menu bg-transparent border-0"
+                    aria-labelledby={`dropdownCheckbox-${category.id}`}
+                  >
+                    {stories[category.name] &&
+                      stories[category.name].map((book, index) => (
+                        <li
+                          key={index}
+                          className="list-group-item bg-transparent border-0"
+                        >
+                          <Link
+                            to={`/book/${book.id}`}
+                            className="text-decoration-none custom-a dropdown-item"
+                          >
+                            {book.title}
+                          </Link>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              ))}
           </div>
         </div>
       </div>

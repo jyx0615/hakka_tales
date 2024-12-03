@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-// import { env } from './env';
+import { env } from './env';
 
 const client = axios.create({
-  // baseURL: env.VITE_API_URL,
-  baseURL: 'https://api.hakka.rice9547.org/api/',
+  baseURL: env.VITE_BACKEND_API_URL,
 });
 
 export function getStories() {

@@ -407,18 +407,30 @@ function Content() {
 
         {/* page view for screen size smaller than md */}
         <div className="d-block d-md-none w-100 h-100 overflow-auto" ref={mobileContainerRef}>
+          {/* the cover page */}
+          <div
+              className="w-100 d-flex flex-column align-items-center justify-content-center p-3"
+              ref={(el) => (pagesRefsMobile.current[0] = el)}
+          >
+            <img
+              src={getImageOfPage(0)}
+              alt="illustration"
+              className="user-select-none p-2 mh-100 mw-100"
+            />
+          </div>
+          
           {pages.map((page, pageNum) => (
             <div
-              key={pageNum}
-              className="w-100 d-flex flex-column align-items-center justify-content-center"
-              ref={(el) => (pagesRefsMobile.current[pageNum] = el)}
+              key={pageNum + 1}
+              className="w-100 d-flex flex-column align-items-center justify-content-center p-3"
+              ref={(el) => (pagesRefsMobile.current[pageNum + 1] = el)}
             >
+              <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
               <img
-                src={getImageOfPage(pageNum)}
+                src={getImageOfPage(pageNum + 1)}
                 alt="illustration"
                 className="user-select-none p-2 mh-100 mw-100"
               />
-              <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
             </div>
           ))}
         </div>

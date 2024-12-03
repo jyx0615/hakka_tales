@@ -5,8 +5,8 @@ import {
   useCallback,
   useMemo,
 } from 'react';
-import { getStories, getStoryById, getCategories } from '../utils/mockData.js'; // Import your mock data functions
-// import { getStories, getStoryById, getCategories } from '../utils/client.js';
+// import { getStories, getStoryById, getCategories } from '../utils/mockData.js'; // Import your mock data functions
+import { getStories, getStoryById, getCategories } from '../utils/client.js';
 import PropTypes from 'prop-types'; // Import PropTypes
 
 // Create a Context

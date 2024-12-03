@@ -321,9 +321,9 @@ function Content() {
 
   const getAudioOfPage = (pageNum) => {
     if (pageNum === 0 || pageNum == totalPage + 1) return null; // No audio for the book cover
-    // return currentBook[pageNum - 1]?.audio_url || null; // Return audio URL or null
+    return pages[pageNum - 1]?.audios[0]?.audio_url || null; // Return audio URL or null
     // Example URL with raw=1 to allow direct playback
-    return pages[pageNum - 1].audios[0].audio_url;
+    // return pages[pageNum - 1].audios[0].audio_url;
   };
 
   return (
@@ -391,7 +391,7 @@ function Content() {
                     <div className="pageFoldLeft"></div>
                     <div className="content-container">
                       {/* content for the back(left) side */}
-                      <h4 className="mb-3">Page number = {pageNum}</h4>
+                      <h4 className="mb-3">Page number = {pageNum + 1}</h4>
                       {pageNum === totalPage ? (
                         <p></p>
                       ) : (

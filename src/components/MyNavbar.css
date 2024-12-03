@@ -38,6 +38,14 @@
   color: black;
 }
 
+#login-logout-btn {
+  cursor: pointer;
+}
+
+#login-logout-icon {
+  cursor: pointer;
+}
+
 /* Small devices (landscape phones, less than 992px) */
 @media (max-width: 992px) {
   .offcanvas-custom {

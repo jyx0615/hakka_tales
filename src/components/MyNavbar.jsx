@@ -8,7 +8,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Meta,
   TelephoneFill,
@@ -17,7 +17,9 @@ import {
   ChevronDown,
   Megaphone,
   PencilSquare,
+  PersonCircle,
 } from 'react-bootstrap-icons';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import logo from '../assets/logo.png';
 import useStories from '../hooks/useStories';
@@ -26,8 +28,10 @@ import './MyNavbar.css';
 function MyNavbar({ handleSearch }) {
   const [inputItem, setInputItem] = useState('');
   const [showOffCanvas, setShowOffcanvas] = useState(false);
-  const { categories, stories } = useStories();
+  const { categories, stories, fetchCategories } = useStories();
   const navigate = useNavigate();
+
+  const { loginWithRedirect, logout, user, isLoading } = useAuth0();
 
   // when to become a hamburger icon([false, 'sm', 'md', 'lg', 'xl', 'xxl'])
   const expand = 'lg';
@@ -66,8 +70,20 @@ function MyNavbar({ handleSearch }) {
     navigate(`/book/${id}`);
   };
 
+  const handleLoginLogout = () => {
+    if (!user) {
+      loginWithRedirect();
+    } else {
+      logout();
+    }
+  };
+
   const closeOffcanvas = () => setShowOffcanvas(false);
   const openOffcanvas = () => setShowOffcanvas(true);
+
+  useEffect(() => { 
+    fetchCategories();
+  }, [fetchCategories]);
 
   return (
     <Navbar expand="lg" className="navbar-custom px-2" sticky="top">
@@ -81,11 +97,19 @@ function MyNavbar({ handleSearch }) {
           />
         </Navbar.Brand>
 
-        <Navbar.Toggle
-          aria-controls={`offcanvasNavbar-expand-${expand}`}
-          onClick={openOffcanvas}
-        />
+        <div>
+          {/* login/register icon */}
+          <PersonCircle className='fs-2 d-lg-none me-3' id="login-logout-icon"
+            onClick={() => handleLoginLogout()}
+          />
 
+          {/* hamburger icon */}
+          <Navbar.Toggle
+            aria-controls={`offcanvasNavbar-expand-${expand}`}
+            onClick={openOffcanvas}
+          />
+        </div>
+        
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expand}`}
           aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
@@ -114,17 +138,17 @@ function MyNavbar({ handleSearch }) {
                 主頁
               </Nav.Link>
               <Nav.Link href="#action4">
-                <Megaphone className="text-danger fs-3 pe-2" />
+                <Megaphone className="text-danger fs-3 pe-2 d-lg-none d-xl-inline" />
                 近期活動
               </Nav.Link>
 
               <Nav.Link as={Link} to="/upload">
-                <PencilSquare className="text-secondary fs-3 pe-2" />
+                <PencilSquare className="text-secondary fs-3 pe-2 d-lg-none d-xl-inline" />
                 投稿專區
               </Nav.Link>
 
               <Nav.Link as={Link} to="/contact">
-                <TelephoneFill className="text-success fs-3 pe-2" />
+                <TelephoneFill className="text-success fs-3 pe-2 d-lg-none d-xl-inline" />
                 聯絡我們
               </Nav.Link>
 
@@ -156,7 +180,7 @@ function MyNavbar({ handleSearch }) {
                 id="book-dropdown"
                 className={showOffCanvas ? 'd-block' : 'd-none'}
               >
-                {categories.map((category) => (
+                {categories && categories.map((category) => (
                   <div key={category.id} className="dropdown my-2">
                     {/* Hidden checkbox to control the dropdown menu */}
                     <input
@@ -182,7 +206,7 @@ function MyNavbar({ handleSearch }) {
                       className="dropdown-menu bg-transparent border-0"
                       aria-labelledby={`book-dropdown-checkbox-${category.id}`}
                     >
-                      {stories[category.name].map((book, index) => (
+                      { stories[category.name] && stories[category.name].map((book, index) => (
                         <li
                           key={index}
                           className="list-group-item bg-transparent border-0 dropdown-item"
@@ -195,6 +219,14 @@ function MyNavbar({ handleSearch }) {
                   </div>
                 ))}
               </NavDropdown>
+            </Nav>
+
+            {/* login/register button */}
+            <Nav className="flex-grow-1 me-auto justify-content-end align-items-center pe-2 d-lg-flex d-none">
+              {/* login button */}
+              { !isLoading && 
+                <span onClick={() => handleLoginLogout()} id='login-logout-btn'>{user? "登出":"登入"}</span>
+              }
             </Nav>
 
             {/* search button */}

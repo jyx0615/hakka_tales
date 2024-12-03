@@ -12,6 +12,7 @@ import Contact from './components/Contact';
 import Upload from './components/Upload';
 import './App.css';
 import useStories, { StoryProvider } from './hooks/useStories';
+import Auth0ProviderWithNavigate from './auth/Auth0ProviderWithNavigate';
 
 function App() {
   const { fetchStories } = useStories();
@@ -27,23 +28,25 @@ function App() {
 
   return (
     <Router>
-      <StoryProvider>
-        <div className="container-fluid px-0 main-container vh-100 vw-100">
-          <MyNavbar handleSearch={handleSearch} />
-          <Container className="pb-4 custom-container px-2" fluid="xl">
-            <Routes>
-              <Route path="/" element={<Home searchItem={searchItem} />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/upload" element={<Upload />} />
-              <Route path="/book/:bookIndex" element={<Book />} />
-              <Route
-                path="/book/:bookIndex/content/:category"
-                element={<Content />}
-              />
-            </Routes>
-          </Container>
-        </div>
-      </StoryProvider>
+      <Auth0ProviderWithNavigate>
+        <StoryProvider>
+          <div className="container-fluid px-0 main-container vh-100 vw-100">
+            <MyNavbar handleSearch={handleSearch} />
+            <Container className="pb-4 custom-container px-2" fluid="xl">
+              <Routes>
+                <Route path="/" element={<Home searchItem={searchItem} />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/upload" element={<Upload />} />
+                <Route path="/book/:bookIndex" element={<Book />} />
+                <Route
+                  path="/book/:bookIndex/content/:category"
+                  element={<Content />}
+                  />
+              </Routes>
+            </Container>
+          </div>
+        </StoryProvider>
+      </Auth0ProviderWithNavigate>
     </Router>
   );
 }

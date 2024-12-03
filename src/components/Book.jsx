@@ -8,10 +8,14 @@ import useStories from '../hooks/useStories';
 
 function Book() {
   // get the book info from backend
-  const { currentStory, fetchCurrentStory } = useStories();
+  const { currentStory, fetchCurrentStory, fetchCategories } = useStories();
   const [loading, setLoading] = useState(true);
 
   const { bookIndex } = useParams();
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     const getStory = async () => {

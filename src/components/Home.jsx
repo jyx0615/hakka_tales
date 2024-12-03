@@ -42,7 +42,7 @@ function Home({ searchItem }) {
         {/* side bar that displays all the book names and hide when the screen is too small */}
         <div className="col col-2 pt-5 d-lg-block d-none">
           <div className="position-fixed border-start border-3">
-            {categories.map((category) => (
+            {categories && categories.map((category) => (
               <div key={category.id} className="dropdown my-2">
                 {/* Hidden checkbox to control the dropdown menu */}
                 <input
@@ -68,7 +68,7 @@ function Home({ searchItem }) {
                   className="dropdown-menu bg-transparent border-0"
                   aria-labelledby={`dropdownCheckbox-${category.id}`}
                 >
-                  {stories[category.name].map((book, index) => (
+                  {stories[category.name] && stories[category.name].map((book, index) => (
                     <li
                       key={index}
                       className="list-group-item bg-transparent border-0"

@@ -7,7 +7,7 @@
 }
 
 .main-container {
-  background-image: url('./assets/background.png');
+  background-image: url('./assets/background5.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,4 +16,10 @@
 
 .custom-container {
   height: 92%;
+  color: white;
+}
+
+.custom-text {
+  color: white;
+  text-shadow: 5px 5px #558ABB;
 }

@@ -78,6 +78,11 @@ function MyNavbar({ handleSearch }) {
     }
   };
 
+  if(user){
+    console.log(user);
+    console.log(user?.picture)
+  }
+
   const closeOffcanvas = () => setShowOffcanvas(false);
   const openOffcanvas = () => setShowOffcanvas(true);
 
@@ -97,13 +102,18 @@ function MyNavbar({ handleSearch }) {
           />
         </Navbar.Brand>
 
-        <div>
+        <div className='d-flex align-items-center'>
           {/* login/register icon */}
-          <PersonCircle
-            className="fs-2 d-lg-none me-3"
-            id="login-logout-icon"
-            onClick={() => handleLoginLogout()}
-          />
+          {user? (
+            <div className="d-lg-none me-3 person-image-container">
+              <img src={user?.picture} alt="user profile" className='contain' height="30"/>
+            </div>
+          ) : (
+            <PersonCircle
+              className="fs-2 d-lg-none me-3 person-icon"
+              onClick={() => handleLoginLogout()}
+            />
+          )}
 
           {/* hamburger icon */}
           <Navbar.Toggle
@@ -156,9 +166,17 @@ function MyNavbar({ handleSearch }) {
 
               {/* link dropdown */}
               <NavDropdown
-                title="Links"
+                title="連結"
                 id={`offcanvasNavbarDropdown-expand-${expand}`}
               >
+                <NavDropdown.Item
+                  href="https://www.hakka.tycg.gov.tw/Default.aspx"
+                  target="_blank"
+                >
+                  桃園市政府客家事務局
+                  <BoxArrowInUpRight className="text-secondary" />
+                </NavDropdown.Item>
+                
                 <NavDropdown.Item
                   href="https://www.hakka.gov.tw/chhakka/index"
                   target="_blank"
@@ -168,10 +186,18 @@ function MyNavbar({ handleSearch }) {
                 </NavDropdown.Item>
 
                 <NavDropdown.Item
+                  href="https://www.facebook.com/tychakka?ref=embed_page"
+                  target="_blank"
+                >
+                  桃園市政府客家事務局
+                  <Meta className="text-primary" />
+                </NavDropdown.Item>
+
+                <NavDropdown.Item
                   href="https://www.facebook.com/www.hakka.gov.tw?mibextid=ZbWKwL"
                   target="_blank"
                 >
-                  臉書專頁
+                  客家委員會
                   <Meta className="text-primary" />
                 </NavDropdown.Item>
               </NavDropdown>
@@ -227,11 +253,15 @@ function MyNavbar({ handleSearch }) {
 
             {/* login/register button */}
             <Nav className="flex-grow-1 me-auto justify-content-end align-items-center pe-2 d-lg-flex d-none">
-              {/* login button */}
-              {!isLoading && (
-                <span onClick={() => handleLoginLogout()} id="login-logout-btn">
-                  {user ? '登出' : '登入'}
-                </span>
+              {user? (
+                <div className="person-image-container me-3">
+                  <img src={user?.picture} alt="user profile" className='contain' height="30"/>
+                </div>
+              ) : (
+                <PersonCircle
+                  className="fs-2 me-3 person-icon"
+                  onClick={() => handleLoginLogout()}
+                />
               )}
             </Nav>
 

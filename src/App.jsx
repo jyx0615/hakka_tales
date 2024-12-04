@@ -30,7 +30,7 @@ function App() {
     <Router>
       <Auth0ProviderWithNavigate>
         <StoryProvider>
-          <div className="container-fluid px-0 main-container vh-100 vw-100">
+          <div className="container-fluid px-0 main-container vh-100 vw-100 text-white">
             <MyNavbar handleSearch={handleSearch} />
             <Container className="pb-4 custom-container px-2" fluid="xl">
               <Routes>

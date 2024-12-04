@@ -42,7 +42,23 @@
   cursor: pointer;
 }
 
-#login-logout-icon {
+.person-icon {
+  cursor: pointer;
+  color: gray;
+}
+
+.person-icon:hover {
+  color: black;
+}
+
+.person-image-container {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.person-image-container:hover {
   cursor: pointer;
 }
 

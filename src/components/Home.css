@@ -1,9 +1,10 @@
 .custom-a {
-  color: #6c757d;
+  color: black;
+  text-shadow: none;
 }
 
 .custom-a:hover {
-  color: black;
+  color: white;
 }
 
 .dropdown-menu {

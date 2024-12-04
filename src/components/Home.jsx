@@ -1,5 +1,5 @@
 import ImageGrid from './ImageGrid';
-import { CartDash, ChevronDown } from 'react-bootstrap-icons';
+import { ChevronDown } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import { Riple } from 'react-loading-indicators';
 import PropTypes from 'prop-types';
@@ -33,9 +33,9 @@ function Home({ searchItem }) {
         <Marquee />
       </div>
 
-      <div className="row w-100 h-100">
+      <div className="row w-100 h-100 custom-text">
         {/* the main contains that shows all books */}
-        <div className="col docItemCol_VOVn">
+        <div className="col">
           <ImageGrid searchItem={searchItem} />
         </div>
 

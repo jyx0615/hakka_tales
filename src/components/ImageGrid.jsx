@@ -63,7 +63,7 @@ function ImageGrid({ searchItem }) {
       {Object.keys(filteredStories).map((type, typeIndex) => (
         <div key={typeIndex}>
           <div className="fs-2 fw-bolder my-4 ms-4">
-            <span className="bg-secondary p-2 rounded-3">{type}</span>
+            <span className="p-2 rounded-3">{type}</span>
           </div>
           <Row className="pt-3">
             {filteredStories[type].map((book, index) => (

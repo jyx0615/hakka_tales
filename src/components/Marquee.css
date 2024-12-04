@@ -2,13 +2,15 @@
   position: absolute;
   left: 0;
   top: 0;
-  background: lightsalmon;
+  background-color: #8dbdd8;
+  /* background: lightsalmon; */
   z-index: 2;
 }
 
 /* Marquee container */
 .marquee {
-  background: lightsalmon;
+  background-color: #8dbdd8;
+  /* background: lightsalmon; */
   width: 85vw;
   height: 4vw;
   box-sizing: border-box;
@@ -24,7 +26,7 @@
 /* Marquee content */
 .marquee-content {
   display: flex;
-  animation: marquee 100s linear infinite running;
+  animation: marquee 40s linear infinite running;
 }
 
 .marquee-content:hover {
@@ -43,7 +45,7 @@
 }
 
 .empty-message {
-  width: 50vw;
+  width: 10vw;
 }
 
 .marquee-tag:hover {
@@ -60,4 +62,8 @@
   100% {
     transform: translateX(-50%);
   }
+}
+
+#phone-icon {
+  color: #4390bc;
 }

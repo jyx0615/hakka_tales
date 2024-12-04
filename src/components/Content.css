@@ -131,3 +131,7 @@
   overflow-y: auto; /* Add vertical scroll if content overflows */
   max-height: 100%; /* Ensure it doesn't exceed the container */
 }
+
+.book-wrapper {
+  color: #191970;
+}

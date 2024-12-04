@@ -322,7 +322,7 @@ function Content() {
 
   return (
     <>
-      <div className="w-100 h-100 d-flex p-3 flex-column align-items-center jusitify-content-center position-relative">
+      <div className="w-100 h-100 d-flex p-3 flex-column align-items-center jusitify-content-center position-relative book-wrapper">
         {/* Audio Player */}
         {getAudioOfPage(pageIndex) && (
           <audio
@@ -333,7 +333,6 @@ function Content() {
         )}
 
         {/* BookWrapper */}
-
         {/* page view for screen size larger than md */}
         <div className="w-100 h-100 position-relative my-5  d-none d-md-block">
           <div
@@ -386,11 +385,9 @@ function Content() {
                     <div className="content-container">
                       {/* content for the back(left) side */}
                       <h4 className="mb-3">Page number = {pageNum + 1}</h4>
-                      {pageNum === totalPage ? (
-                        <p></p>
-                      ) : (
-                        <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
-                      )}
+                      <p className="fs-3 lh-lg text-start">{pages[pageNum]?.content_hakka}</p>
+                      { pageNum === totalPage - 1 &&  
+                      <span className='fs-1 text-primary'>完</span> }
                     </div>
                   </div>
                 </div>
@@ -422,7 +419,7 @@ function Content() {
               className="w-100 d-flex flex-column align-items-center justify-content-center p-3"
               ref={(el) => (pagesRefsMobile.current[pageNum + 1] = el)}
             >
-              <p className="fs-3 lh-lg">{pages[pageNum].content}</p>
+              <p className="fs-3 lh-lg bg-white rounded-3 p-3">{pages[pageNum].content_hakka}</p>
               <img
                 src={getImageOfPage(pageNum + 1)}
                 alt="illustration"
@@ -430,6 +427,10 @@ function Content() {
               />
             </div>
           ))}
+          <div className='d-flex justify-content-center'>
+          <span className='fs-1 text-primary '>完</span>
+
+          </div>
         </div>
 
         {/* Refresh button */}
@@ -466,7 +467,7 @@ function Content() {
             <input
               type="range"
               min="0"
-              max={totalPage + 1}
+              max={totalPage}
               value={pageIndex}
               onChange={(e) => goToPage(Number(e.target.value))}
               className="w-100"

@@ -87,7 +87,7 @@ function Upload() {
           {/* Image input with Bootstrap styling */}
           <div className="mb-3">
             <label htmlFor="imageInput" className="form-label">
-              選擇要上傳的影像
+              上傳影像
             </label>
             <input
               type="file"
@@ -128,8 +128,8 @@ function Upload() {
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
               作者
-              <span className="ms-3 text-secondary">
-                只限中文＋英文，最多20個字
+              <span className="ms-3">
+                只限中文/英文，最多20個字
               </span>
             </Form.Label>
             <Form.Control
@@ -176,8 +176,8 @@ function Upload() {
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
               作者
-              <span className="ms-3 text-secondary">
-                只限中文＋英文，最多20個字
+              <span className="ms-3">
+                只限中文/英文，最多20個字
               </span>
             </Form.Label>
             <Form.Control

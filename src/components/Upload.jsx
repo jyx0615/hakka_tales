@@ -128,9 +128,7 @@ function Upload() {
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
               作者
-              <span className="ms-3">
-                只限中文/英文，最多20個字
-              </span>
+              <span className="ms-3">只限中文/英文，最多20個字</span>
             </Form.Label>
             <Form.Control
               type="name"
@@ -176,9 +174,7 @@ function Upload() {
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
               作者
-              <span className="ms-3">
-                只限中文/英文，最多20個字
-              </span>
+              <span className="ms-3">只限中文/英文，最多20個字</span>
             </Form.Label>
             <Form.Control
               type="name"

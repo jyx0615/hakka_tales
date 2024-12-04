@@ -385,9 +385,12 @@ function Content() {
                     <div className="content-container">
                       {/* content for the back(left) side */}
                       <h4 className="mb-3">Page number = {pageNum + 1}</h4>
-                      <p className="fs-3 lh-lg text-start">{pages[pageNum]?.content_hakka}</p>
-                      { pageNum === totalPage - 1 &&  
-                      <span className='fs-1 text-primary'>完</span> }
+                      <p className="fs-3 lh-lg text-start">
+                        {pages[pageNum]?.content_hakka}
+                      </p>
+                      {pageNum === totalPage - 1 && (
+                        <span className="fs-1 text-primary">完</span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -419,7 +422,9 @@ function Content() {
               className="w-100 d-flex flex-column align-items-center justify-content-center p-3"
               ref={(el) => (pagesRefsMobile.current[pageNum + 1] = el)}
             >
-              <p className="fs-3 lh-lg bg-white rounded-3 p-3">{pages[pageNum].content_hakka}</p>
+              <p className="fs-3 lh-lg bg-white rounded-3 p-3">
+                {pages[pageNum].content_hakka}
+              </p>
               <img
                 src={getImageOfPage(pageNum + 1)}
                 alt="illustration"
@@ -427,9 +432,8 @@ function Content() {
               />
             </div>
           ))}
-          <div className='d-flex justify-content-center'>
-          <span className='fs-1 text-primary '>完</span>
-
+          <div className="d-flex justify-content-center">
+            <span className="fs-1 text-primary ">完</span>
           </div>
         </div>
 

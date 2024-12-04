@@ -78,9 +78,9 @@ function MyNavbar({ handleSearch }) {
     }
   };
 
-  if(user){
+  if (user) {
     console.log(user);
-    console.log(user?.picture)
+    console.log(user?.picture);
   }
 
   const closeOffcanvas = () => setShowOffcanvas(false);
@@ -102,11 +102,16 @@ function MyNavbar({ handleSearch }) {
           />
         </Navbar.Brand>
 
-        <div className='d-flex align-items-center'>
+        <div className="d-flex align-items-center">
           {/* login/register icon */}
-          {user? (
+          {user ? (
             <div className="d-lg-none me-3 person-image-container">
-              <img src={user?.picture} alt="user profile" className='contain' height="30"/>
+              <img
+                src={user?.picture}
+                alt="user profile"
+                className="contain"
+                height="30"
+              />
             </div>
           ) : (
             <PersonCircle
@@ -176,7 +181,7 @@ function MyNavbar({ handleSearch }) {
                   桃園市政府客家事務局
                   <BoxArrowInUpRight className="text-secondary" />
                 </NavDropdown.Item>
-                
+
                 <NavDropdown.Item
                   href="https://www.hakka.gov.tw/chhakka/index"
                   target="_blank"
@@ -253,9 +258,14 @@ function MyNavbar({ handleSearch }) {
 
             {/* login/register button */}
             <Nav className="flex-grow-1 me-auto justify-content-end align-items-center pe-2 d-lg-flex d-none">
-              {user? (
+              {user ? (
                 <div className="person-image-container me-3">
-                  <img src={user?.picture} alt="user profile" className='contain' height="30"/>
+                  <img
+                    src={user?.picture}
+                    alt="user profile"
+                    className="contain"
+                    height="30"
+                  />
                 </div>
               ) : (
                 <PersonCircle

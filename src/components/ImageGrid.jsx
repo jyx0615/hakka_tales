@@ -59,7 +59,6 @@ function ImageGrid({ searchItem }) {
 
   return (
     <>
-      {/* use mock data */}
       {Object.keys(filteredStories).map((type, typeIndex) => (
         <div key={typeIndex}>
           <div className="fs-2 fw-bolder my-4 ms-4">

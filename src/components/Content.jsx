@@ -81,6 +81,8 @@ function Content() {
 
   // Handle page navigation on click
   const handlePageClick = (pageId) => {
+    // prevent flipping for the last page
+    if(pageId === 'page-' + totalPage) return;
     const currentLocation = pageLocation[pageId] || 'right';
     if (currentLocation === 'right') {
       flippingFromRightToLeft(pageId);
@@ -309,7 +311,7 @@ function Content() {
     if (pageNum === 0) {
       return currentStory.cover_image;
     } else {
-      return pages[pageNum - 1].narration_url;
+      return pages[pageNum - 1].image;
     }
   };
 
@@ -334,7 +336,7 @@ function Content() {
 
         {/* BookWrapper */}
         {/* page view for screen size larger than md */}
-        <div className="w-100 h-100 position-relative my-5  d-none d-md-block">
+        <div className="w-100 h-100 position-relative mt-5 mb-3 d-none d-md-block">
           <div
             className="pageWrapper p-1 w-50 h-100 position-absolute float-end"
             ref={setPageWrapperRef}
@@ -384,12 +386,14 @@ function Content() {
                     <div className="pageFoldLeft"></div>
                     <div className="content-container">
                       {/* content for the back(left) side */}
-                      <h4 className="mb-3">Page number = {pageNum + 1}</h4>
                       <p className="fs-3 lh-lg text-start">
                         {pages[pageNum]?.content_hakka}
                       </p>
-                      {pageNum === totalPage - 1 && (
-                        <span className="fs-1 text-primary">完</span>
+                      {/* page number */}
+                      {(pageNum === totalPage - 1)? (
+                        <span className="finish-text">完</span>
+                      ) : (
+                        <span className='page-number'>{pageNum + 1}</span>
                       )}
                     </div>
                   </div>
@@ -433,21 +437,19 @@ function Content() {
             </div>
           ))}
           <div className="d-flex justify-content-center">
-            <span className="fs-1 text-primary ">完</span>
+            <span className='finish-text-sm'>完</span>
           </div>
         </div>
 
         {/* Refresh button */}
         <div className="w-100 d-flex justify-content-end p-2">
           {/* Conditionally render the navigation button on the last page */}
-          {pageIndex === totalPage + 1 && (
-            <button
-              onClick={() => goToPage(0)}
-              className="btn btn-primary-outline"
-            >
-              <ArrowClockwise color="black" className="fs-3 bolder fw-bolder" />
-            </button>
-          )}
+          <button
+            onClick={() => goToPage(0)}
+            className={`btn btn-primary-outline ${pageIndex === totalPage ? '' : 'invisible'}`}
+          >
+            <ArrowClockwise color="black" className="fs-3 bolder fw-bolder" />
+          </button>
         </div>
 
         {/* control bar */}

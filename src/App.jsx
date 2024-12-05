@@ -10,6 +10,7 @@ import Home from './components/Home';
 import Content from './components/Content';
 import Contact from './components/Contact';
 import Upload from './components/Upload';
+import Activities from './components/Activities';
 import './App.css';
 import useStories, { StoryProvider } from './hooks/useStories';
 import Auth0ProviderWithNavigate from './auth/Auth0ProviderWithNavigate';
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/upload" element={<Upload />} />
                 <Route path="/book/:bookIndex" element={<Book />} />
+                <Route path="/activities" element={<Activities />} />
                 <Route
                   path="/book/:bookIndex/content/:category"
                   element={<Content />}

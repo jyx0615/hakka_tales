@@ -135,3 +135,27 @@
 .book-wrapper {
   color: #191970;
 }
+
+.finish-text {
+  margin-right: 10px;
+  color: black;
+  font-size: 5rem;
+  font-weight: bold;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.page-number {
+  margin-right: 10px;
+  color: black;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.finish-text-sm {
+  color: black;
+  font-size: 5rem;
+  font-weight: bold;
+}

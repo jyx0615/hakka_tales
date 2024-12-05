@@ -22,6 +22,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 
 import logo from '../assets/logo.png';
+import fox from '../assets/fox.png';
 import useStories from '../hooks/useStories';
 import './MyNavbar.css';
 
@@ -30,8 +31,6 @@ function MyNavbar({ handleSearch }) {
   const [showOffCanvas, setShowOffcanvas] = useState(false);
   const { categories, stories, fetchCategories } = useStories();
   const navigate = useNavigate();
-
-  const { loginWithRedirect, logout, user, isLoading } = useAuth0();
 
   // when to become a hamburger icon([false, 'sm', 'md', 'lg', 'xl', 'xxl'])
   const expand = 'lg';
@@ -70,19 +69,6 @@ function MyNavbar({ handleSearch }) {
     navigate(`/book/${id}`);
   };
 
-  const handleLoginLogout = () => {
-    if (!user) {
-      loginWithRedirect();
-    } else {
-      logout();
-    }
-  };
-
-  if (user) {
-    console.log(user);
-    console.log(user?.picture);
-  }
-
   const closeOffcanvas = () => setShowOffcanvas(false);
   const openOffcanvas = () => setShowOffcanvas(true);
 
@@ -103,22 +89,10 @@ function MyNavbar({ handleSearch }) {
         </Navbar.Brand>
 
         <div className="d-flex align-items-center">
-          {/* login/register icon */}
-          {user ? (
-            <div className="d-lg-none me-3 person-image-container">
-              <img
-                src={user?.picture}
-                alt="user profile"
-                className="contain"
-                height="30"
-              />
-            </div>
-          ) : (
-            <PersonCircle
-              className="fs-2 d-lg-none me-3 person-icon"
-              onClick={() => handleLoginLogout()}
-            />
-          )}
+          {/* login/register icon(small screen) */}
+          <div className='d-lg-none'>
+            <LoginLogoutIcon />
+          </div>
 
           {/* hamburger icon */}
           <Navbar.Toggle
@@ -135,6 +109,7 @@ function MyNavbar({ handleSearch }) {
           show={showOffCanvas}
           onHide={closeOffcanvas}
         >
+          {/* brand logo */}
           <Offcanvas.Header closeButton>
             <Offcanvas.Title
               id={`offcanvasNavbarLabel-expand-${expand}`}
@@ -154,7 +129,7 @@ function MyNavbar({ handleSearch }) {
               <Nav.Link as={Link} to="/">
                 主頁
               </Nav.Link>
-              <Nav.Link href="#action4">
+              <Nav.Link as={Link} to="/activities">
                 <Megaphone className="text-danger fs-3 pe-2 d-lg-none d-xl-inline" />
                 近期活動
               </Nav.Link>
@@ -171,7 +146,7 @@ function MyNavbar({ handleSearch }) {
 
               {/* link dropdown */}
               <NavDropdown
-                title="連結"
+                title="相關連結"
                 id={`offcanvasNavbarDropdown-expand-${expand}`}
               >
                 <NavDropdown.Item
@@ -256,27 +231,13 @@ function MyNavbar({ handleSearch }) {
               </NavDropdown>
             </Nav>
 
-            {/* login/register button */}
+            {/* login/register button(large screen) */}
             <Nav className="flex-grow-1 me-auto justify-content-end align-items-center pe-2 d-lg-flex d-none">
-              {user ? (
-                <div className="person-image-container me-3">
-                  <img
-                    src={user?.picture}
-                    alt="user profile"
-                    className="contain"
-                    height="30"
-                  />
-                </div>
-              ) : (
-                <PersonCircle
-                  className="fs-2 me-3 person-icon"
-                  onClick={() => handleLoginLogout()}
-                />
-              )}
+              <LoginLogoutIcon />
             </Nav>
 
             {/* search button */}
-            <Form className="d-flex mh-100">
+            <Form className="d-flex mh-100 w-25 justify-content-end align-items-center">
               <Form.Control
                 type="search"
                 placeholder="搜尋"
@@ -298,6 +259,42 @@ function MyNavbar({ handleSearch }) {
 
 MyNavbar.propTypes = {
   handleSearch: PropTypes.func,
+};
+
+
+const LoginLogoutIcon = () => {
+  const { loginWithRedirect, logout, user } = useAuth0();
+
+  const getImageOfUser = () => {
+    if(user.picture) {
+      return user.picture;
+    } else {
+      return fox;
+    }
+  };
+
+  return (
+    user ? (
+      <div className="me-3 dropdown person-image-container">
+        <img
+          id="user-image" aria-expanded="true" role="button"
+          className="me-3 person-icon dropdown-toggle contain"
+          src={getImageOfUser()}
+          alt="user profile"
+          height="30"
+        />
+        <div aria-labelledby="user-image" data-bs-popper="static" 
+        className="dropdown-menu dropdown-menu-start py-1" style={{ minWidth: '60px' }}>
+          <a className="dropdown-item px-2 text-center" onClick={() => logout()}>登出</a>
+        </div>
+      </div>
+    ) : (
+      <PersonCircle
+        className="fs-2 me-3 person-icon"
+        onClick={() => loginWithRedirect()}
+      />
+    )
+  );
 };
 
 export default MyNavbar;

@@ -1,9 +1,15 @@
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('../public/fonts/Iansui-Regular.ttf') format('truetype'); /* Absolute path */
+}
+
 :root {
   --light-blue: #e4f3f4; /* Define the color alias */
 }
 
 * {
   box-sizing: border-box;
+  font-family: 'MyCustomFont', 'Courier New', Courier, monospace;
 }
 
 .main-container {

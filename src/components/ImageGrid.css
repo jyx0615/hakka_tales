@@ -7,10 +7,6 @@
   background-position: center;
 }
 
-.bookName {
-  margin-top: 30%;
-}
-
 .bookContainer:hover {
   background-image: url('../assets/book3.svg');
   background-size: contain;
@@ -18,6 +14,10 @@
   background-position: center;
   color: white;
   cursor: pointer;
+}
+
+.bookName {
+  margin-top: 30%;
 }
 
 .book-cover {
@@ -29,4 +29,5 @@
 
 .book-cover:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }

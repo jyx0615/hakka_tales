@@ -90,7 +90,7 @@ function MyNavbar({ handleSearch }) {
 
         <div className="d-flex align-items-center">
           {/* login/register icon(small screen) */}
-          <div className='d-lg-none'>
+          <div className="d-lg-none">
             <LoginLogoutIcon />
           </div>
 
@@ -261,39 +261,44 @@ MyNavbar.propTypes = {
   handleSearch: PropTypes.func,
 };
 
-
 const LoginLogoutIcon = () => {
   const { loginWithRedirect, logout, user } = useAuth0();
 
   const getImageOfUser = () => {
-    if(user.picture) {
+    if (user.picture) {
       return user.picture;
     } else {
       return fox;
     }
   };
 
-  return (
-    user ? (
-      <div className="me-3 dropdown person-image-container">
-        <img
-          id="user-image" aria-expanded="true" role="button"
-          className="me-3 person-icon dropdown-toggle contain"
-          src={getImageOfUser()}
-          alt="user profile"
-          height="30"
-        />
-        <div aria-labelledby="user-image" data-bs-popper="static" 
-        className="dropdown-menu dropdown-menu-start py-1" style={{ minWidth: '60px' }}>
-          <a className="dropdown-item px-2 text-center" onClick={() => logout()}>登出</a>
-        </div>
-      </div>
-    ) : (
-      <PersonCircle
-        className="fs-2 me-3 person-icon"
-        onClick={() => loginWithRedirect()}
+  return user ? (
+    <div className="me-3 dropdown person-image-container">
+      <img
+        id="user-image"
+        aria-expanded="true"
+        role="button"
+        className="me-3 person-icon dropdown-toggle contain"
+        src={getImageOfUser()}
+        alt="user profile"
+        height="30"
       />
-    )
+      <div
+        aria-labelledby="user-image"
+        data-bs-popper="static"
+        className="dropdown-menu dropdown-menu-start py-1"
+        style={{ minWidth: '60px' }}
+      >
+        <a className="dropdown-item px-2 text-center" onClick={() => logout()}>
+          登出
+        </a>
+      </div>
+    </div>
+  ) : (
+    <PersonCircle
+      className="fs-2 me-3 person-icon"
+      onClick={() => loginWithRedirect()}
+    />
   );
 };
 

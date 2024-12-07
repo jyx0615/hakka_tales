@@ -82,7 +82,7 @@ function Content() {
   // Handle page navigation on click
   const handlePageClick = (pageId) => {
     // prevent flipping for the last page
-    if(pageId === 'page-' + totalPage) return;
+    if (pageId === 'page-' + totalPage) return;
     const currentLocation = pageLocation[pageId] || 'right';
     if (currentLocation === 'right') {
       flippingFromRightToLeft(pageId);
@@ -390,10 +390,10 @@ function Content() {
                         {pages[pageNum]?.content_hakka}
                       </p>
                       {/* page number */}
-                      {(pageNum === totalPage - 1)? (
+                      {pageNum === totalPage - 1 ? (
                         <span className="finish-text">完</span>
                       ) : (
-                        <span className='page-number'>{pageNum + 1}</span>
+                        <span className="page-number">{pageNum + 1}</span>
                       )}
                     </div>
                   </div>
@@ -437,7 +437,7 @@ function Content() {
             </div>
           ))}
           <div className="d-flex justify-content-center">
-            <span className='finish-text-sm'>完</span>
+            <span className="finish-text-sm">完</span>
           </div>
         </div>
 

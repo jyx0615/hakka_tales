@@ -80,7 +80,7 @@ export function StoryProvider({ children }) {
         fetchStories,
         fetchCurrentStory,
         fetchCategories,
-        fetchActivities
+        fetchActivities,
       }}
     >
       {children}

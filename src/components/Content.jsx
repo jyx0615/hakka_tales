@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap-icons';
 import { Riple } from 'react-loading-indicators';
 import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 import useStories from '../hooks/useStories';
 
@@ -44,6 +45,7 @@ function Content() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const pagesRefsMobile = useRef([]);
   const mobileContainerRef = useRef();
+  const navigate = useNavigate();
 
   const flippingFromRightToLeft = (pageId, duration = 1.5) => {
     const newZi = Math.max(leftZi.current, rightZi.current) + 1;
@@ -164,6 +166,10 @@ function Content() {
     if (pageIndex === totalPage) {
       setIsPlaying(false);
     }
+  };
+
+  const goToQuiz = () => {
+    navigate('/quiz'); // Navigate to the Quiz page
   };
 
   const togglePlay = () => {
@@ -441,9 +447,18 @@ function Content() {
           </div>
         </div>
 
-        {/* Refresh button */}
+        {/* Buttons for last page */}
         <div className="w-100 d-flex justify-content-end p-2">
-          {/* Conditionally render the navigation button on the last page */}
+          {/* Go to Quiz button */}
+          {pageIndex === totalPage && (
+            <button
+              onClick={goToQuiz}
+              className="btn btn-success mx-2"
+            >
+              前往測驗
+            </button>
+          )}
+          {/* Refresh button */}
           <button
             onClick={() => goToPage(0)}
             className={`btn btn-primary-outline ${pageIndex === totalPage ? '' : 'invisible'}`}
@@ -451,6 +466,7 @@ function Content() {
             <ArrowClockwise color="black" className="fs-3 bolder fw-bolder" />
           </button>
         </div>
+
 
         {/* control bar */}
         <div className="row w-100 pb-2">

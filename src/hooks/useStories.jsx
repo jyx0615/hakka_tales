@@ -9,6 +9,7 @@ import {
 import { getActivities } from '../utils/mockData.js';
 import { getStories, getStoryById, getCategories } from '../utils/client.js';
 import PropTypes from 'prop-types'; // Import PropTypes
+import { getQuizzes } from '../utils/mockData.js';
 
 // Create a Context
 const StoryContext = createContext({
@@ -20,6 +21,7 @@ const StoryContext = createContext({
   fetchCurrentStory: () => {},
   fetchCategories: () => {},
   fetchActivities: () => {},
+  fetchQuizzes: () => {},
 });
 
 // Create a Provider component
@@ -28,6 +30,7 @@ export function StoryProvider({ children }) {
   const [currentStory, setCurrentStory] = useState({});
   const [categories, setCategories] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [quizzes, setQuizzes] = useState([]); 
 
   const fetchCategories = useCallback(async () => {
     const res = await getCategories();
@@ -53,6 +56,17 @@ export function StoryProvider({ children }) {
     }
   }, []);
 
+  const fetchQuizzes = useCallback(async () => {
+    try {
+      const res = await getQuizzes();
+      console.log('Fetched quizzes:', res.data.data); // Verify data
+      setQuizzes(res.data.data);
+    } catch (error) {
+      console.error('Error fetching quizzes:', error);
+    }
+  }, []);
+   
+  
   const stories = useMemo(() => {
     if (!rawStories.length || !categories.length) {
       fetchCategories();
@@ -77,10 +91,12 @@ export function StoryProvider({ children }) {
         activities,
         currentStory,
         categories,
+        quizzes,
         fetchStories,
         fetchCurrentStory,
         fetchCategories,
-        fetchActivities
+        fetchActivities,
+        fetchQuizzes,
       }}
     >
       {children}

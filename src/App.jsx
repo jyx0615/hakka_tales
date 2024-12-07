@@ -14,6 +14,7 @@ import Activities from './components/Activities';
 import './App.css';
 import useStories, { StoryProvider } from './hooks/useStories';
 import Auth0ProviderWithNavigate from './auth/Auth0ProviderWithNavigate';
+import Quiz from './components/Quiz';
 
 function App() {
   const { fetchStories } = useStories();
@@ -44,6 +45,7 @@ function App() {
                   path="/book/:bookIndex/content/:category"
                   element={<Content />}
                 />
+                <Route path="/quiz" element={<Quiz />} /> 
               </Routes>
             </Container>
           </div>

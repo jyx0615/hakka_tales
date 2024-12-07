@@ -230,6 +230,42 @@ const pages = [
   },
 ];
 
+const quizzes = [
+  {
+    id: '1',
+    question: 'What is the capital of France?',
+    type: 'multiple-choice',
+    choices: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+    correctAnswer: 'Paris',
+  },
+  {
+    id: '2',
+    question: 'Solve: 5 + 3',
+    type: 'fill-in-the-blank',
+    correctAnswer: '8',
+  },
+  {
+    id: '3',
+    question: 'Which is the largest planet in our solar system?',
+    type: 'multiple-choice',
+    choices: ['Earth', 'Mars', 'Jupiter', 'Venus'],
+    correctAnswer: 'Jupiter',
+  },
+];
+
+// Mock function to simulate fetching quizzes
+export const getQuizzes = async () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: {
+          data: quizzes,
+        },
+      });
+    }, 500); // Simulate a network delay
+  });
+};
+
 const activities = [
   {
     id: '0',

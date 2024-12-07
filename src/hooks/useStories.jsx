@@ -30,7 +30,7 @@ export function StoryProvider({ children }) {
   const [currentStory, setCurrentStory] = useState({});
   const [categories, setCategories] = useState([]);
   const [activities, setActivities] = useState([]);
-  const [quizzes, setQuizzes] = useState([]); 
+  const [quizzes, setQuizzes] = useState([]);
 
   const fetchCategories = useCallback(async () => {
     const res = await getCategories();
@@ -65,8 +65,7 @@ export function StoryProvider({ children }) {
       console.error('Error fetching quizzes:', error);
     }
   }, []);
-   
-  
+
   const stories = useMemo(() => {
     if (!rawStories.length || !categories.length) {
       fetchCategories();

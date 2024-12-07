@@ -91,12 +91,16 @@ function Quiz() {
 
   if (showResults) {
     // Results view
-    const correctCount = userAnswers.filter((answer) => answer.isCorrect).length;
+    const correctCount = userAnswers.filter(
+      (answer) => answer.isCorrect
+    ).length;
     return (
       <div className="quiz-wrapper">
         <div className="quiz-card results-container">
           <h1>測驗結果</h1>
-          <p>您在 {userAnswers.length} 題中答對 {correctCount} 題</p>
+          <p>
+            您在 {userAnswers.length} 題中答對 {correctCount} 題
+          </p>
 
           <div className="results-scroll">
             <ul className="results-list">
@@ -146,8 +150,8 @@ function Quiz() {
                     ? choice === currentQuestion.correctAnswer
                       ? 'correct'
                       : selectedAnswer === choice
-                      ? 'incorrect'
-                      : ''
+                        ? 'incorrect'
+                        : ''
                     : ''
                 }`}
                 onClick={() => handleChoiceClick(choice)}

@@ -271,71 +271,71 @@ const activities = [
     id: '0',
     title: '第三期 新星專區 桃園你和我',
     description: '114-03-14 故事',
-    type: '1'
+    type: '1',
   },
   {
     id: '1',
     title: '第二期 新星專區 我的台灣記憶',
     description: '114-02-14 故事',
-    type: '1'
+    type: '1',
   },
   {
     id: '2',
     title: '第一期 封面故事投稿獲獎名單',
     description: '114-01-28 封面',
-    type: '1'
+    type: '1',
   },
   {
     id: '3',
     title: '茶香四溢，吃得客家文化',
     description: '114-07-03 大型活動',
     duration: '114/07/19',
-    type: '2'
+    type: '2',
   },
   {
     id: '4',
     title: '你客了嗎？',
     description: '114-05-14 小型活動',
     duration: '114/05/24 ~ 114/05/25',
-    type: '2'
+    type: '2',
   },
   {
     id: '5',
     title: '桃園天穿日',
     description: '114-05-14 小型活動',
-    type: '3'
+    type: '3',
   },
   {
     id: '6',
     title: '桃園魯冰花活動',
     description: '114-05-14 小型活動',
-    type: '3'
+    type: '3',
   },
   {
     id: '7',
     title: '桃園桐花祭',
     description: '114-05-14 小型活動',
-    type: '3'
+    type: '3',
   },
   {
     id: '8',
     title: '桃園客語講故事比賽',
     description: '114-05-14 小型活動',
-    type: '3'
+    type: '3',
   },
   {
     id: '9',
     title: '海客文化藝術季',
     description: '114-05-14 小型活動',
-    type: '3'
+    type: '3',
   },
   {
     id: '10',
     title: '乙未客家戰役文化季',
     description: '114-05-14 小型活動',
-    type: '3'
+    type: '3',
   },
-]
+];
 
 // Define functions to simulate backend behavior
 export const getStories = () => {

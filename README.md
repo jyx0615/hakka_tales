@@ -51,3 +51,7 @@ To start the development server, run:
 ```
 npm run dev
 ```
+
+### Preview
+
+You can preview the deployed application at [Hakka Learning App](https://hakka-tales.onrender.com).

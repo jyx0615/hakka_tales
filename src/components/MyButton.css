@@ -41,12 +41,12 @@
 }
 
 /* 四縣腔 (green) */
-.sixian .shadow-layer,
-.sixian .bg-layer {
+.sijian .shadow-layer,
+.sijian .bg-layer {
   background-color: green;
 }
 
-.sixian .text-layer {
+.sijian .text-layer {
   color: green;
 }
 

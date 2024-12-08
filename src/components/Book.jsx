@@ -44,7 +44,7 @@ function Book() {
             <img
               src={currentStory.cover_image}
               alt="cover image"
-              className="w-100"
+              className="w-100 rounded-4"
             />
           </div>
           <h1>{currentStory.title}</h1>
@@ -65,8 +65,8 @@ function Book() {
           <div className="d-flex align-items-center justify-content-end gap-4 mb-3">
             <MyButton
               text="四縣腔"
-              category="sixian"
-              target_page={`/book/${bookIndex}/content/sixian`}
+              category="sijian"
+              target_page={`/book/${bookIndex}/content/sijian`}
             />
             <MyButton
               text="海陸腔"

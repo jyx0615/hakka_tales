@@ -18,6 +18,7 @@ import {
   Megaphone,
   PencilSquare,
   PersonCircle,
+  House,
 } from 'react-bootstrap-icons';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -127,20 +128,21 @@ function MyNavbar({ handleSearch }) {
           <Offcanvas.Body>
             <Nav className="flex-grow-1 pe-4 me-auto justify-content-start">
               <Nav.Link as={Link} to="/">
+                <House className="text-primary fs-3 pe-2 d-lg-none d-xl-inline mb-1" />
                 主頁
               </Nav.Link>
               <Nav.Link as={Link} to="/activities">
-                <Megaphone className="text-danger fs-3 pe-2 d-lg-none d-xl-inline" />
+                <Megaphone className="text-danger fs-3 pe-2 d-lg-none d-xl-inline mb-1" />
                 近期活動
               </Nav.Link>
 
               <Nav.Link as={Link} to="/upload">
-                <PencilSquare className="text-secondary fs-3 pe-2 d-lg-none d-xl-inline" />
+                <PencilSquare className="text-secondary fs-3 pe-2 d-lg-none d-xl-inline mb-1" />
                 投稿專區
               </Nav.Link>
 
               <Nav.Link as={Link} to="/contact">
-                <TelephoneFill className="text-success fs-3 pe-2 d-lg-none d-xl-inline" />
+                <TelephoneFill className="text-success fs-3 pe-2 d-lg-none d-xl-inline mb-1" />
                 聯絡我們
               </Nav.Link>
 
@@ -237,7 +239,8 @@ function MyNavbar({ handleSearch }) {
             </Nav>
 
             {/* search button */}
-            <Form className="d-flex mh-100 w-25 justify-content-end align-items-center">
+            {/* set w-25 when screen is large and do not w-100 when screen is small */}
+            <Form className="d-flex mh-100 justify-content-end align-items-center custom-input">
               <Form.Control
                 type="search"
                 placeholder="搜尋"

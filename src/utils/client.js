@@ -26,6 +26,10 @@ export function getQuizzes() {
   return client.get('/exercise');
 }
 
+export function getAnswerById(bookIndex, exerciseIndex, data) {
+  return client.post(`/story/${bookIndex}/exercise/${exerciseIndex}`, data);
+}
+
 // getStories().then((res) => {
 //   console.log(res.data);
 // });

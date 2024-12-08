@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Riple } from 'react-loading-indicators';
 
+import { getAnswerById } from '../utils/client';
 import useStories from '../hooks/useStories';
 import './Quiz.css';
 
@@ -58,6 +59,13 @@ function Quiz() {
   const handelSubmit = () => {
     setHasAnswered(true);
     var isAnswerCorrect;
+
+    const data = {
+      type: currentQuestion.type - 1,
+      answers: selectedAnswer,
+    };
+    const res = getAnswerById(bookIndex, currentQuestionIndex, data);
+    console.log(res.data.data);
 
     // multiple choice
     if (currentQuestion.type == 1) {

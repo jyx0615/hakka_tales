@@ -9,7 +9,6 @@ import {
 } from 'react-bootstrap-icons';
 import { Riple } from 'react-loading-indicators';
 import { useMediaQuery } from 'react-responsive';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 import useStories from '../hooks/useStories';
 import MyButton from './MyButton';
@@ -19,8 +18,6 @@ function Content() {
   const { currentStory, fetchCurrentStory } = useStories();
   const [loading, setLoading] = useState(true);
   const { bookIndex, category } = useParams();
-
-  console.log(category);
 
   useEffect(() => {
     const getStory = async () => {
@@ -317,9 +314,14 @@ function Content() {
 
   const getAudioOfPage = (pageNum) => {
     if (pageNum === 0 || pageNum == totalPage + 1) return null; // No audio for the book cover
-    return pages[pageNum - 1]?.audios[0]?.audio_url || null; // Return audio URL or null
-    // Example URL with raw=1 to allow direct playback
-    // return pages[pageNum - 1].audios[0].audio_url;
+    // iterate through the audios array to find the audio_url that has is the same as the category
+    for (let i = 0; i < pages[pageNum - 1]?.audios.length; i++) {
+      if (pages[pageNum - 1]?.audios[i].dialect === category) {
+        return pages[pageNum - 1]?.audios[i].audio_url;
+      }
+    }
+    // return null if the audio is not found
+    return null;
   };
 
   return (

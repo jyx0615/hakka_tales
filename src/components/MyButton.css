@@ -59,3 +59,13 @@
 .hailu .text-layer {
   color: blue;
 }
+
+/* quiz (orange) */
+.quiz .shadow-layer,
+.quiz .bg-layer {
+  background-color: orange;
+}
+
+.quiz .text-layer {
+  color: orange;
+}

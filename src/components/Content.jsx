@@ -12,8 +12,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 import useStories from '../hooks/useStories';
-
-// import OverView from './Overview';
+import MyButton from './MyButton';
 import './Content.css';
 
 function Content() {
@@ -45,7 +44,6 @@ function Content() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const pagesRefsMobile = useRef([]);
   const mobileContainerRef = useRef();
-  const navigate = useNavigate();
 
   const flippingFromRightToLeft = (pageId, duration = 1.5) => {
     const newZi = Math.max(leftZi.current, rightZi.current) + 1;
@@ -166,10 +164,6 @@ function Content() {
     if (pageIndex === totalPage) {
       setIsPlaying(false);
     }
-  };
-
-  const goToQuiz = () => {
-    navigate('/quiz'); // Navigate to the Quiz page
   };
 
   const togglePlay = () => {
@@ -330,7 +324,7 @@ function Content() {
 
   return (
     <>
-      <div className="w-100 h-100 d-flex p-3 flex-column align-items-center jusitify-content-center position-relative book-wrapper">
+      <div className="w-100 h-100 d-flex p-3 flex-column align-items-center jusitify-content-center position-relative blue-text">
         {/* Audio Player */}
         {getAudioOfPage(pageIndex) && (
           <audio
@@ -411,7 +405,7 @@ function Content() {
 
         {/* page view for screen size smaller than md */}
         <div
-          className="d-block d-md-none w-100 h-100 overflow-auto"
+          className="d-block d-md-none w-100 h-100 overflow-auto p-3"
           ref={mobileContainerRef}
         >
           {/* the cover page */}
@@ -422,7 +416,7 @@ function Content() {
             <img
               src={getImageOfPage(0)}
               alt="illustration"
-              className="user-select-none p-2 mh-100 mw-100"
+              className="user-select-none py-2 mh-100 mw-100 rounded-4"
             />
           </div>
 
@@ -432,13 +426,13 @@ function Content() {
               className="w-100 d-flex flex-column align-items-center justify-content-center p-3"
               ref={(el) => (pagesRefsMobile.current[pageNum + 1] = el)}
             >
-              <p className="fs-3 lh-lg bg-white rounded-3 p-3">
+              <p className="fs-3 lh-lg bg-white rounded-3 p-2">
                 {pages[pageNum].content_hakka}
               </p>
               <img
                 src={getImageOfPage(pageNum + 1)}
                 alt="illustration"
-                className="user-select-none p-2 mh-100 mw-100"
+                className="user-select-none py-2 mh-100 mw-100 rounded-4"
               />
             </div>
           ))}
@@ -448,17 +442,22 @@ function Content() {
         </div>
 
         {/* Buttons for last page */}
-        <div className="w-100 d-flex justify-content-end p-2">
+        <div
+          className={`w-100 d-flex justify-content-end p-2 ${pageIndex === totalPage ? '' : 'invisible'}`}
+        >
           {/* Go to Quiz button */}
-          {pageIndex === totalPage && (
-            <button onClick={goToQuiz} className="btn btn-success mx-2">
-              前往測驗
-            </button>
-          )}
+          <div className="me-3">
+            <MyButton
+              text="前往測驗"
+              category="quiz"
+              target_page={`/quiz/${bookIndex}`}
+            />
+          </div>
+
           {/* Refresh button */}
           <button
             onClick={() => goToPage(0)}
-            className={`btn btn-primary-outline ${pageIndex === totalPage ? '' : 'invisible'}`}
+            className={`btn btn-primary-outline`}
           >
             <ArrowClockwise color="black" className="fs-3 bolder fw-bolder" />
           </button>

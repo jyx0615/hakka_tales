@@ -18,6 +18,14 @@ export function getCategories() {
   return client.get('/category');
 }
 
+export function getQuizById(bookIndex) {
+  return client.get(`/story/${bookIndex}/exercise`);
+}
+
+export function getQuizzes() {
+  return client.get('/exercise');
+}
+
 // getStories().then((res) => {
 //   console.log(res.data);
 // });
@@ -27,5 +35,13 @@ export function getCategories() {
 // });
 
 // getCategories().then((res) => {
+//   console.log(res.data);
+// });
+
+// getQuizById(2).then((res) => {
+//   console.log(res.data);
+// });
+
+// getQuizzes().then((res) => {
 //   console.log(res.data);
 // });

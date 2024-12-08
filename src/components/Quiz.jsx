@@ -1,66 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Riple } from 'react-loading-indicators';
+
 import useStories from '../hooks/useStories';
 import './Quiz.css';
 
 function Quiz() {
-  const { quizzes, fetchQuizzes } = useStories();
+  const { bookIndex } = useParams();
+  const { currentQuiz, fetchCurrentQuiz } = useStories();
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
-  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
   const [userAnswers, setUserAnswers] = useState([]); // Store user answers
   const [showResults, setShowResults] = useState(false); // Toggle between quiz and results
   const [loading, setLoading] = useState(true);
+  const [hasAnswered, setHasAnswered] = useState(false);
 
   // Fetch quizzes on load
   useEffect(() => {
     const fetchQuizData = async () => {
-      await fetchQuizzes();
+      await fetchCurrentQuiz(bookIndex);
       setLoading(false);
     };
     fetchQuizData();
-  }, [fetchQuizzes]);
+  }, []);
 
+  // display the loading icon when data is not loaded
   if (loading) {
-    return <div className="quiz-wrapper">Loading quizzes...</div>;
+    return (
+      <div className="d-flex align-items-center justify-content-center w-100 h-100">
+        <Riple color="#32cd32" size="medium" text="" textColor="" />
+      </div>
+    );
   }
 
-  if (!quizzes || quizzes.length === 0) {
-    return <div className="quiz-wrapper">No quizzes available.</div>;
+  // display no quizzes available message
+  if (!currentQuiz || currentQuiz.length === 0) {
+    return (
+      <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+        <div className=" custom-text fs-1">目前的故事沒有測驗</div>
+      </div>
+    );
   }
 
-  const currentQuestion = quizzes[currentQuestionIndex];
+  const currentQuestion = currentQuiz[currentQuestionIndex];
 
-  const handleChoiceClick = (choice) => {
-    setSelectedAnswer(choice);
-    const isAnswerCorrect = choice === currentQuestion.correctAnswer;
-    setIsCorrect(isAnswerCorrect);
-    setShowCorrectAnswer(!isAnswerCorrect);
-
-    // Save user answer
-    setUserAnswers((prevAnswers) => [
-      ...prevAnswers,
-      {
-        question: currentQuestion.question,
-        userAnswer: choice,
-        correctAnswer: currentQuestion.correctAnswer,
-        isCorrect: isAnswerCorrect,
-      },
-    ]);
+  const handleRestartQuiz = () => {
+    setCurrentQuestionIndex(0);
+    setSelectedAnswer('');
+    setIsCorrect(null);
+    setUserAnswers([]);
+    setShowResults(false);
   };
 
-  const handleInputSubmit = () => {
-    const isAnswerCorrect =
-      selectedAnswer.trim().toLowerCase() ===
-      currentQuestion.correctAnswer.trim().toLowerCase();
-    setIsCorrect(isAnswerCorrect);
-    setShowCorrectAnswer(!isAnswerCorrect);
+  // Submit answer
+  const handelSubmit = () => {
+    setHasAnswered(true);
+    var isAnswerCorrect;
 
+    // multiple choice
+    if (currentQuestion.type == 1) {
+      isAnswerCorrect = selectedAnswer === currentQuestion.correctAnswer;
+    }
+    // fill in blank
+    else {
+      const userAns = selectedAnswer?.trim().toLowerCase();
+      const rightAns = currentQuestion.correctAnswer?.trim().toLowerCase();
+      isAnswerCorrect = userAns === rightAns;
+    }
+
+    setIsCorrect(isAnswerCorrect);
     // Save user answer
     setUserAnswers((prevAnswers) => [
       ...prevAnswers,
       {
-        question: currentQuestion.question,
+        question: currentQuestion.prompt_text,
         userAnswer: selectedAnswer,
         correctAnswer: currentQuestion.correctAnswer,
         isCorrect: isAnswerCorrect,
@@ -68,25 +83,31 @@ function Quiz() {
     ]);
   };
 
+  // go to next question
   const handleNextQuestion = () => {
+    setHasAnswered(false);
     setSelectedAnswer('');
     setIsCorrect(null);
-    setShowCorrectAnswer(false);
 
-    if (currentQuestionIndex < quizzes.length - 1) {
+    if (currentQuestionIndex < currentQuiz.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     } else {
       setShowResults(true); // Show results after the last question
     }
   };
 
-  const handleRestartQuiz = () => {
-    setCurrentQuestionIndex(0);
-    setSelectedAnswer('');
-    setIsCorrect(null);
-    setShowCorrectAnswer(false);
-    setUserAnswers([]);
-    setShowResults(false);
+  // multiple choice question: handle choice click(not yet submit)
+  const handleChoiceClick = (choice) => {
+    // prevent answer again
+    if (hasAnswered) return;
+    setSelectedAnswer(choice.choice_text);
+  };
+
+  // fill in blank question: handle input change(not yet submit)
+  const handleInputChange = (e) => {
+    // prevent answer again
+    if (hasAnswered) return;
+    setSelectedAnswer(e.target.value);
   };
 
   if (showResults) {
@@ -95,15 +116,16 @@ function Quiz() {
       (answer) => answer.isCorrect
     ).length;
     return (
-      <div className="quiz-wrapper">
-        <div className="quiz-card results-container">
-          <h1>測驗結果</h1>
-          <p>
+      <div className="w-100 h-100 d-flex align-items-center justify-content-center blue-text">
+        {/* <div className="quiz-card results-container"> */}
+        <div className="d-flex flex-column align-items-center justify-content-center w-50 h-75 bg-white p-4 rounded-4">
+          <h1 className="fw-bolder">測驗結果</h1>
+          <p className="my-1">
             您在 {userAnswers.length} 題中答對 {correctCount} 題
           </p>
 
           <div className="results-scroll">
-            <ul className="results-list">
+            <ul className="list-unstyled text-start my-0">
               {userAnswers.map((answer, index) => (
                 <li key={index} className="results-item">
                   <p>
@@ -127,7 +149,7 @@ function Quiz() {
             </ul>
           </div>
 
-          <button className="quiz-button" onClick={handleRestartQuiz}>
+          <button className="btn btn-primary" onClick={handleRestartQuiz}>
             重新測驗
           </button>
         </div>
@@ -136,68 +158,90 @@ function Quiz() {
   }
 
   return (
-    <div className="quiz-wrapper">
-      <div className="quiz-card">
-        <p className="quiz-question">{currentQuestion.question}</p>
+    <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+      <div className="quiz-card blue-text">
+        {/* question title */}
+        <p className="fw-bolder fs-3 text-start mt-3">
+          {currentQuestion.prompt_text}
+        </p>
 
-        {currentQuestion.type === 'multiple-choice' ? (
-          <ul className="quiz-choices">
-            {currentQuestion.choices.map((choice, index) => (
-              <li
-                key={index}
-                className={`quiz-choice ${
-                  isCorrect !== null
-                    ? choice === currentQuestion.correctAnswer
-                      ? 'correct'
-                      : selectedAnswer === choice
-                        ? 'incorrect'
-                        : ''
-                    : ''
-                }`}
-                onClick={() => handleChoiceClick(choice)}
-              >
-                {choice}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div>
-            <input
-              type="text"
-              className="quiz-input"
-              placeholder="請作答"
-              value={selectedAnswer}
-              onChange={(e) => setSelectedAnswer(e.target.value)}
-            />
-            <button
-              className="quiz-button"
-              onClick={handleInputSubmit}
-              disabled={isCorrect !== null}
-            >
-              提交
-            </button>
-            {showCorrectAnswer && (
-              <p className="quiz-correct-answer">
-                正確答案： {currentQuestion.correctAnswer}
-              </p>
-            )}
-          </div>
-        )}
+        {/* choice or input */}
+        {currentQuestion.type == 1
+          ? MultipleChoise(
+              currentQuestion,
+              handleChoiceClick,
+              selectedAnswer,
+              hasAnswered
+            )
+          : FillInBlank(currentQuestion, handleInputChange, selectedAnswer)}
 
-        {isCorrect !== null && (
-          <p className={`quiz-feedback ${isCorrect ? 'correct' : 'incorrect'}`}>
-            {isCorrect ? '正確' : '錯誤'}
-          </p>
-        )}
+        {/* result */}
+        <p
+          className={`quiz-feedback fs-3 ${hasAnswered ? 'visible' : 'invisible'} ${isCorrect ? 'correct' : 'incorrect'}`}
+        >
+          {isCorrect ? '正確' : '錯誤'}
+        </p>
 
-        {isCorrect !== null && (
-          <button className="quiz-button" onClick={handleNextQuestion}>
+        {/* submit/next button */}
+        {hasAnswered ? (
+          <button
+            className="btn btn-primary"
+            onClick={() => handleNextQuestion()}
+          >
             下一題
+          </button>
+        ) : (
+          <button
+            className="btn btn-outline-primary"
+            onClick={() => handelSubmit()}
+            disabled={!selectedAnswer}
+          >
+            提交
           </button>
         )}
       </div>
     </div>
   );
 }
+
+const MultipleChoise = (
+  question,
+  handleChoiceClick,
+  selectedAnswer,
+  hasAnswered
+) => {
+  return (
+    <ul
+      className={`${hasAnswered ? 'answered' : 'notAnswered'} list-unstyled p-0 my-3 quiz-choices`}
+    >
+      {question.choices.map((choice, index) => {
+        const acitve = selectedAnswer === choice.choice_text ? 'active' : '';
+        return (
+          <li
+            key={index}
+            className={`quiz-choice ${acitve}`}
+            onClick={() => handleChoiceClick(choice)}
+          >
+            {choice.choice_text}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
+
+const FillInBlank = (question, handleInputChange, selectedAnswer) => {
+  return (
+    <div>
+      <input
+        type="text"
+        className="quiz-input"
+        placeholder="請作答"
+        value={selectedAnswer}
+        onChange={(e) => handleInputChange(e)}
+      />
+    </div>
+  );
+};
 
 export default Quiz;

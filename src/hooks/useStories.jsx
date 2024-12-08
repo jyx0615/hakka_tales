@@ -7,9 +7,14 @@ import {
 } from 'react';
 // import { getStories, getStoryById, getCategories } from '../utils/mockData.js'; // Import your mock data functions
 import { getActivities } from '../utils/mockData.js';
-import { getStories, getStoryById, getCategories } from '../utils/client.js';
+import {
+  getStories,
+  getStoryById,
+  getCategories,
+  getQuizById,
+  getQuizzes,
+} from '../utils/client.js';
 import PropTypes from 'prop-types'; // Import PropTypes
-import { getQuizzes } from '../utils/mockData.js';
 
 // Create a Context
 const StoryContext = createContext({
@@ -17,11 +22,13 @@ const StoryContext = createContext({
   activities: [],
   stories: {},
   currentStory: {},
+  currentQuiz: [],
   fetchStories: () => {},
   fetchCurrentStory: () => {},
   fetchCategories: () => {},
   fetchActivities: () => {},
   fetchQuizzes: () => {},
+  fetchCurrentQuiz: () => {},
 });
 
 // Create a Provider component
@@ -31,6 +38,7 @@ export function StoryProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [activities, setActivities] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
+  const [currentQuiz, setCurrentQuiz] = useState([]);
 
   const fetchCategories = useCallback(async () => {
     const res = await getCategories();
@@ -66,6 +74,15 @@ export function StoryProvider({ children }) {
     }
   }, []);
 
+  const fetchCurrentQuiz = useCallback(async (exerciseId) => {
+    try {
+      const fetchedQuiz = await getQuizById(exerciseId);
+      setCurrentQuiz(fetchedQuiz.data.data);
+    } catch (error) {
+      console.error('Error fetching quiz:', exerciseId, error);
+    }
+  }, []);
+
   const stories = useMemo(() => {
     if (!rawStories.length || !categories.length) {
       fetchCategories();
@@ -91,11 +108,13 @@ export function StoryProvider({ children }) {
         currentStory,
         categories,
         quizzes,
+        currentQuiz,
         fetchStories,
         fetchCurrentStory,
         fetchCategories,
         fetchActivities,
         fetchQuizzes,
+        fetchCurrentQuiz,
       }}
     >
       {children}

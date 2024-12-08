@@ -45,7 +45,7 @@ function App() {
                   path="/book/:bookIndex/content/:category"
                   element={<Content />}
                 />
-                <Route path="/quiz" element={<Quiz />} />
+                <Route path="/quiz/:bookIndex" element={<Quiz />} />
               </Routes>
             </Container>
           </div>

@@ -230,41 +230,172 @@ const pages = [
   },
 ];
 
+// const quizzes = [
+//   {
+//     id: '1',
+//     question: 'What is the capital of France?',
+//     type: 'multiple-choice',
+//     choices: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+//     correctAnswer: 'Paris',
+//   },
+//   {
+//     id: '2',
+//     question: 'Solve: 5 + 3',
+//     type: 'fill-in-the-blank',
+//     correctAnswer: '8',
+//   },
+//   {
+//     id: '3',
+//     question: 'Which is the largest planet in our solar system?',
+//     type: 'multiple-choice',
+//     choices: ['Earth', 'Mars', 'Jupiter', 'Venus'],
+//     correctAnswer: 'Jupiter',
+//   },
+// ];
+
 const quizzes = [
   {
-    id: '1',
-    question: 'What is the capital of France?',
-    type: 'multiple-choice',
-    choices: ['Berlin', 'Madrid', 'Paris', 'Rome'],
-    correctAnswer: 'Paris',
+    id: 1,
+    story_id: 2,
+    type: 1,
+    prompt_text: '為什麼爸爸媽媽出門前交代姊弟不能讓陌生人進門？',
+    audio_url: '',
+    choices: [
+      {
+        id: 9,
+        choice_text: '怕有虎姑婆出沒',
+      },
+      {
+        id: 10,
+        choice_text: '怕姊弟吵架',
+      },
+      {
+        id: 11,
+        choice_text: '怕家裡失火',
+      },
+      {
+        id: 12,
+        choice_text: '怕姊弟忘記做家務',
+      },
+    ],
   },
   {
-    id: '2',
-    question: 'Solve: 5 + 3',
-    type: 'fill-in-the-blank',
-    correctAnswer: '8',
+    id: 2,
+    story_id: 2,
+    type: 1,
+    prompt_text: '「格崩、格崩」的聲音是什麼？',
+    audio_url: '',
+    choices: [
+      {
+        id: 5,
+        choice_text: '虎姑婆在敲門的聲音',
+      },
+      {
+        id: 6,
+        choice_text: '姊姊在說話的聲音',
+      },
+      {
+        id: 7,
+        choice_text: '虎姑婆咬東西的聲音',
+      },
+      {
+        id: 8,
+        choice_text: '弟弟在睡覺的聲音',
+      },
+    ],
   },
   {
-    id: '3',
-    question: 'Which is the largest planet in our solar system?',
-    type: 'multiple-choice',
-    choices: ['Earth', 'Mars', 'Jupiter', 'Venus'],
-    correctAnswer: 'Jupiter',
+    id: 3,
+    story_id: 2,
+    type: 1,
+    prompt_text: '姊姊最後是怎麼把虎姑婆解決的？',
+    audio_url: '',
+    choices: [
+      {
+        id: 25,
+        choice_text: '用繩子把虎姑婆綁起來',
+      },
+      {
+        id: 26,
+        choice_text: '請爸爸媽媽回來幫忙',
+      },
+      {
+        id: 27,
+        choice_text: '用滾燙的油倒進虎姑婆的嘴巴',
+      },
+      {
+        id: 28,
+        choice_text: '把虎姑婆鎖在家裡',
+      },
+    ],
+  },
+  {
+    id: 4,
+    story_id: 2,
+    type: 1,
+    prompt_text: '為什麼弟弟想打開門讓虎姑婆進來？',
+    audio_url: '',
+    choices: [
+      {
+        id: 21,
+        choice_text: '弟弟認識虎姑婆',
+      },
+      {
+        id: 22,
+        choice_text: '弟弟貪吃，聽到有點心',
+      },
+      {
+        id: 23,
+        choice_text: '弟弟害怕虎姑婆',
+      },
+      {
+        id: 24,
+        choice_text: '弟弟忘記媽媽的叮囑',
+      },
+    ],
+  },
+  {
+    id: 5,
+    story_id: 2,
+    type: 1,
+    prompt_text: '故事裡的虎姑婆其實是什麼動物變的？',
+    audio_url: '',
+    choices: [
+      {
+        id: 29,
+        choice_text: '老虎',
+      },
+      {
+        id: 30,
+        choice_text: '狐狸',
+      },
+      {
+        id: 31,
+        choice_text: '熊',
+      },
+      {
+        id: 32,
+        choice_text: '貓',
+      },
+    ],
+  },
+  {
+    id: 6,
+    story_id: 2,
+    type: 0,
+    prompt_text: '深山仔內佇囡了一戶人家，「深山仔」的意思是',
+    audio_url: '',
+    choices: [],
+  },
+  {
+    id: 7,
+    story_id: 2,
+    type: 0,
+    prompt_text: '爸母去外面頭公事，「公事」的意思是',
+    audio_url: '',
+    choices: [],
   },
 ];
-
-// Mock function to simulate fetching quizzes
-export const getQuizzes = async () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          data: quizzes,
-        },
-      });
-    }, 500); // Simulate a network delay
-  });
-};
 
 const activities = [
   {
@@ -396,5 +527,18 @@ export const getActivities = () => {
         },
       });
     }, 500);
+  });
+};
+
+// Mock function to simulate fetching quizzes
+export const getQuizzes = async () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: {
+          data: quizzes,
+        },
+      });
+    }, 500); // Simulate a network delay
   });
 };

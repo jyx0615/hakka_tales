@@ -29,7 +29,7 @@ function Book() {
   // display the loading icon when data is not loaded
   if (loading) {
     return (
-      <div className="d-flex flex-color align-items-center justify-content-center w-100 h-100">
+      <div className="d-flex align-items-center justify-content-center w-100 h-100">
         <Riple color="#32cd32" size="medium" text="" textColor="" />
       </div>
     );
@@ -63,8 +63,16 @@ function Book() {
           </div>
 
           <div className="d-flex align-items-center justify-content-end gap-4 mb-3">
-            <MyButton text="四縣腔" bookIndex={bookIndex} category="sixian" />
-            <MyButton text="海陸腔" bookIndex={bookIndex} category="hailu" />
+            <MyButton
+              text="四縣腔"
+              category="sixian"
+              target_page={`/book/${bookIndex}/content/sixian`}
+            />
+            <MyButton
+              text="海陸腔"
+              category="hailu"
+              target_page={`/book/${bookIndex}/content/hailu`}
+            />
           </div>
         </div>
       </Col>

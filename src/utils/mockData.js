@@ -397,6 +397,37 @@ const quizzes = [
   },
 ];
 
+const answers = [
+  {
+    quiz_id: 1,
+    answer: '怕有虎姑婆出沒',
+  },
+  {
+    quiz_id: 2,
+    answer: '虎姑婆咬東西的聲音',
+  },
+  {
+    quiz_id: 3,
+    answer: '用滾燙的油倒進虎姑婆的嘴巴',
+  },
+  {
+    quiz_id: 4,
+    answer: '弟弟貪吃，聽到有點心',
+  },
+  {
+    quiz_id: 5,
+    answer: '老虎',
+  },
+  {
+    quiz_id: 6,
+    answer: '深山仔',
+  },
+  {
+    quiz_id: 7,
+    answer: '頭公事',
+  },
+];
+
 const activities = [
   {
     id: '0',
@@ -540,5 +571,31 @@ export const getQuizzes = async () => {
         },
       });
     }, 500); // Simulate a network delay
+  });
+};
+
+export const getAnswerById = async (
+  bookIndex,
+  exerciseIndex,
+  type,
+  userAnswers
+) => {
+  return new Promise((resolve) => {
+    const correctAns = answers.find(
+      (answer) => answer.quiz_id === exerciseIndex
+    ).answer;
+    const isCorrect = userAnswers === correctAns;
+    // console.log("isCorrect", isCorrect);
+
+    setTimeout(() => {
+      resolve({
+        data: {
+          data: {
+            answers: correctAns,
+            is_correct: isCorrect,
+          },
+        },
+      });
+    }, 500);
   });
 };

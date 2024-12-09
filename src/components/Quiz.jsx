@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Riple } from 'react-loading-indicators';
 
-import { getAnswerById } from '../utils/client';
+// import { getAnswerById } from '../utils/client';
+import { getAnswerById } from '../utils/mockData';
 import useStories from '../hooks/useStories';
 import './Quiz.css';
 
@@ -55,40 +56,33 @@ function Quiz() {
     setShowResults(false);
   };
 
-  // Submit answer
-  const handelSubmit = () => {
-    setHasAnswered(true);
-    var isAnswerCorrect;
+  // Submit answer and fetch the correct answer
+  const handelSubmit = async () => {
+    try {
+      const res = await getAnswerById(
+        bookIndex,
+        currentQuestion.id,
+        currentQuestion.type,
+        selectedAnswer
+      );
+      const isAnswerCorrect = res.data.data.is_correct;
+      const correctAnswer = res.data.data.answers;
 
-    const data = {
-      type: currentQuestion.type - 1,
-      answers: selectedAnswer,
-    };
-    const res = getAnswerById(bookIndex, currentQuestionIndex, data);
-    console.log(res.data.data);
-
-    // multiple choice
-    if (currentQuestion.type == 1) {
-      isAnswerCorrect = selectedAnswer === currentQuestion.correctAnswer;
+      setIsCorrect(isAnswerCorrect);
+      // Save user answer
+      setUserAnswers((prevAnswers) => [
+        ...prevAnswers,
+        {
+          question: currentQuestion.prompt_text,
+          userAnswer: selectedAnswer,
+          correctAnswer: correctAnswer,
+          isCorrect: isAnswerCorrect,
+        },
+      ]);
+      setHasAnswered(true);
+    } catch (error) {
+      console.error('Error fetching answer:', error);
     }
-    // fill in blank
-    else {
-      const userAns = selectedAnswer?.trim().toLowerCase();
-      const rightAns = currentQuestion.correctAnswer?.trim().toLowerCase();
-      isAnswerCorrect = userAns === rightAns;
-    }
-
-    setIsCorrect(isAnswerCorrect);
-    // Save user answer
-    setUserAnswers((prevAnswers) => [
-      ...prevAnswers,
-      {
-        question: currentQuestion.prompt_text,
-        userAnswer: selectedAnswer,
-        correctAnswer: currentQuestion.correctAnswer,
-        isCorrect: isAnswerCorrect,
-      },
-    ]);
   };
 
   // go to next question

@@ -369,7 +369,7 @@ function Content() {
                     <img
                       src={getImageOfPage(pageNum)}
                       alt="illustration"
-                      className="user-select-none p-2 mh-100 mw-100"
+                      className="user-select-none p-2 mh-100 mw-100 rounded-5"
                     />
                   </div>
                 </div>

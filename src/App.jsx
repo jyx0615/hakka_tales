@@ -34,7 +34,7 @@ function App() {
         <StoryProvider>
           <div className="container-fluid px-0 main-container vh-100 vw-100 text-white">
             <MyNavbar handleSearch={handleSearch} />
-            <Container className="pb-4 custom-container px-2" fluid="xl">
+            <Container className="p-2 custom-container px-2" fluid="xl">
               <Routes>
                 <Route path="/" element={<Home searchItem={searchItem} />} />
                 <Route path="/contact" element={<Contact />} />

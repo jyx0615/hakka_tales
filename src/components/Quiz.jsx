@@ -118,9 +118,9 @@ function Quiz() {
       (answer) => answer.isCorrect
     ).length;
     return (
-      <div className="w-100 h-100 d-flex align-items-center justify-content-center blue-text">
+      <div className="w-100 h-100 d-flex align-items-center justify-content-center blue-text p-3">
         {/* <div className="quiz-card results-container"> */}
-        <div className="d-flex flex-column align-items-center justify-content-center w-50 h-75 bg-white p-4 rounded-4">
+        <div className="d-flex flex-column align-items-center justify-content-center h-75 bg-white p-4 rounded-4">
           <h1 className="fw-bolder">測驗結果</h1>
           <p className="my-1">
             您在 {userAnswers.length} 題中答對 {correctCount} 題

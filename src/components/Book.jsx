@@ -39,7 +39,7 @@ function Book() {
     <Row className="custom-text">
       {/* left side */}
       <Col md={6} sm={12}>
-        <div className="w-100 d-flex flex-column align-items-center justify-content-center border-end me-4 p-5">
+        <div className="w-100 d-flex flex-column align-items-center justify-content-center me-4 p-5">
           <div className="d-flex justify-content-center mb-3">
             <img
               src={currentStory.cover_image}

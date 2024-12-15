@@ -441,11 +441,30 @@ function Content() {
           <div className="d-flex justify-content-center">
             <span className="finish-text-sm">完</span>
           </div>
+
+          <div className="w-100 d-flex justify-content-end">
+            {/* Go to Quiz button */}
+            <div className="me-3">
+              <MyButton
+                text="前往測驗"
+                category="quiz"
+                target_page={`/quiz/${bookIndex}`}
+              />
+            </div>
+
+            {/* Refresh button */}
+            <button
+              onClick={() => goToPage(0)}
+              className={`btn btn-primary-outline`}
+            >
+              <ArrowClockwise color="black" className="fs-3 bolder fw-bolder" />
+            </button>
+          </div>
         </div>
 
         {/* Buttons for last page */}
         <div
-          className={`w-100 d-flex justify-content-end p-2 ${pageIndex === totalPage ? '' : 'invisible'}`}
+          className={`w-100 d-none d-md-block d-flex justify-content-end p-2 ${pageIndex === totalPage ? '' : 'invisible'}`}
         >
           {/* Go to Quiz button */}
           <div className="me-3">
@@ -466,7 +485,7 @@ function Content() {
         </div>
 
         {/* control bar */}
-        <div className="row w-100 pb-2">
+        <div className="row w-100">
           {/* pause/stop button */}
           <div className="p-2 col-md-1 col-2 d-flex">
             <button

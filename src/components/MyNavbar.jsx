@@ -192,7 +192,7 @@ function MyNavbar({ handleSearch }) {
               >
                 {categories &&
                   categories.map((category) => (
-                    <div key={category.id} className="dropdown my-2">
+                    <div key={category.id} className="dropdown my-2 ps-3">
                       {/* Hidden checkbox to control the dropdown menu */}
                       <input
                         type="checkbox"
@@ -206,7 +206,7 @@ function MyNavbar({ handleSearch }) {
                         htmlFor={`book-dropdown-checkbox-${category.id}`}
                         className="btn bg-transparent border-0"
                       >
-                        <span className="custom-a text-decoration-none">
+                        <span className="text-decoration-none">
                           {category.name}
                           <ChevronDown className="ms-1" />
                         </span>

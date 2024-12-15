@@ -22,8 +22,8 @@ Follow these steps to get the project up and running on your local machine.
 
 ### Prerequisites
 
-- Node.js (version X.X.X or higher)
-- npm (usually comes with Node.js)
+- Node.js
+- npm
 
 ### Installation
 
@@ -55,3 +55,12 @@ npm run dev
 ### Preview
 
 You can preview the deployed application at [Hakka Learning App](https://hakka-tales.onrender.com).
+![Hakka Learning App Screenshot](./assets/screenshot.png)
+
+### Demo Video
+
+Watch our demo video to see the app in action: [Hakka Learning App Demo](https://www.youtube.com/watch?v=KYGpy9XyIfQ)
+
+### Backend Repository
+
+The backend repository for this project can be found at [Hakka Story Backend](https://github.com/Rice9547/hakka_story).

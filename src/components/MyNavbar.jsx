@@ -279,6 +279,7 @@ const LoginLogoutIcon = () => {
     <div className="me-3 dropdown person-image-container">
       <img
         id="user-image"
+        data-bs-toggle="dropdown"
         aria-expanded="true"
         role="button"
         className="me-3 person-icon dropdown-toggle contain"
@@ -289,7 +290,7 @@ const LoginLogoutIcon = () => {
       <div
         aria-labelledby="user-image"
         data-bs-popper="static"
-        className="dropdown-menu dropdown-menu-start py-1"
+        className="dropdown-menu dropdown-menu-start py-1 mt-2"
         style={{ minWidth: '60px' }}
       >
         <a className="dropdown-item px-2 text-center" onClick={() => logout()}>

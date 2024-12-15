@@ -16,7 +16,7 @@ function Auth0ProviderWithNavigate({ children }) {
       domain={env.VITE_AUTH0_DOMAIN}
       clientId={env.VITE_AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: `${window.location.origin}/hakka_tales`,
+        redirect_uri: `${window.location.origin}/hakka_tales/`,
         audience: env.REACT_APP_AUTH0_AUDIENCE,
         scope: 'openid profile email',
       }}

@@ -29,7 +29,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <Auth0ProviderWithNavigate>
         <StoryProvider>
           <div className="container-fluid px-0 main-container vh-100 vw-100 text-white">

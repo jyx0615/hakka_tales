@@ -1,10 +1,10 @@
-# Hakka Learning App: Tales of Taiwan
+# Hakka Tale App: Tales of Taiwan
 
 Learn Hakka through famous Taiwanese stories! This interactive application helps you explore the rich Hakka language and culture by immersing yourself in beloved Taiwanese tales.
 
 ## Project Description
 
-Our Hakka Learning App is an innovative educational tool designed to make learning the Hakka language engaging and accessible. By leveraging well-known Taiwanese stories, we provide a unique and culturally rich learning experience.
+Our Hakka Tale App is an innovative educational tool designed to make learning the Hakka language engaging and accessible. By leveraging well-known Taiwanese stories, we provide a unique and culturally rich learning experience.
 
 Key features:
 
@@ -54,12 +54,12 @@ npm run dev
 
 ### Preview
 
-You can preview the deployed application at [Hakka Learning App](https://hakka-tales.onrender.com).
-![Hakka Learning App Screenshot](./assets/screenshot.png)
+You can preview the deployed application at [Hakka Tale App](https://jyx0615.github.io/hakka_tales/).
+![Hakka Tale App Screenshot](./assets/screenshot.png)
 
 ### Demo Video
 
-Watch our demo video to see the app in action: [Hakka Learning App Demo](https://www.youtube.com/watch?v=KYGpy9XyIfQ)
+Watch our demo video to see the app in action: [Hakka Tale App Demo](https://www.youtube.com/watch?v=KYGpy9XyIfQ)
 
 ### Backend Repository
 

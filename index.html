@@ -13,8 +13,27 @@
       name="description"
       content="Our website is an innovative educational tool designed to make learning the Hakka language engaging and accessible. By leveraging well-known Taiwanese stories, we provide a unique and culturally rich learning experience."
     />
-    <script type="module" crossorigin src="/assets/index-z1Yra3z0.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-QJSqo6is.css">
+
+    <script type="text/javascript">
+      (function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) {
+              return s.replace(/~and~/g, '&');
+            })
+            .join('?');
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      })(window.location);
+    </script>
+    <script type="module" crossorigin src="/hakka_tales/assets/index-CQOTRMTg.js"></script>
+    <link rel="stylesheet" crossorigin href="/hakka_tales/assets/index-BhdA40le.css">
   </head>
   <body>
     <!-- jquery cdn -->

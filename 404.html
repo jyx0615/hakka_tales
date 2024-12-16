@@ -3,7 +3,12 @@
   <head>
     <meta http-equiv="refresh" content="0; url=/" />
     <script>
-      window.location.href = '/hakka_tales/';
+      // Redirect to index.html while preserving the current path
+      const redirectTo =
+        window.location.pathname +
+        window.location.search +
+        window.location.hash;
+      window.location.replace('/hakka_tales' + redirectTo);
     </script>
   </head>
   <body>

@@ -46,6 +46,8 @@ function App() {
                   element={<Content />}
                 />
                 <Route path="/quiz/:bookIndex" element={<Quiz />} />
+                {/* Redirect unknown routes to home */}
+                <Route path="*" element={<Home searchItem={searchItem} />} />
               </Routes>
             </Container>
           </div>

@@ -464,7 +464,7 @@ function Content() {
 
         {/* Buttons for last page */}
         <div
-          className={`w-100 d-none d-md-block d-flex justify-content-end p-2 ${pageIndex === totalPage ? '' : 'invisible'}`}
+          className={`w-100 d-none d-md-flex d-flex justify-content-end p-2 ${pageIndex === totalPage ? '' : 'invisible'}`}
         >
           {/* Go to Quiz button */}
           <div className="me-3">

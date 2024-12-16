@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://jyx0615.github.io/hakka_tales/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

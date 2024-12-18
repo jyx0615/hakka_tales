@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Riple } from 'react-loading-indicators';
 
-// import { getAnswerById } from '../utils/client';
-import { getAnswerById } from '../utils/mockData';
+import { getAnswerById } from '../utils/client';
+// import { getAnswerById } from '../utils/mockData';
 import useStories from '../hooks/useStories';
 import './Quiz.css';
 
@@ -60,7 +60,6 @@ function Quiz() {
   const handelSubmit = async () => {
     try {
       const res = await getAnswerById(
-        bookIndex,
         currentQuestion.id,
         currentQuestion.type,
         selectedAnswer

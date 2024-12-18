@@ -574,12 +574,7 @@ export const getQuizzes = async () => {
   });
 };
 
-export const getAnswerById = async (
-  bookIndex,
-  exerciseIndex,
-  type,
-  userAnswers
-) => {
+export const getAnswerById = async (exerciseIndex, type, userAnswers) => {
   return new Promise((resolve) => {
     const correctAns = answers.find(
       (answer) => answer.quiz_id === exerciseIndex

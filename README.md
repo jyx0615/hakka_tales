@@ -64,3 +64,7 @@ Watch our demo video to see the app in action: [Hakka Tale App Demo](https://www
 ### Backend Repository
 
 The backend repository for this project can be found at [Hakka Story Backend](https://github.com/Rice9547/hakka_story).
+
+### Explanation
+
+- **Fix for GitHub Pages Reload Error**: Included the redirect script from the [referenced repository](https://github.com/ErickKS/vite-react-router/blob/main/index.html) to handle client-side routing correctly.

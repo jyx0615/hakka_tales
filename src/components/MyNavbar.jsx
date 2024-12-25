@@ -293,7 +293,16 @@ const LoginLogoutIcon = () => {
         className="dropdown-menu dropdown-menu-start py-1 mt-2"
         style={{ minWidth: '60px' }}
       >
-        <a className="dropdown-item px-2 text-center" onClick={() => logout()}>
+        <a
+          className="dropdown-item px-2 text-center"
+          onClick={() =>
+            logout({
+              logoutParams: {
+                returnTo: `${window.location.origin}/hakka_tales/`,
+              },
+            })
+          }
+        >
           登出
         </a>
       </div>
